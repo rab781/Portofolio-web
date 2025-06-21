@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 
 export default function Hero() {
@@ -8,13 +8,13 @@ export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const texts = [
+  const texts = useMemo(() => [
     "Web Developer",
     "UI/UX Enthusiast",
     "Data Scientist",
     "Software Engineer",
     "AI Enthusiast",
-  ];
+  ], []);
 
   useEffect(() => {
     const currentText = texts[currentIndex];
