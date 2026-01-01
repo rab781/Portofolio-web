@@ -2,6 +2,19 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
+import dynamic from "next/dynamic";
+
+// Dynamically import Lanyard3D to avoid SSR issues
+const Lanyard3D = dynamic(() => import('./Lanyard3D'), { 
+  ssr: false,
+  loading: () => (
+    <div className="w-48 h-72 md:w-64 md:h-96 absolute top-16 right-4 md:right-8 lg:right-16 z-10 animate-pulse">
+      <div className="w-full h-full bg-gray-800/20 rounded-2xl border border-gray-600/30 flex items-center justify-center">
+        <div className="text-gray-500 text-sm">Loading 3D Lanyard...</div>
+      </div>
+    </div>
+  )
+});
 
 export default function Hero() {
   const [displayText, setDisplayText] = useState("");
@@ -10,7 +23,7 @@ export default function Hero() {
 
   const texts = useMemo(() => [
     "Web Developer",
-    "UI/UX Enthusiast",
+    "UI/UX Enthusiast", 
     "Data Scientist",
     "Software Engineer",
     "AI Enthusiast",
@@ -39,23 +52,26 @@ export default function Hero() {
   }, [displayText, currentIndex, isDeleting, texts]);
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative pt-16">
+    <section id="home" className="min-h-screen flex items-center justify-center relative pt-16 overflow-hidden">
+      {/* 3D Lanyard using Three.js */}
+      <Lanyard3D />
+
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="mb-8">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-4">
             Hi, I&apos;m{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
               Mohammad Raihan Rabbani
             </span>
           </h1>
-          <div className="text-xl sm:text-2xl lg:text-3xl text-gray-600 dark:text-gray-400 mb-8 h-12">
+          <div className="text-xl sm:text-2xl lg:text-3xl text-gray-400 mb-8 h-12">
             I&apos;m a{" "}
-            <span className="text-blue-600 dark:text-blue-400 font-semibold">
+            <span className="text-yellow-400 font-semibold">
               {displayText}
               <span className="animate-pulse">|</span>
             </span>
           </div>
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-8">
+          <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-8">
             Passionate about creating beautiful, functional, and user-centered digital experiences.
             I bring ideas to life through code and design.
           </p>
@@ -64,13 +80,13 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
           <a
             href="#contact"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-colors duration-300 shadow-lg hover:shadow-xl"
+            className="bg-yellow-600 hover:bg-yellow-500 text-black px-8 py-3 rounded-full font-semibold transition-colors duration-300 shadow-lg hover:shadow-xl"
           >
             Get In Touch
           </a>
           <a
             href="#projects"
-            className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white px-8 py-3 rounded-full font-semibold transition-all duration-300"
+            className="border-2 border-yellow-600 text-yellow-400 hover:bg-yellow-600 hover:text-black px-8 py-3 rounded-full font-semibold transition-all duration-300"
           >
             View My Work
           </a>
@@ -81,7 +97,7 @@ export default function Hero() {
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+            className="text-gray-400 hover:text-yellow-400 transition-colors duration-300"
           >
             <Github size={28} />
           </a>
@@ -89,13 +105,13 @@ export default function Hero() {
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+            className="text-gray-400 hover:text-yellow-400 transition-colors duration-300"
           >
             <Linkedin size={28} />
           </a>
           <a
             href="mailto:your.email@example.com"
-            className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+            className="text-gray-400 hover:text-yellow-400 transition-colors duration-300"
           >
             <Mail size={28} />
           </a>
@@ -104,7 +120,7 @@ export default function Hero() {
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
           <a
             href="#about"
-            className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 animate-bounce"
+            className="text-gray-400 hover:text-yellow-400 transition-colors duration-300 animate-bounce"
           >
             <ChevronDown size={32} />
           </a>

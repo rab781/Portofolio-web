@@ -4,24 +4,14 @@ export default function Projects() {
   const projects = [
     {
       title: "E-Commerce Platform",
-      description: "A full-stack e-commerce application built with Next.js, TypeScript, and Stripe integration. Features include user authentication, product management, and payment processing.",
+      description: "A full-stack e-commerce application built with laravel v12. Features include user authentication, product management, and payment processing.",
       image: "/api/placeholder/400/300",
-      technologies: ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Tailwind CSS"],
+      technologies: ["laravel","blade", "Mysql", "Tailwind CSS"],
       liveUrl: "https://example.com",
       githubUrl: "https://github.com",
       featured: true,
     },
     {
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates using Socket.io. Built with React and Node.js backend.",
-      image: "/api/placeholder/400/300",
-      technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Express"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com",
-      featured: true,
-    },
-    {
-      title: "Weather Dashboard",
       description: "A responsive weather dashboard that displays current weather and forecasts using OpenWeatherMap API. Built with vanilla JavaScript and modern CSS.",
       image: "/api/placeholder/400/300",
       technologies: ["JavaScript", "CSS3", "OpenWeatherMap API", "Chart.js"],

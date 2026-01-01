@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,9 +34,14 @@ export default function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <div className="text-2xl font-bold text-gray-900 dark:text-white">
-            Portfolio
-          </div>
+          <a href="#home" className="flex items-center space-x-2">
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={80}
+              height={80}
+            />
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8">

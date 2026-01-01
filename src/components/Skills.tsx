@@ -1,4 +1,4 @@
-import { Code, Database, Globe, Smartphone } from "lucide-react";
+import { Code, Database, Globe } from "lucide-react";
 
 export default function Skills() {
   const skillCategories = [
@@ -19,11 +19,8 @@ export default function Skills() {
       icon: <Database className="w-8 h-8" />,
       skills: [
         { name: "Node.js", level: 85 },
-        { name: "Express.js", level: 80 },
         { name: "Python", level: 75 },
         { name: "PostgreSQL", level: 80 },
-        { name: "MongoDB", level: 75 },
-        { name: "REST APIs", level: 85 },
       ],
     },
     {
@@ -31,21 +28,6 @@ export default function Skills() {
       icon: <Code className="w-8 h-8" />,
       skills: [
         { name: "Git", level: 90 },
-        { name: "Docker", level: 70 },
-        { name: "AWS", level: 65 },
-        { name: "Figma", level: 80 },
-        { name: "VS Code", level: 95 },
-        { name: "Linux", level: 75 },
-      ],
-    },
-    {
-      title: "Mobile Development",
-      icon: <Smartphone className="w-8 h-8" />,
-      skills: [
-        { name: "React Native", level: 70 },
-        { name: "Flutter", level: 60 },
-        { name: "Progressive Web Apps", level: 80 },
-        { name: "Responsive Design", level: 90 },
       ],
     },
   ];
