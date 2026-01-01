@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
-import dynamic from "next/dynamic";
 
 
 
