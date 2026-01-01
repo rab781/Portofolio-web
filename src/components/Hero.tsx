@@ -4,17 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 
-// Dynamically import Lanyard3D to avoid SSR issues
-const Lanyard3D = dynamic(() => import('./Lanyard3D'), { 
-  ssr: false,
-  loading: () => (
-    <div className="w-48 h-72 md:w-64 md:h-96 absolute top-16 right-4 md:right-8 lg:right-16 z-10 animate-pulse">
-      <div className="w-full h-full bg-gray-800/20 rounded-2xl border border-gray-600/30 flex items-center justify-center">
-        <div className="text-gray-500 text-sm">Loading 3D Lanyard...</div>
-      </div>
-    </div>
-  )
-});
+
 
 export default function Hero() {
   const [displayText, setDisplayText] = useState("");
@@ -53,9 +43,6 @@ export default function Hero() {
 
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative pt-16 overflow-hidden">
-      {/* 3D Lanyard using Three.js */}
-      <Lanyard3D />
-
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="mb-8">
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-4">
