@@ -11,8 +11,7 @@ export default function Hero() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const texts = useMemo(() => [
-    "Web Developer",
-    "UI/UX Enthusiast", 
+    "Web Developer", 
     "Data Scientist",
     "Software Engineer",
     "AI Enthusiast",
@@ -45,7 +44,7 @@ export default function Hero() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="mb-8">
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-4">
-            Hi, I&apos;m{" "}
+            Hello, I&apos;m{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
               Mohammad Raihan Rabbani
             </span>
@@ -80,7 +79,7 @@ export default function Hero() {
 
         <div className="flex items-center justify-center space-x-6 mb-12">
           <a
-            href="https://github.com"
+            href="https://github.com/rab781"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-400 hover:text-yellow-400 transition-colors duration-300"
@@ -88,7 +87,7 @@ export default function Hero() {
             <Github size={28} />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/mohammadraihanrabbani/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-400 hover:text-yellow-400 transition-colors duration-300"
@@ -96,7 +95,7 @@ export default function Hero() {
             <Linkedin size={28} />
           </a>
           <a
-            href="mailto:your.email@example.com"
+            href="mailto:raihanrabani199@gmail.com"
             className="text-gray-400 hover:text-yellow-400 transition-colors duration-300"
           >
             <Mail size={28} />

@@ -73,7 +73,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Email</h4>
-                  <p className="text-gray-600 dark:text-gray-400">your.email@example.com</p>
+                  <p className="text-gray-600 dark:text-gray-400">raihanrabani199@gmail.com</p>
                 </div>
               </div>
 
@@ -83,7 +83,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Phone</h4>
-                  <p className="text-gray-600 dark:text-gray-400">+1 (555) 123-4567</p>
+                  <p className="text-gray-600 dark:text-gray-400">+62 858-2466-5623</p>
                 </div>
               </div>
 
@@ -93,7 +93,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Location</h4>
-                  <p className="text-gray-600 dark:text-gray-400">City, Country</p>
+                  <p className="text-gray-600 dark:text-gray-400">Bondowoso, Indonesia</p>
                 </div>
               </div>
             </div>
@@ -208,7 +208,7 @@ export default function Contact() {
         {/* Footer */}
         <div className="mt-20 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
           <p className="text-gray-600 dark:text-gray-400">
-            © 2024 Your Name. Built with Next.js and Tailwind CSS.
+            © 2026 Mohammad Raihan Rabbani. All rights reserved.
           </p>
         </div>
       </div>
