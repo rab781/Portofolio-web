@@ -11,7 +11,7 @@ export const projects: Project[] = [
     image: "/projects/presentation.jpg",
     technologies: ["Python", "OpenCV", "MediaPipe", "Voice Recognition", "PyAutoGUI"],
     githubUrl: "https://github.com/rab781/Presentation-Tools",
-    demoUrl: null,
+    demoUrl: "https://presentation-control-app.example.com",
     
     problem: "Presenter sering kesulitan mengontrol slide saat harus berdiri jauh dari laptop. Remote clicker konvensional memiliki keterbatasan jarak dan fitur. Dibutuhkan solusi hands-free yang lebih modern dan interaktif.",
     
@@ -39,7 +39,7 @@ export const projects: Project[] = [
     image: "/projects/restoration.jpg",
     technologies: ["Python", "PyTorch", "Flask", "HalfUNet", "SIDD Dataset"],
     githubUrl: "https://github.com/rab781/restorasi-citra",
-    demoUrl: null,
+    demoUrl: "https://image-restoration-app.example.com",
     
     problem: "Foto smartphone sering mengalami noise terutama dalam kondisi low-light. Traditional denoising methods seperti Gaussian blur menghilangkan detail penting. Dibutuhkan AI-based solution yang mampu mempertahankan edge dan texture.",
     
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     image: "/projects/dashboard.jpg",
     technologies: ["Python", "Streamlit", "Pandas", "Matplotlib", "Seaborn"],
     githubUrl: "https://github.com/rab781/Latihan-Program",
-    demoUrl: null,
+    demoUrl: "https://ecommerce-analytics-dashboard.streamlit.app/",
     
     problem: "E-commerce membutuhkan insight cepat tentang daily orders, product performance, dan customer demographics. Data mentah sulit diinterpretasi tanpa visualisasi yang proper dan interactive filtering.",
     
