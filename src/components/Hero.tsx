@@ -11,9 +11,10 @@ export default function Hero() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const texts = useMemo(() => [
-    "Web Developer", 
     "Data Scientist",
-    "Software Engineer",
+    "Machine Learning Engineer",
+    "Deep Learning Researcher",
+    "Data Analyst",
     "AI Enthusiast",
   ], []);
 
