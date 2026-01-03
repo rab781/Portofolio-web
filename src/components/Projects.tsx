@@ -1,4 +1,4 @@
-import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import { Github, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { projects } from "@/data/projects";
