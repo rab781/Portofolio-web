@@ -1,9 +1,11 @@
 import * as LucideIcons from "lucide-react";
 import { skillCategories } from "@/data/skills";
+import type { LucideProps } from "lucide-react";
 
 // Helper function untuk mengambil icon dari lucide-react berdasarkan nama
 const getIcon = (iconName: string) => {
-  const IconComponent = (LucideIcons as any)[iconName] || LucideIcons.Code;
+  type IconKey = keyof typeof LucideIcons;
+  const IconComponent = LucideIcons[iconName as IconKey] as React.FC<LucideProps>;
   return <IconComponent className="w-8 h-8" />;
 };
 
@@ -79,13 +81,13 @@ export default function Skills() {
         </div>
 
         <div className="mt-16 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Continuous Growth
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+            Always Learning
           </h3>
           <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Technology evolves rapidly, and I&apos;m committed to continuous learning and improvement. 
-            I actively explore emerging technologies, contribute to open-source projects, and apply 
-            best practices to deliver high-quality solutions.
+            Technology evolves rapidly, and I&apos;m committed to continuous learning. 
+            I regularly explore new frameworks, attend tech conferences, and contribute 
+            to open-source projects to stay at the forefront of web development.
           </p>
         </div>
       </div>
