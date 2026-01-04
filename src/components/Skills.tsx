@@ -1,36 +1,29 @@
-import { Code, Database, Globe } from "lucide-react";
+import * as LucideIcons from "lucide-react";
+import { skillCategories } from "@/data/skills";
+
+// Helper function untuk mengambil icon dari lucide-react berdasarkan nama
+const getIcon = (iconName: string) => {
+  const IconComponent = (LucideIcons as any)[iconName] || LucideIcons.Code;
+  return <IconComponent className="w-8 h-8" />;
+};
+
+// Helper function untuk mendapatkan warna badge berdasarkan proficiency
+const getProficiencyColor = (proficiency?: string) => {
+  switch (proficiency) {
+    case 'expert':
+      return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+    case 'advanced':
+      return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+    case 'intermediate':
+      return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+    case 'beginner':
+      return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+    default:
+      return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+  }
+};
 
 export default function Skills() {
-  const skillCategories = [
-    {
-      title: "Frontend Development",
-      icon: <Globe className="w-8 h-8" />,
-      skills: [
-        { name: "React", level: 90 },
-        { name: "Next.js", level: 85 },
-        { name: "TypeScript", level: 80 },
-        { name: "Tailwind CSS", level: 85 },
-        { name: "JavaScript", level: 90 },
-        { name: "HTML/CSS", level: 95 },
-      ],
-    },
-    {
-      title: "Backend Development",
-      icon: <Database className="w-8 h-8" />,
-      skills: [
-        { name: "Node.js", level: 85 },
-        { name: "Python", level: 75 },
-        { name: "PostgreSQL", level: 80 },
-      ],
-    },
-    {
-      title: "Tools & Technologies",
-      icon: <Code className="w-8 h-8" />,
-      skills: [
-        { name: "Git", level: 90 },
-      ],
-    },
-  ];
 
   return (
     <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-800">
@@ -48,34 +41,36 @@ export default function Skills() {
           {skillCategories.map((category, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700"
             >
               <div className="flex items-center mb-6">
                 <div className="text-blue-600 dark:text-blue-400 mr-3">
-                  {category.icon}
+                  {getIcon(category.icon)}
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                   {category.title}
                 </h3>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {category.skills.map((skill, skillIndex) => (
-                  <div key={skillIndex}>
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-gray-700 dark:text-gray-300 font-medium">
+                  <div 
+                    key={skillIndex}
+                    className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    <div className="flex-1">
+                      <span className="text-gray-900 dark:text-gray-100 font-medium block">
                         {skill.name}
                       </span>
                       <span className="text-gray-500 dark:text-gray-400 text-sm">
-                        {skill.level}%
+                        {skill.years} {skill.years === 1 ? 'year' : 'years'} experience
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div
-                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-1000 ease-out"
-                        style={{ width: `${skill.level}%` }}
-                      ></div>
-                    </div>
+                    {skill.proficiency && (
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase ${getProficiencyColor(skill.proficiency)}`}>
+                        {skill.proficiency}
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -84,13 +79,13 @@ export default function Skills() {
         </div>
 
         <div className="mt-16 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
-            Always Learning
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Continuous Growth
           </h3>
           <p className="text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Technology evolves rapidly, and I&apos;m committed to continuous learning. 
-            I regularly explore new frameworks, attend tech conferences, and contribute 
-            to open-source projects to stay at the forefront of web development.
+            Technology evolves rapidly, and I&apos;m committed to continuous learning and improvement. 
+            I actively explore emerging technologies, contribute to open-source projects, and apply 
+            best practices to deliver high-quality solutions.
           </p>
         </div>
       </div>
