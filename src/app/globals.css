@@ -1,174 +1,96 @@
 @import "tailwindcss";
 
-/* Custom CSS untuk smooth scrolling dan animasi */
-html {
-  scroll-behavior: smooth;
+@theme {
+  --color-gold-500: #FFD700;
+  --color-gold-600: #D4AF37;
+  --color-gold-700: #C5A000;
+  --color-neon-blue: #00F0FF;
+  --color-neon-purple: #7000FF;
+  --color-cyber-black: #050A14;
+  --color-cyber-dark: #0A1120;
 }
 
-/* Advanced 3D Transforms */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.backface-hidden {
-  backface-visibility: hidden;
-}
-
-/* 3D Rotation Classes */
-.rotateY-12 {
-  transform: rotateY(12deg);
-}
-
-.rotateX-5 {
-  transform: rotateX(5deg);
-}
-
-.rotateY-180 {
-  transform: rotateY(180deg);
-}
-
-.rotateX-90 {
-  transform: rotateX(90deg);
-}
-
-.rotateY-90 {
-  transform: rotateY(90deg);
-}
-
-.rotateZ-45 {
-  transform: rotateZ(45deg);
-}
-
-.rotateZ-90 {
-  transform: rotateZ(90deg);
-}
-
-.rotateZ--90 {
-  transform: rotateZ(-90deg);
-}
-
-.translateZ--8 {
-  transform: translateZ(-8px);
-}
-
-.translateX-2 {
-  transform: translateX(0.5rem);
-}
-
-/* Lanyard Animation */
-@keyframes subtleSway {
-  0%, 100% { 
-    transform: rotateZ(3deg) rotateY(8deg) rotateX(3deg); 
-  }
-  25% { 
-    transform: rotateZ(-2deg) rotateY(-4deg) rotateX(-2deg); 
-  }
-  50% { 
-    transform: rotateZ(-3deg) rotateY(-8deg) rotateX(-3deg); 
-  }
-  75% { 
-    transform: rotateZ(2deg) rotateY(4deg) rotateX(2deg); 
-  }
-}
-
-.animate-subtle-sway {
-  animation: subtleSway 6s ease-in-out infinite;
-}
-
-/* Animation delays */
-.animation-delay-0 {
-  animation-delay: 0s;
-}
-
-.animation-delay-300 {
-  animation-delay: 0.3s;
-}
-
-.animation-delay-500 {
-  animation-delay: 0.5s;
-}
-
-.animation-delay-1000 {
-  animation-delay: 1s;
-}
-
-/* Enhanced 3D rotation classes */
-.rotateY-15 {
-  transform: rotateY(15deg);
-}
-
-.rotateX-8 {
-  transform: rotateX(8deg);
-}
-
-/* Floating animation for rope segments */
-@keyframes floatRope {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-3px) rotate(2deg); }
-}
-
-.animate-float-rope {
-  animation: floatRope 3s ease-in-out infinite;
-}
-
-/* Enhanced 3D effects */
-.transform-gpu {
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-/* Holographic effect */
-@keyframes holographic {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-.holographic-effect {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  background-size: 200% 100%;
-  animation: holographic 2s infinite;
-}
-
-/* Custom scrollbar untuk browser webkit */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #121212; /* Warna track scrollbar gelap */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #B8860B; /* Warna thumb scrollbar emas */
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #FFD700; /* Warna thumb scrollbar saat hover */
-}
-
-/* Mendefinisikan variabel warna baru */
 :root {
-  --background: #121212; /* Latar belakang utama hitam */
-  --foreground: #F5F5F5; /* Teks utama putih gading */
-  --gold-accent: #B8860B; /* Aksen emas */
-  --gold-accent-hover: #FFD700; /* Aksen emas saat hover */
-  --secondary-bg: #1f1f1f; /* Latar belakang sekunder */
-  --secondary-text: #a0a0a0; /* Teks sekunder */
+  --background: #050A14;
+  --foreground: #F5F5F5;
 }
 
-/* Terapkan variabel warna ke body */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050A14;
+}
+::-webkit-scrollbar-thumb {
+  background: #C5A000;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFD700;
+}
+
+/* Cyberpunk / Terminal Utilities */
+@layer components {
+  /* Glassmorphism Card */
+  .glass-panel {
+    @apply bg-gray-900/40 backdrop-blur-md border border-white/10 shadow-xl;
+  }
+  
+  .glass-panel-gold {
+     @apply bg-[#0A1120]/60 backdrop-blur-md border border-[#FFD700]/20 shadow-[0_0_15px_rgba(255,215,0,0.05)];
+  }
+
+  /* Text Glows */
+  .text-glow-gold {
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+  
+  .text-glow-neon {
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+  }
+  
+  /* Scanline Effect */
+  .scanline {
+    position: relative;
+    overflow: hidden;
+  }
+  .scanline::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+  }
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+}
+.animate-pulse-gold {
+  animation: pulse-gold 2s infinite;
 }

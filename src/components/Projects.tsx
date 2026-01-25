@@ -8,14 +8,14 @@ export default function Projects() {
   const displayedProjects = projects;
 
   return (
-    <section id="projects" className="py-20 bg-white dark:bg-gray-900">
+    <section id="projects" className="py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Data Science Projects
+        <div className="text-center mb-10">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#FFD700] mb-4 font-mono">
+            &lt;Data_Projects /&gt;
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Analytical projects & case studies showcasing data-driven insights
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto font-mono">
+            // Analysing patterns in the noise
           </p>
         </div>
 
@@ -25,51 +25,51 @@ export default function Projects() {
             <Link
               key={project.id}
               href={`/projects/${project.id}`}
-              className="bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
+              className="glass-panel-gold rounded-xl overflow-hidden group hover:-translate-y-2 transition-transform duration-300"
             >
               {/* Project Image */}
-              <div className="relative w-full h-48 bg-gradient-to-br from-blue-400 to-purple-500 overflow-hidden">
+              <div className="relative w-full h-48 bg-gray-900 overflow-hidden border-b border-white/10">
                 <Image
                   src={project.image}
                   alt={project.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                 />
                 <div className="absolute top-4 right-4">
-                  <span className="px-3 py-1 bg-white/90 dark:bg-gray-900/90 text-xs font-semibold rounded-full text-gray-900 dark:text-white">
+                  <span className="px-3 py-1 bg-black/80 backdrop-blur-sm text-xs font-mono font-semibold rounded border border-[#00F0FF] text-[#00F0FF]">
                     {project.category}
                   </span>
                 </div>
               </div>
-              
+
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#FFD700] transition-colors font-mono">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 text-sm leading-relaxed line-clamp-2">
+                <p className="text-gray-400 mb-4 text-sm leading-relaxed line-clamp-2">
                   {project.subtitle}
                 </p>
-                
+
                 {/* Technologies */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.technologies.slice(0, 3).map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded"
+                      className="px-2 py-1 text-xs font-medium bg-[#FFD700]/10 text-[#FFD700] border border-[#FFD700]/20 rounded"
                     >
                       {tech}
                     </span>
                   ))}
                   {project.technologies.length > 3 && (
-                    <span className="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded">
+                    <span className="px-2 py-1 text-xs bg-white/10 text-gray-300 rounded">
                       +{project.technologies.length - 3}
                     </span>
                   )}
                 </div>
-                
+
                 {/* Call to Action */}
-                <div className="flex items-center text-blue-600 dark:text-blue-400 font-medium text-sm group-hover:text-blue-700 dark:group-hover:text-blue-300">
-                  View Case Study
+                <div className="flex items-center text-[#00F0FF] font-medium text-sm group-hover:text-[#FFD700]">
+                  [ACCESS_CASE_STUDY]
                   <ArrowRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
@@ -83,10 +83,10 @@ export default function Projects() {
             href="https://github.com/rab781"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors duration-300"
+            className="inline-flex items-center bg-gray-900 border border-gray-700 text-gray-300 px-6 py-3 rounded hover:bg-gray-800 hover:border-[#FFD700] hover:text-[#FFD700] transition-all duration-300 font-mono"
           >
             <Github size={20} className="mr-2" />
-            View More on GitHub
+            git remote -v
           </a>
         </div>
       </div>
