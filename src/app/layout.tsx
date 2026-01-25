@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -17,7 +17,11 @@ export const metadata: Metadata = {
   description: "Portfolio website of a passionate AI engineer showcasing projects in data analysis, AI, and machine learning.",
   keywords: "portfolio, Data analysis, AI, machine learning, projects, contact, Mohammad Raihan Rabbani, AI engineer",
   authors: [{ name: "Mohammad Raihan Rabbani" }],
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

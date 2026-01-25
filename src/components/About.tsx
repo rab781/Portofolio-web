@@ -7,7 +7,7 @@ export default function About() {
             &lt;About_Me /&gt;
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto font-mono">
-            // Get to know more about who I am
+            &quot;// Get to know more about who I am&quot;
           </p>
         </div>
 

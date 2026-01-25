@@ -15,7 +15,7 @@ export default function Projects() {
             &lt;Data_Projects /&gt;
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto font-mono">
-            // Analysing patterns in the noise
+            &quot;// Analysing patterns in the noise&quot;
           </p>
         </div>
 

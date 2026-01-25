@@ -1,15 +1,25 @@
 'use client';
 
 import { useState, useEffect, useMemo } from "react";
-import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
-import ParticleBackground from "@/components/ParticleBackground";
-import NeuralHero from "@/components/NeuralHero";
+import dynamic from 'next/dynamic';
+import { Github, Linkedin, Mail } from "lucide-react";
 import TerminalCard from "@/components/ui/TerminalCard";
 import Navigation from "@/components/Navigation";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
+
+// Dynamically load heavy 3D components
+const ParticleBackground = dynamic(() => import("@/components/ParticleBackground"), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0 bg-[#050A14]" />,
+});
+
+const NeuralHero = dynamic(() => import("@/components/NeuralHero"), {
+  ssr: false,
+  loading: () => <div className="h-full w-full bg-transparent" />,
+});
 
 export default function Home() {
   const [displayText, setDisplayText] = useState("");
@@ -57,7 +67,7 @@ export default function Home() {
         {/* HERO SECTION */}
         <section className="min-h-[90vh] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <div className="space-y-8 animate-float">
+          <div className="space-y-8 animate-float order-2 lg:order-1">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-2 h-2 bg-[#FFD700] rounded-full animate-pulse"></span>
@@ -98,13 +108,9 @@ export default function Home() {
           </div>
 
           {/* Right Content - 3D Neural Hero */}
-          <div className="hidden lg:block h-[600px] w-full relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] to-transparent z-10 opacity-50"></div>
-            <NeuralHero />
-          </div>
-
-          {/* Mobile Neural Hero Placeholder or smaller version */}
-          <div className="lg:hidden h-[300px] w-full block">
+          {/* Combined Responsive Container for NeuralHero */}
+          <div className="h-[300px] lg:h-[600px] w-full relative order-1 lg:order-2">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] to-transparent z-10 opacity-50 pointer-events-none"></div>
             <NeuralHero />
           </div>
         </section>

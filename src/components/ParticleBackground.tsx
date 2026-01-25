@@ -4,15 +4,17 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
 import * as random from 'maath/random/dist/maath-random.esm';
+import * as THREE from 'three';
 
-function Stars(props: any) {
-    const ref = useRef<any>();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function Stars(props: React.ComponentProps<typeof Points>) {
+    const ref = useRef<THREE.Points>(null);
 
     // Generate random points in a sphere
     const sphere = useMemo(() => {
-        // Generate 5000 points (Float32Array) inside a sphere of radius 1.5
+        // Generate 3000 points (Float32Array) inside a sphere of radius 1.5
         // Using explicit type assertion to handle the precise return type of the generator
-        return random.inSphere(new Float32Array(5000), { radius: 1.5 }) as Float32Array;
+        return random.inSphere(new Float32Array(3000), { radius: 1.5 }) as Float32Array;
     }, []);
 
     useFrame((state, delta) => {
@@ -40,7 +42,7 @@ function Stars(props: any) {
 export default function ParticleBackground() {
     return (
         <div className="absolute inset-0 -z-10 h-full w-full bg-[#050A14]">
-            <Canvas camera={{ position: [0, 0, 1] }}>
+            <Canvas camera={{ position: [0, 0, 1] }} dpr={[1, 2]}>
                 <Stars />
             </Canvas>
         </div>

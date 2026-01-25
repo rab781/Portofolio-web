@@ -1,29 +1,21 @@
-import * as LucideIcons from "lucide-react";
+import { Code2, Brain, Globe, Wrench } from "lucide-react";
 import { skillCategories } from "@/data/skills";
 import type { LucideProps } from "lucide-react";
 
+const iconMap: Record<string, React.ComponentType<LucideProps>> = {
+  Code2,
+  Brain,
+  Globe,
+  Wrench,
+};
+
 // Helper function untuk mengambil icon dari lucide-react berdasarkan nama
 const getIcon = (iconName: string) => {
-  type IconKey = keyof typeof LucideIcons;
-  const IconComponent = LucideIcons[iconName as IconKey] as React.FC<LucideProps>;
+  const IconComponent = iconMap[iconName] || Code2; // Default to Code2 if not found
   return <IconComponent className="w-8 h-8" />;
 };
 
-// Helper function untuk mendapatkan warna badge berdasarkan proficiency
-const getProficiencyColor = (proficiency?: string) => {
-  switch (proficiency) {
-    case 'expert':
-      return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
-    case 'advanced':
-      return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-    case 'intermediate':
-      return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-    case 'beginner':
-      return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-    default:
-      return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
-  }
-};
+
 
 export default function Skills() {
 
@@ -35,7 +27,7 @@ export default function Skills() {
             &lt;Skills_Matrix /&gt;
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto font-mono">
-            // Loaded modules and capabilities
+            &quot;// Loaded modules and capabilities&quot;
           </p>
         </div>
 
@@ -70,8 +62,8 @@ export default function Skills() {
                     </div>
                     {skill.proficiency && (
                       <span className={`px-3 py-1 rounded text-xs font-bold uppercase font-mono ${skill.proficiency === 'expert' ? 'text-[#FFD700] bg-[#FFD700]/10 border border-[#FFD700]/20' :
-                          skill.proficiency === 'advanced' ? 'text-[#00F0FF] bg-[#00F0FF]/10 border border-[#00F0FF]/20' :
-                            'text-gray-400 bg-gray-800'
+                        skill.proficiency === 'advanced' ? 'text-[#00F0FF] bg-[#00F0FF]/10 border border-[#00F0FF]/20' :
+                          'text-gray-400 bg-gray-800'
                         }`}>
                         {skill.proficiency}
                       </span>

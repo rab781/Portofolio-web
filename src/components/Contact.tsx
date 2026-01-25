@@ -50,7 +50,7 @@ export default function Contact() {
             &lt;Initiate_Uplink /&gt;
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto font-mono">
-            // Secure connection request ready
+            &quot;// Secure connection request ready&quot;
           </p>
         </div>
 

@@ -74,7 +74,7 @@ function Scene() {
         return positions;
     }, []);
 
-    useFrame((state) => {
+    useFrame(() => {
         if (groupRef.current) {
             groupRef.current.rotation.y += 0.002; // Slow rotation
         }
