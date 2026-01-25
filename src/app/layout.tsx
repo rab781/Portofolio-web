@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mohammad Raihan Rabbani - Portfolio | Full Stack Developer",
-  description: "Portfolio website of a passionate full stack developer specializing in React, Next.js, and modern web technologies. View my projects and get in touch.",
-  keywords: "portfolio, web developer, full stack, React, Next.js, TypeScript, JavaScript",
+  title: "Mohammad Raihan Rabbani - Portfolio | AI Engineer",
+  description: "Portfolio website of a passionate AI engineer showcasing projects in data analysis, AI, and machine learning.",
+  keywords: "portfolio, Data analysis, AI, machine learning, projects, contact, Mohammad Raihan Rabbani, AI engineer",
   authors: [{ name: "Mohammad Raihan Rabbani" }],
   viewport: "width=device-width, initial-scale=1",
 };

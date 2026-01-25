@@ -11,7 +11,7 @@ export const projects: Project[] = [
     image: "/projects/presentation.jpg",
     technologies: ["Python", "OpenCV", "MediaPipe", "Voice Recognition", "PyAutoGUI"],
     githubUrl: "https://github.com/rab781/Presentation-Tools",
-    demoUrl: "https://presentation-control-app.example.com",
+    
     
     problem: "Presenter sering kesulitan mengontrol slide saat harus berdiri jauh dari laptop. Remote clicker konvensional memiliki keterbatasan jarak dan fitur. Dibutuhkan solusi hands-free yang lebih modern dan interaktif.",
     
@@ -39,7 +39,6 @@ export const projects: Project[] = [
     image: "/projects/restoration.jpg",
     technologies: ["Python", "PyTorch", "Flask", "HalfUNet", "SIDD Dataset"],
     githubUrl: "https://github.com/rab781/restorasi-citra",
-    demoUrl: "https://image-restoration-app.example.com",
     
     problem: "Foto smartphone sering mengalami noise terutama dalam kondisi low-light. Traditional denoising methods seperti Gaussian blur menghilangkan detail penting. Dibutuhkan AI-based solution yang mampu mempertahankan edge dan texture.",
     
@@ -60,31 +59,35 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: "ecommerce-dashboard",
-    title: "E-Commerce Analytics Dashboard",
-    subtitle: "Interactive dashboard untuk analisis performa penjualan dan customer behavior",
-    category: "Data Analytics",
-    image: "/projects/dashboard.jpg",
-    technologies: ["Python", "Streamlit", "Pandas", "Matplotlib", "Seaborn"],
-    githubUrl: "https://github.com/rab781/Latihan-Program",
-    demoUrl: "https://ecommerce-analytics-dashboard.streamlit.app/",
+    id: "ecommerce-for-fish",
+    title: "E-Commerce untuk Ikan Hias",
+    subtitle: "Platform jual beli ikan hias premium dengan fitur lengkap untuk komunitas aquarist",
+    category: "Full Stack Web Development",
+    image: "/projects/ecommerce-for-fish",
+    technologies: ["Laravel", "MySQL", "Tailwind CSS", "Midtrans API", "RajaOngkir", "Alpine.js"],
+    githubUrl: "https://github.com/rab781/WIB-FISH-FARM-website",
+    demoUrl: "https://wib-fish-farm-website-production-d256.up.railway.app/",
     
-    problem: "E-commerce membutuhkan insight cepat tentang daily orders, product performance, dan customer demographics. Data mentah sulit diinterpretasi tanpa visualisasi yang proper dan interactive filtering.",
+    problem: "Platform e-commerce ikan hias memerlukan solusi lengkap yang menggabungkan katalog produk, sistem pembayaran terintegrasi, manajemen pesanan real-time, dan dashboard admin yang komprehensif. Dibutuhkan sistem yang dapat menangani kompleksitas bisnis aquaculture termasuk tracking pesanan, pengembalian produk, dan analitik penjualan.",
     
-    dataOverview: "Dataset e-commerce dengan informasi orders, customers, products mencakup 100K+ transactions. Data mencakup order dates, customer demographics (gender, age, state), dan purchase behavior dari periode 2020-2021.",
+    dataOverview: "Platform WIB Fish Farm melayani komunitas pecinta ikan hias dengan katalog ribuan produk (Ikan Koi, Ikan Koki, dan spesies aquarium lainnya). Sistem mengelola ribuan transaksi, pelanggan dengan berbagai demografi geografis, dan inventory real-time dengan integrasi logistik RajaOngkir.",
     
     methodology: [
-      "Data Cleaning: Preprocessing datetime columns, handling missing values, dan data type conversion.",
-      "Feature Engineering: Membuat age groups, calculating daily metrics, dan RFM (Recency, Frequency, Monetary) analysis.",
-      "Interactive Dashboard: Streamlit dengan date range filter, multiple visualizations, dan real-time metric calculations.",
-      "RFM Analysis: Segmentasi customer berdasarkan recency order, frequency pembelian, dan total monetary value.",
+      "Architecture: Laravel 10 backend dengan Blade templating, Tailwind CSS untuk responsive design, dan Alpine.js untuk interaktivitas frontend.",
+      "Authentication & Authorization: Sistem login multi-role (customer, admin) dengan permission-based access control.",
+      "Payment Integration: Integrasi Midtrans untuk payment gateway yang aman mendukung berbagai metode pembayaran.",
+      "Inventory Management: Real-time stock management dengan auto-update setelah pembelian dan low-stock alerts.",
+      "Order System: Complete order lifecycle dari checkout, pembayaran, fulfillment, hingga return management.",
+      "Shipping Integration: Integrasi RajaOngkir API untuk kalkulasi ongkir realtime berdasarkan lokasi.",
+      "Dashboard Analytics: Admin dashboard dengan laporan penjualan, analytics produk, dan financial reporting dengan export Excel.",
     ],
     
     results: [
-      "Dashboard menampilkan 10+ key metrics dengan interactive date filtering dan auto-refresh.",
-      "Identified top 5 best/worst performing products dengan clear visual comparisons.",
-      "Customer segmentation berdasarkan demographics (gender, age, state) untuk targeted marketing.",
-      "RFM analysis mengidentifikasi top customers dengan avg recency, frequency, dan monetary metrics."
+      "Platform fully functional dengan 8+ fitur customer utama: katalog browsing, shopping cart, checkout system, order tracking, review & rating, notifications, responsive design, dan return system.",
+      "Admin dashboard dengan 8+ fitur manajemen: product management, user management, order processing, financial reports, sales analytics, expense tracking, dan diagnostic tools.",
+      "Terintegrasi dengan payment gateway Midtrans dan shipping calculator RajaOngkir untuk pengalaman user yang seamless.",
+      "Sistem otomasi termasuk auto-order expiration, automated email notifications, dan export laporan bulanan.",
+      "Database schema yang robust dengan support untuk order timeline tracking, review verification, dan refund processing."
     ]
   },];
 
