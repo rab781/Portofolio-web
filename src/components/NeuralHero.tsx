@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, Line } from '@react-three/drei';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
 function NetworkNode({ position, color }: { position: [number, number, number], color: string }) {
@@ -29,39 +30,37 @@ function NetworkNode({ position, color }: { position: [number, number, number], 
     );
 }
 
-function Connections({ points, color }: { points: [number, number, number][], color: string }) {
-    // Create connections between some points
-    const lines = useMemo(() => {
-        const connections: [number, number, number][] = [];
-        points.forEach((p1, i) => {
-            // Connect to nearest 3 neighbors or random
-            points.slice(i + 1, i + 4).forEach(p2 => {
-                if (Math.random() > 0.5) { // Randomly connect
-                    connections.push(p1);
-                    connections.push(p2);
-                }
-            });
-        });
-        return connections;
-    }, [points]);
+function DataPacket({ start, end }: { start: THREE.Vector3, end: THREE.Vector3 }) {
+    const ref = useRef<THREE.Mesh>(null);
+    const [active] = useState(true);
+    const speed = 1; // Units per second
+    const progress = useRef(0);
 
-    if (lines.length === 0) return null;
+    useFrame((state, delta) => {
+        if (!active || !ref.current) return;
+
+        progress.current += delta * speed / start.distanceTo(end);
+
+        if (progress.current >= 1) {
+            progress.current = 0;
+        }
+
+        ref.current.position.lerpVectors(start, end, progress.current);
+    });
+
+    if (!active) return null;
 
     return (
-        <Line
-            points={lines}
-            color={color}
-            lineWidth={1}
-            transparent
-            opacity={0.3}
-        />
+        <Sphere ref={ref} args={[0.08, 8, 8]}>
+            <meshBasicMaterial color={[10, 10, 10]} toneMapped={false} />
+        </Sphere>
     );
 }
 
 function Scene() {
     const groupRef = useRef<THREE.Group>(null);
 
-    // Generate random node positions
+
     const nodes = useMemo(() => {
         const positions: [number, number, number][] = [];
         for (let i = 0; i < 20; i++) {
@@ -73,6 +72,31 @@ function Scene() {
         }
         return positions;
     }, []);
+
+    // Calculate connections and packets
+    const { connections, packets } = useMemo(() => {
+        const lines: [number, number, number][] = [];
+        const packetPaths: { start: THREE.Vector3, end: THREE.Vector3 }[] = [];
+
+        nodes.forEach((p1, i) => {
+            // Connect to nearest 3 neighbors or random
+            nodes.slice(i + 1, i + 4).forEach(p2 => {
+                if (Math.random() > 0.5) { // Randomly connect
+                    lines.push(p1);
+                    lines.push(p2);
+
+                    // Add a packet path for some connections
+                    if (Math.random() > 0.8) {
+                        packetPaths.push({
+                            start: new THREE.Vector3(...p1),
+                            end: new THREE.Vector3(...p2)
+                        });
+                    }
+                }
+            });
+        });
+        return { connections: lines, packets: packetPaths };
+    }, [nodes]);
 
     useFrame(() => {
         if (groupRef.current) {
@@ -89,9 +113,25 @@ function Scene() {
                     color={i % 3 === 0 ? "#FFD700" : "#00F0FF"} // Gold or Neon Blue
                 />
             ))}
-            <Connections points={nodes} color="#00F0FF" />
+
+            {/* Connections */}
+            <Line
+                points={connections}
+                color="#00F0FF"
+                lineWidth={1}
+                transparent
+                opacity={0.3}
+            />
+
+            {/* Moving Packets */}
+            {packets.map((path, i) => (
+                <DataPacket key={i} start={path.start} end={path.end} />
+            ))}
+
             <ambientLight intensity={0.5} />
             <pointLight position={[10, 10, 10]} intensity={1} color="#FFD700" />
+            <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00F0FF" />
+
             <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00F0FF" />
         </group>
     );
@@ -99,10 +139,13 @@ function Scene() {
 
 export default function NeuralHero() {
     return (
-        <div className="h-[500px] w-full relative">
+        <div className="h-[500px] w-full absolute ">
             <Canvas camera={{ position: [0, 0, 10], fov: 60 }}>
                 <Scene />
                 <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+                <EffectComposer multisampling={0}>
+                    <Bloom luminanceThreshold={1} mipmapBlur intensity={1.5} radius={0.4} />
+                </EffectComposer>
             </Canvas>
         </div>
     );

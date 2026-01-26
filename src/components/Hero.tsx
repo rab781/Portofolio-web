@@ -13,7 +13,6 @@ export default function Hero() {
   const texts = useMemo(() => [
     "Data Scientist",
     "Machine Learning Engineer",
-    "Deep Learning Researcher",
     "Data Analyst",
     "AI Enthusiast",
   ], []);

@@ -3,7 +3,7 @@
 import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
-import * as random from 'maath/random/dist/maath-random.esm';
+import * as random from 'maath/random';
 import * as THREE from 'three';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,7 +30,7 @@ function Stars(props: React.ComponentProps<typeof Points>) {
                 <PointMaterial
                     transparent
                     color="#FFD700" /* Gold */
-                    size={0.002}
+                    size={0.010}
                     sizeAttenuation={true}
                     depthWrite={false}
                 />
@@ -41,7 +41,7 @@ function Stars(props: React.ComponentProps<typeof Points>) {
 
 export default function ParticleBackground() {
     return (
-        <div className="absolute inset-0 -z-10 h-full w-full bg-[#050A14]">
+        <div className="fixed inset-0 -z-10 h-full w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0f1c2e] via-[#050A14] to-[#020409]">
             <Canvas camera={{ position: [0, 0, 1] }} dpr={[1, 2]}>
                 <Stars />
             </Canvas>

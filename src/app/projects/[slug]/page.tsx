@@ -16,7 +16,7 @@ export async function generateStaticParams() {
 export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
   // Await params di Next.js 15
   const { slug } = await params;
-  
+
   // Cari proyek berdasarkan slug di URL
   const project = projects.find((p) => p.id === slug);
 
@@ -27,10 +27,10 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
   return (
     <article className="min-h-screen bg-white dark:bg-gray-900 pt-24 pb-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Tombol Kembali */}
-        <Link 
-          href="/#projects" 
+        <Link
+          href="/#projects"
           className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-blue-600 mb-8 transition-colors"
         >
           <ArrowLeft size={20} className="mr-2" />
@@ -66,10 +66,10 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
 
         {/* Konten Utama: 2 Kolom */}
         <div className="grid md:grid-cols-3 gap-12">
-          
+
           {/* Kolom Kiri: Detail Analisis (Lebih Lebar) */}
           <div className="md:col-span-2 space-y-12">
-            
+
             {/* 1. Masalah Bisnis */}
             <section>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
@@ -146,7 +146,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                   <Github size={18} className="mr-2" />
                   View Notebook
                 </a>
-                
+
                 {project.demoUrl && (
                   <a
                     href={project.demoUrl}

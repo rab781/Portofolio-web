@@ -1,93 +1,112 @@
-// src/data/projects.ts
-
 import type { Project } from "@/types/project";
 
 export const projects: Project[] = [
   {
-    id: "presentation-tools",
-    title: "Presentation Control Tool",
-    subtitle: "Kontrol presentasi dengan gerakan tangan dan perintah suara menggunakan AI",
-    category: "Computer Vision",
-    image: "/projects/presentation.jpg",
-    technologies: ["Python", "OpenCV", "MediaPipe", "Voice Recognition", "PyAutoGUI"],
-    githubUrl: "https://github.com/rab781/Presentation-Tools",
+    id: "coffee-leaf-detection",
+    title: "Coffee Leaf Disease Detection",
+    subtitle: "Automated plant disease detection using Deep Learning (EfficientNet & MobileNet).",
+    category: "Deep Learning",
+    image: "/projects/coffee.jpg",
+    technologies: ["Python", "TensorFlow", "EfficientNet", "MobileNet", "Transfer Learning"],
+    githubUrl: "https://github.com/rab781/Deteksi-Daun-kopi",
 
+    problem: "Coffee farmers struggle with early diagnosis of leaf diseases like Miner, Phoma, and Rust, leading to crop loss. Manual inspection is slow and expertise-dependent. An automated, accurate, and mobile-friendly solution is needed.",
 
-    problem: "Presenter sering kesulitan mengontrol slide saat harus berdiri jauh dari laptop. Remote clicker konvensional memiliki keterbatasan jarak dan fitur. Dibutuhkan solusi hands-free yang lebih modern dan interaktif.",
-
-    dataOverview: "Aplikasi menggunakan MediaPipe untuk hand tracking real-time dengan deteksi 21 landmarks per tangan. Voice recognition mendukung mode online (Google API) dan offline (Vosk) untuk bahasa Indonesia dan Inggris.",
+    dataOverview: "Dataset contains thousands of coffee leaf images augmented with rotation, zoom, and flip techniques. Classes: Healthy, Miner, Rust, Phoma. Balanced using data augmentation to ensure robust model performance.",
 
     methodology: [
-      "Computer Vision: Implementasi MediaPipe Hands untuk gesture detection 7 gerakan berbeda (swipe, palm, fist, thumbs, peace sign).",
-      "Voice Recognition: Dual-mode system dengan Google Speech API dan Vosk offline model untuk reliability.",
-      "Keyboard Simulation: PyAutoGUI untuk mengirim keyboard shortcuts ke berbagai aplikasi presentasi.",
-      "Multi-Mode Operation: 3 mode operasi (Gesture Only, Voice Only, Hybrid) dengan real-time switching.",
+      "Comparative Analysis: Evaluated 8 architectures including EfficientNet (B0-B2), MobileNetV2, and DenseNet.",
+      "Transfer Learning: Utilized ImageNet pretrained weights, freezing base layers and fine-tuning top dense layers.",
+      "Optimization: Adam optimizer with categorical crossentropy loss and early stopping to prevent overfitting.",
+      "Deployment Strategy: Selected MobileNetV2 for its optimal balance of accuracy and inference speed for potential mobile deployment."
     ],
 
     results: [
-      "Berhasil mendeteksi 7 jenis gesture dengan akurasi >90% dalam kondisi cahaya normal.",
-      "Voice recognition mendukung 15+ perintah suara dalam 2 bahasa dengan offline capability.",
-      "Compatible dengan PowerPoint, Google Slides, PDF viewers, dan aplikasi presentasi lainnya.",
-      "Real-time processing dengan FPS 30+ menggunakan optimasi threading dan debouncing."
+      "Achieved high classification accuracy across all 4 disease categories.",
+      "EfficientNetB0 showed the fastest convergence during training.",
+      "MobileNetV2 proved most suitable for edge devices due to low parameter count (~2.2M) while maintaining competitive accuracy.",
+      "Robustness against varying lighting conditions demonstrated through test set validation."
+    ]
+  },
+  {
+    id: "fraud-detection",
+    title: "Fraud & Online Gamble Detection",
+    subtitle: "Advanced anomaly detection system for financial transactions and gambling patterns.",
+    category: "Data Science & Security",
+    image: "/projects/fraud.jpg",
+    technologies: ["Python", "Scikit-Learn", "Pandas", "XGBoost", "Anomaly Detection"],
+    githubUrl: "https://github.com/rab781/Fraud-and-Online-gamble-Detection",
+
+    problem: "The rise of digital transactions has led to sophisticated fraud and illegal online gambling activities. Traditional rule-based systems often miss subtle patterns. Financial institutions need a dynamic AI model to flag suspicious activities in real-time.",
+
+    dataOverview: "Analyzed transactional datasets containing features like transaction amount, location, time, frequency, and merchant category. Data preprocessing involved handling imbalance using SMOTE and feature scaling.",
+
+    methodology: [
+      "Data Preprocessing: Cleaning, normalization, and handling missing values in high-volume transaction logs.",
+      "Feature Engineering: Created time-based features and behavioral profiles for users.",
+      "Model Training: Implemented Random Forest and XGBoost classifiers to detect fraud patterns.",
+      "Validation: Used Precision-Recall curves instead of just accuracy due to the highly imbalanced nature of fraud data."
+    ],
+
+    results: [
+      "Successfully identified key indicators of online gambling transactions.",
+      "Reduced false positives significantly compared to baseline methods.",
+      "Model provides interpretability features to explain why a transaction was flagged.",
+      "High recall rate ensuring most fraudulent activities are caught."
+    ]
+  },
+  {
+    id: "presentation-tools",
+    title: "AI Presentation Controller",
+    subtitle: "Hands-free presentation control using Computer Vision hand gesture recognition.",
+    category: "Computer Vision",
+    image: "/projects/presentation.jpg",
+    technologies: ["Python", "OpenCV", "MediaPipe", "PyAutoGUI", "Voice Recognition"],
+    githubUrl: "https://github.com/rab781/Presentation-Tools",
+
+    problem: "Presenters often feel tethered to their laptops or clickers. Physical remotes can fail or be lost. A natural user interface using hand gestures offers a modern, engaging, and hardware-free alternative for controlling slides.",
+
+    dataOverview: "Real-time video stream input processed to detect 21 hand landmarks per hand using MediaPipe. Audio input processed for voice command triggers.",
+
+    methodology: [
+      "Hand Tracking: Utilized MediaPipe Hands for robust real-time landmark detection.",
+      "Gesture Logic: Defined geometric rules to recognize 'Open Palm' (Next), 'Fist' (Previous), and 'Pointer' (Laser) gestures.",
+      "Voice Control: Integrated Google Speech API and Vosk for offline voice commands as a backup.",
+      "Action Mapping: Mapped detected intents to keyboard events using PyAutoGUI to control PowerPoint/PDF readers."
+    ],
+
+    results: [
+      "Achieved >90% gesture recognition accuracy in real-time (30+ FPS) on standard webcams.",
+      "Seamless control of slides without any physical device.",
+      "Hybrid mode allows switching between voice and gesture control instantly.",
+      "Robust to background clutter and varying lighting conditions."
     ]
   },
   {
     id: "image-restoration",
-    title: "Image Restoration dengan Deep Learning",
-    subtitle: "Menghilangkan noise dari gambar menggunakan HalfUNet Neural Network",
+    title: "Deep Image Restoration",
+    subtitle: "Restoring noisy and degraded images using advanced Neural Networks (HalfUNet).",
     category: "Deep Learning",
     image: "/projects/restoration.jpg",
-    technologies: ["Python", "PyTorch", "Flask", "HalfUNet", "SIDD Dataset"],
+    technologies: ["Python", "PyTorch", "HalfUNet", "Flask", "Image Processing"],
     githubUrl: "https://github.com/rab781/restorasi-citra",
 
-    problem: "Foto smartphone sering mengalami noise terutama dalam kondisi low-light. Traditional denoising methods seperti Gaussian blur menghilangkan detail penting. Dibutuhkan AI-based solution yang mampu mempertahankan edge dan texture.",
+    problem: "Low-light photography often results in grainy, noisy images. Standard filters blur detail. The goal was to build a Deep Learning model that denoises images while preserving sharp edges and fine textures.",
 
-    dataOverview: "Menggunakan SIDD (Smartphone Image Denoising Dataset) dengan 160 scene instances. Dataset berisi pasangan noisy-clean images dengan resolusi tinggi yang di-crop menjadi patches 256x256 untuk training efficiency.",
+    dataOverview: "Used the SIDD (Smartphone Image Denoising Dataset) containing pairs of noisy and ground-truth clean images. Patched into 256x256 crops for training.",
 
     methodology: [
-      "Model Architecture: HalfUNet dengan NAFBlock (Nonlinear Activation Free) untuk efisiensi komputasi.",
-      "Training Strategy: Mixed precision training dengan early stopping, learning rate scheduling, dan data augmentation.",
-      "Optimization: Implemented Quantum Annealing-inspired parameter tuning untuk optimal hyperparameters.",
-      "Deployment: Flask web application dengan real-time inference dan optional sharpening post-processing.",
+      "Architecture: Implemented HalfUNet with NAFBlock (Nonlinear Activation Free) for efficient feature extraction.",
+      "Training: Mixed precision training with AdamW optimizer and cosine annealing scheduler.",
+      "Loss Function: Combination of L1 pixel loss and MS-SSIM to ensure structural fidelity.",
+      "Web Interface: Deployed model via Flask for easy user interaction and testing."
     ],
 
     results: [
-      "Achieved PSNR 24.21 dB dan SSIM 0.5951 pada validation set dengan model size hanya ~12M parameters.",
-      "Web app mampu process image 256x256 dalam 50-100ms pada GPU RTX 3080.",
-      "Model berhasil mempertahankan edge sharpness sambil menghilangkan noise secara efektif.",
-      "Support untuk multiple sharpening methods: Unsharp Mask, Laplacian, dan Adaptive Sharpening."
+      "PSNR of 24.21 dB and SSIM of 0.5951 on validation set.",
+      "Model effectively removes noise while keeping text and edges sharp.",
+      "Inference time of ~100ms per image on GPU.",
+      "Outperforms traditional Gaussian and Median filters in visual quality."
     ]
-  },
-  {
-    id: "ecommerce-for-fish",
-    title: "E-Commerce untuk Ikan Hias",
-    subtitle: "Platform jual beli ikan hias premium dengan fitur lengkap untuk komunitas aquarist",
-    category: "Full Stack Web Development",
-    image: "/projects/ecommerce.png",
-    technologies: ["Laravel", "MySQL", "Tailwind CSS", "Midtrans API", "RajaOngkir", "Alpine.js"],
-    githubUrl: "https://github.com/rab781/WIB-FISH-FARM-website",
-    demoUrl: "https://wib-fish-farm-website-production-d256.up.railway.app/",
-
-    problem: "Platform e-commerce ikan hias memerlukan solusi lengkap yang menggabungkan katalog produk, sistem pembayaran terintegrasi, manajemen pesanan real-time, dan dashboard admin yang komprehensif. Dibutuhkan sistem yang dapat menangani kompleksitas bisnis aquaculture termasuk tracking pesanan, pengembalian produk, dan analitik penjualan.",
-
-    dataOverview: "Platform WIB Fish Farm melayani komunitas pecinta ikan hias dengan katalog ribuan produk (Ikan Koi, Ikan Koki, dan spesies aquarium lainnya). Sistem mengelola ribuan transaksi, pelanggan dengan berbagai demografi geografis, dan inventory real-time dengan integrasi logistik RajaOngkir.",
-
-    methodology: [
-      "Architecture: Laravel 10 backend dengan Blade templating, Tailwind CSS untuk responsive design, dan Alpine.js untuk interaktivitas frontend.",
-      "Authentication & Authorization: Sistem login multi-role (customer, admin) dengan permission-based access control.",
-      "Payment Integration: Integrasi Midtrans untuk payment gateway yang aman mendukung berbagai metode pembayaran.",
-      "Inventory Management: Real-time stock management dengan auto-update setelah pembelian dan low-stock alerts.",
-      "Order System: Complete order lifecycle dari checkout, pembayaran, fulfillment, hingga return management.",
-      "Shipping Integration: Integrasi RajaOngkir API untuk kalkulasi ongkir realtime berdasarkan lokasi.",
-      "Dashboard Analytics: Admin dashboard dengan laporan penjualan, analytics produk, dan financial reporting dengan export Excel.",
-    ],
-
-    results: [
-      "Platform fully functional dengan 8+ fitur customer utama: katalog browsing, shopping cart, checkout system, order tracking, review & rating, notifications, responsive design, dan return system.",
-      "Admin dashboard dengan 8+ fitur manajemen: product management, user management, order processing, financial reports, sales analytics, expense tracking, dan diagnostic tools.",
-      "Terintegrasi dengan payment gateway Midtrans dan shipping calculator RajaOngkir untuk pengalaman user yang seamless.",
-      "Sistem otomasi termasuk auto-order expiration, automated email notifications, dan export laporan bulanan.",
-      "Database schema yang robust dengan support untuk order timeline tracking, review verification, dan refund processing."
-    ]
-  },];
-
+  }
+];

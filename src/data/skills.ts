@@ -8,7 +8,6 @@ export const skillCategories: SkillCategory[] = [
       { name: "Python", years: 3, proficiency: "advanced" },
       { name: "JavaScript", years: 2.5, proficiency: "advanced" },
       { name: "TypeScript", years: 1.5, proficiency: "intermediate" },
-      // Tambahkan skill lainnya di sini
     ],
   },
   {
@@ -29,7 +28,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "React", years: 2, proficiency: "intermediate" },
       { name: "Next.js", years: 1, proficiency: "intermediate" },
       { name: "Tailwind CSS", years: 1.5, proficiency: "intermediate" },
-      // Tambahkan skill lainnya di sini
+      { name: "Laravel", years: 1.5, proficiency: "intermediate" },
     ],
   },
   {

@@ -32,6 +32,7 @@ export default function Projects() {
                 <Image
                   src={project.image}
                   alt={project.title}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                 />

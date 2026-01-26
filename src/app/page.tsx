@@ -58,7 +58,7 @@ export default function Home() {
   }, [displayText, currentIndex, isDeleting, texts]);
 
   return (
-    <div className="min-h-screen bg-[#050A14] overflow-x-hidden selection:bg-[#FFD700] selection:text-black">
+    <div className="relative min-h-screen overflow-x-hidden selection:bg-[#FFD700] selection:text-black">
       <ParticleBackground />
       <Navigation />
 
