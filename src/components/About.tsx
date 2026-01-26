@@ -30,7 +30,7 @@ export default function About() {
             </p>
             <p className="text-gray-300 leading-relaxed">
               Currently, I am focused on bridging the gap between complex data and practical applications.
-              Whether it's deploying a computer vision model or analyzing market trends, I strive to create solutions that matter.
+              Whether it&apos;s deploying a computer vision model or analyzing market trends, I strive to create solutions that matter.
             </p>
 
             <div className="grid grid-cols-2 gap-6 pt-6">

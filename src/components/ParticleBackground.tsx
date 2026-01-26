@@ -6,7 +6,7 @@ import { Points, PointMaterial } from '@react-three/drei';
 import * as random from 'maath/random';
 import * as THREE from 'three';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 function Stars(props: React.ComponentProps<typeof Points>) {
     const ref = useRef<THREE.Points>(null);
 
