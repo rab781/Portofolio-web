@@ -2,76 +2,67 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <section id="about" className="py-8">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#FFD700] mb-4 font-mono">
-            &lt;About_Me /&gt;
-          </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto font-mono">
-            &quot;// Transforming raw data into actionable intelligence&quot;
-          </p>
+    <div className="max-w-7xl mx-auto rounded-7xl bg-white/80 backdrop-blur-lg p-10 md:p-16 shadow-lg">
+      <div className="grid md:grid-cols-2 gap-16 items-start">
+        {/* Image Column */}
+        <div className="relative group">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gray-100">
+            <Image
+              src="https://avatars.githubusercontent.com/u/149395358?v=4"
+              alt="Raihan Rabbani"
+              width={600}
+              height={750}
+              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 filter grayscale hover:grayscale-0"
+            />
+          </div>
+          {/* Decorative Pattern */}
+          <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-[url('/dots.svg')] opacity-20"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        {/* Content Column */}
+        <div className="space-y-8 pt-4">
           <div>
-            <div className="aspect-square bg-gradient-to-br from-[#0A1120] to-[#050A14] rounded-2xl shadow-[0_0_30px_rgba(255,215,0,0.1)] border border-[#FFD700]/30 flex items-center justify-center relative overflow-hidden group">
-              <Image
-                src="https://avatars.githubusercontent.com/u/149395358?v=4"
-                alt="Raihan Rabbani"
-                width={500}
-                height={500}
-                className="w-full h-full object-cover"
-              />
+            <h2 className="text-sm font-bold tracking-widest text-[#2563EB] uppercase mb-4">About Me</h2>
+            <h3 className="heading-lg mb-6">
+              Bridging the gap between <br />
+              <span className="text-gray-400">theory</span> and <span className="text-[#111111]">application</span>.
+            </h3>
+          </div>
+
+          <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
+            <p>
+              I am Mohammad Raihan Rabbani, an IT student dedicated to mastering the intersection of
+              <strong className="text-[#111111]"> Artificial Intelligence</strong> and <strong className="text-[#111111]">Software Engineering</strong>.
+            </p>
+            <p>
+              My passion lies in building intelligent systems—from Deep Learning models that restore historical images to predictive trading algorithms that analyze market sentiment.
+              I don&apos;t just build models; I build <span className="italic text-[#111111]">products</span> that leverage data to solve real human problems.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-6 pt-4">
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-[#111111]">2+</div>
+              <div className="text-sm text-gray-500 uppercase tracking-wide">Years of AI Research</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-3xl font-bold text-[#111111]">15+</div>
+              <div className="text-sm text-gray-500 uppercase tracking-wide">Projects Delivered</div>
             </div>
           </div>
 
-          <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-white">
-              Data Scientist & AI Engineer
-            </h3>
-            <p className="text-gray-300 leading-relaxed">
-              I am Mohammad Raihan Rabbani, an IT student dedicated to mastering the intersection of
-              <span className="text-[#FFD700]"> Artificial Intelligence</span> and <span className="text-[#FFD700]">Software Engineering</span>.
-              My passion lies in building intelligent systems—from Deep Learning models for image restoration to predictive trading algorithms.
-            </p>
-            <p className="text-gray-300 leading-relaxed">
-              Currently, I am focused on bridging the gap between complex data and practical applications.
-              Whether it&apos;s deploying a computer vision model or analyzing market trends, I strive to create solutions that matter.
-            </p>
-
-            <div className="grid grid-cols-2 gap-6 pt-6">
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <h4 className="font-semibold text-[#00F0FF] mb-2 font-mono">
-                  AI & Deep Learning
-                </h4>
-                <p className="text-gray-400 text-sm">
-                  Python, PyTorch, Computer Vision, & Predictive Modeling
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <h4 className="font-semibold text-[#00F0FF] mb-2 font-mono">
-                  Data Science
-                </h4>
-                <p className="text-gray-400 text-sm">
-                  Data Mining, SQL, Statistical Analysis, & Visualization
-                </p>
-              </div>
-            </div>
-
-            <div className="pt-6">
-              <a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center bg-[#FFD700] hover:bg-[#D4AF37] text-black px-6 py-3 rounded font-bold transition-all duration-300 shadow-[0_0_15px_rgba(255,215,0,0.4)]"
-              >
-                DOWNLOAD_CV
-              </a>
-            </div>
+          <div className="pt-8">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-[#111111] font-bold hover:text-[#2563EB] transition-colors border-b-2 border-[#111111] hover:border-[#2563EB] pb-1"
+            >
+              Download CV
+            </a>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

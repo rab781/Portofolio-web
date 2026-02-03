@@ -1,138 +1,129 @@
 'use client';
 
-import { useState, useEffect, useMemo } from "react";
-import dynamic from 'next/dynamic';
-import { Github, Linkedin, Mail } from "lucide-react";
-import TerminalCard from "@/components/ui/TerminalCard";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import Navigation from "@/components/Navigation";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
-
-// Dynamically load heavy 3D components
-const ParticleBackground = dynamic(() => import("@/components/ParticleBackground"), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 bg-[#050A14]" />,
-});
-
-const NeuralHero = dynamic(() => import("@/components/NeuralHero"), {
-  ssr: false,
-  loading: () => <div className="h-full w-full bg-transparent" />,
-});
+import { ArrowDown } from "lucide-react";
 
 export default function Home() {
-  const [displayText, setDisplayText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  // Typing effect logic
-  const texts = useMemo(() => [
-    "Data Scientist",
-    "Machine Learning Engineer",
-    "Deep Learning Researcher",
-    "Data Analyst",
-    "AI Enthusiast",
-  ], []);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    const currentText = texts[currentIndex];
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (displayText.length < currentText.length) {
-          setDisplayText(currentText.slice(0, displayText.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), 2000);
-        }
-      } else {
-        if (displayText.length > 0) {
-          setDisplayText(displayText.slice(0, -1));
-        } else {
-          setIsDeleting(false);
-          setCurrentIndex((prev) => (prev + 1) % texts.length);
-        }
-      }
-    }, isDeleting ? 50 : 100);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
 
-    return () => clearTimeout(timeout);
-  }, [displayText, currentIndex, isDeleting, texts]);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const maxScroll = 500; 
+  const scrollProgress = Math.min(scrollY / maxScroll, 1); 
+  
+
+  const bgDarkness = scrollProgress * 0.1; 
+  const backgroundColor = `rgba(140, 228, 255, ${1 - bgDarkness})`;
+  const overlayOpacity = scrollProgress * 0.6; 
+  
+  // Font scaling (100% to 70%)
+  const fontScale = 1 - (scrollProgress * 0.1);
+  const heroTranslateY = scrollY * 0.1;
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden selection:bg-[#FFD700] selection:text-black">
-      <ParticleBackground />
+    <div className="relative min-h-screen bg-[#18181B] text-[#18181B] selection:bg-blue-100 selection:text-blue-900">
       <Navigation />
 
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
+      <main className="relative">
 
-        {/* HERO SECTION */}
-        <section className="min-h-[90vh] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div className="space-y-8 animate-float order-2 lg:order-1">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-2 h-2 bg-[#FFD700] rounded-full animate-pulse"></span>
-                <span className="text-[#00F0FF] font-mono text-sm tracking-widest">SYSTEM_ONLINE</span>
-              </div>
-              <h1 className="text-5xl sm:text-7xl font-bold text-white leading-tight">
-                Hello, I&apos;m <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#C5A000] text-glow-gold">
-                  Raihan Rabbani
-                </span>
+        {/* HERO SECTION - Fixed in center, will be covered by sections below */}
+        <section 
+          id="home" 
+          className="fixed top-0 left-0 w-full h-screen flex items-center justify-center px-6 transition-colors duration-300"
+          style={{
+            backgroundColor: backgroundColor,
+          }}
+        >
+          {/* Dark overlay that appears on scroll */}
+          <div 
+            className="absolute inset-0 bg-gradient-to-b from-gray-900/0 via-gray-900/50 to-gray-900/70 pointer-events-none transition-opacity duration-300"
+            style={{
+              opacity: overlayOpacity
+            }}
+          />
+          
+          <div 
+            className="text-center max-w-6xl mx-auto transition-all duration-300 relative z-10"
+            style={{
+              transform: `scale(${fontScale})`
+            }}
+          >
+            {/* Main Title with staggered animation */}
+            <div className="hero-title-wrapper overflow-hidden">
+              <h1 className="hero-title">
+                Mohammad Raihan Rabbani
               </h1>
             </div>
-
-            <div className="text-xl sm:text-2xl text-gray-400 font-mono h-8">
-              &gt; <span className="text-[#00F0FF]">{displayText}</span>
-              <span className="animate-pulse">_</span>
+            
+            {/* Tagline */}
+            <div className="hero-tagline-wrapper overflow-hidden">
+              <h2 className="hero-tagline">
+                One Passionate Builder
+              </h2>
             </div>
 
-            <p className="text-gray-400 max-w-lg text-lg leading-relaxed">
-              Building the bridge between complex data and actionable intelligence.
-              Specialized in <span className="text-[#FFD700]">Deep Learning</span> and <span className="text-[#FFD700]">Predictive Analytics</span>.
-            </p>
-
-            <div className="flex items-center gap-6">
-              <a href="https://github.com/rab781" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-[#FFD700] transition-colors"><Github size={24} /></a>
-              <a href="https://www.linkedin.com/in/mohammadraihanrabbani/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-[#FFD700] transition-colors"><Linkedin size={24} /></a>
-              <a href="mailto:raihanrabani199@gmail.com" className="text-gray-400 hover:text-[#FFD700] transition-colors"><Mail size={24} /></a>
-            </div>
-
-            <div className="flex gap-4">
-              <a href="#projects" className="px-8 py-3 bg-[#FFD700] text-black font-bold rounded hover:bg-[#D4AF37] transition-all shadow-[0_0_20px_rgba(255,215,0,0.3)]">
-                VIEW DATA
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 justify-center pt-12 hero-cta">
+              <a href="#projects" className="px-8 py-4 bg-[#18181B] text-white font-medium rounded-full hover:bg-black transition-all hover:scale-105 shadow-lg hover:shadow-xl">
+                View Selected Work
               </a>
-              <a href="#contact" className="px-8 py-3 border border-[#00F0FF] text-[#00F0FF] font-bold rounded hover:bg-[#00F0FF]/10 transition-all">
-                INITIATE_CONTACT
+              <a href="#contact" className="px-8 py-4 border-2 border-gray-800 text-[#18181B] font-medium rounded-full hover:bg-gray-50 transition-all hover:scale-105">
+                Get in Touch
               </a>
             </div>
           </div>
 
-          {/* Right Content - 3D Neural Hero */}
-          {/* Combined Responsive Container for NeuralHero */}
-          <div className="h-[300px] lg:h-[600px] w-full relative order-1 lg:order-2">
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050A14] to-transparent z-10 opacity-50 pointer-events-none"></div>
-            <NeuralHero />
+          {/* Scroll Indicator */}
+          <div 
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 transition-opacity duration-300 z-10"
+            style={{
+              opacity: 1 - scrollProgress,
+              animation: scrollProgress < 0.5 ? 'bounce 2s infinite' : 'none'
+            }}
+          >
+            <Image 
+              src="/cartoon-face.png" 
+              alt="Scroll down" 
+              width={64} 
+              height={64}
+              className="rounded-full"
+            />
           </div>
         </section>
 
+        {/* Spacer to push content down (height of hero section) */}
+        <div className="h-screen" />
 
-        {/* SECTIONS WRAPPED IN TERMINAL CARDS */}
-        <div className="space-y-24 pb-24">
-          <TerminalCard title="ABOUT_MODULE.exe">
+        {/* SECTIONS - Will overlay the hero section when scrolling */}
+        <div className="relative z-20">
+          <div id="about" className="section-padding bg-white border-t border-gray-100 rounded-t-[40px]">
             <About />
-          </TerminalCard>
+          </div>
 
-          <TerminalCard title="SKILLS_MATRIX.json">
+          <div id="skills" className="section-padding bg-[#F9FAFB]">
             <Skills />
-          </TerminalCard>
+          </div>
 
-          <TerminalCard title="PROJECT_DATABASE.db">
+          <div id="projects" className="section-padding bg-white">
             <Projects />
-          </TerminalCard>
+          </div>
 
-          <TerminalCard title="COMMUNICATION_LINK">
+          <div id="contact" className="bg-[#111111] text-white">
             <Contact />
-          </TerminalCard>
+          </div>
         </div>
 
       </main>
