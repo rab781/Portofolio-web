@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function About() {
   return (
     <section id="about" className="py-8">
@@ -14,8 +16,13 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div className="aspect-square bg-gradient-to-br from-[#0A1120] to-[#050A14] rounded-2xl shadow-[0_0_30px_rgba(255,215,0,0.1)] border border-[#FFD700]/30 flex items-center justify-center relative overflow-hidden group">
-              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-              <div className="text-[#FFD700] text-9xl font-bold group-hover:scale-110 transition-transform duration-500">MR</div>
+              <Image
+                src="https://avatars.githubusercontent.com/u/149395358?v=4"
+                alt="Raihan Rabbani"
+                width={500}
+                height={500}
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 
