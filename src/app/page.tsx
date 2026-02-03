@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Navigation from "@/components/Navigation";
 import About from "@/components/About";
@@ -11,6 +11,8 @@ import { ArrowDown } from "lucide-react";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +26,18 @@ export default function Home() {
   const maxScroll = 500; 
   const scrollProgress = Math.min(scrollY / maxScroll, 1); 
   
+  // Calculate image position and scale based on scroll
+  const imageMaxScroll = typeof window !== 'undefined' ? window.innerHeight * 0.8 : 800;
+  const imageProgress = Math.min(scrollY / imageMaxScroll, 1);
+  
+  // Image transforms
+  const imageScale = 0.3 + (imageProgress * 0.7); // From 30% to 100%
+  const imageTranslateY = scrollY * 0.5; // Move down slower than scroll
+  const imageOpacity = 0.3 + (imageProgress * 0.7); // Fade in as it grows
+  
+  // Calculate if image should stick to About section
+  const aboutOffset = aboutRef.current?.offsetTop || 1000;
+  const shouldStick = scrollY >= aboutOffset - 400;
 
   const bgDarkness = scrollProgress * 0.1; 
   const backgroundColor = `rgba(140, 228, 255, ${1 - bgDarkness})`;
@@ -88,29 +102,53 @@ export default function Home() {
 
           {/* Scroll Indicator */}
           <div 
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 transition-opacity duration-300 z-10"
+            className="absolute bottom-20 left-1/2 -translate-x-1/2 transition-opacity duration-300 z-10"
             style={{
               opacity: 1 - scrollProgress,
               animation: scrollProgress < 0.5 ? 'bounce 2s infinite' : 'none'
             }}
           >
-            <Image 
-              src="/cartoon-face.png" 
-              alt="Scroll down" 
-              width={64} 
-              height={64}
-              className="rounded-full"
-            />
           </div>
         </section>
 
-        {/* Spacer to push content down (height of hero section) */}
+        {/* Animated Profile Image */}
+        <div 
+          ref={imageRef}
+          className={`${shouldStick ? 'absolute' : 'fixed'} z-40 left-1/2 -translate-x-1/2 pointer-events-none transition-all duration-300`}
+          style={{
+            top: shouldStick ? `${aboutOffset - 350}px` : '50%',
+            transform: shouldStick 
+              ? 'translateX(-50%) scale(1)' 
+              : `translate(-50%, -50%) translateY(${imageTranslateY}px) scale(${imageScale})`,
+            opacity: shouldStick ? 1 : imageOpacity,
+          }}
+        >
+          <div className="relative w-[280px] h-[350px] md:w-[400px] md:h-[500px]">
+            <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl ring-8 ring-white/50 backdrop-blur-sm">
+              <Image
+                src="https://avatars.githubusercontent.com/u/149395358?v=4"
+                alt="Raihan Rabbani"
+                fill
+                className="object-cover filter grayscale hover:grayscale-0 transition-all duration-700"
+                priority
+              />
+            </div>
+            {/* 3D Effect Shadow */}
+            <div className="absolute -inset-2 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl blur-xl -z-10 opacity-50"></div>
+          </div>
+        </div>
+
+        {/* Spacer */}
         <div className="h-screen" />
 
-        {/* SECTIONS - Will overlay the hero section when scrolling */}
+        {/* SECTIONS */}
         <div className="relative z-20">
-          <div id="about" className="section-padding bg-white border-t border-gray-100 rounded-t-[40px]">
-            <About />
+          <div 
+            ref={aboutRef}
+            id="about" 
+            className="section-padding bg-white border-t border-gray-100 rounded-t-[40px] pt-[400px] md:pt-[450px]"
+          >
+            <About hideImage={true} />
           </div>
 
           <div id="skills" className="section-padding bg-[#F9FAFB]">

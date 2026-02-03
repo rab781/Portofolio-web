@@ -1,23 +1,28 @@
 import Image from "next/image";
 
-export default function About() {
+interface AboutProps {
+  hideImage?: boolean;
+}
+
+export default function About({ hideImage = false }: AboutProps) {
   return (
     <div className="max-w-7xl mx-auto rounded-7xl bg-white/80 backdrop-blur-lg p-10 md:p-16 shadow-lg">
-      <div className="grid md:grid-cols-2 gap-16 items-start">
-        {/* Image Column */}
-        <div className="relative group">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gray-100">
-            <Image
-              src="https://avatars.githubusercontent.com/u/149395358?v=4"
-              alt="Raihan Rabbani"
-              width={600}
-              height={750}
-              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 filter grayscale hover:grayscale-0"
-            />
+      <div className={`grid ${hideImage ? 'md:grid-cols-1' : 'md:grid-cols-2'} gap-16 items-start`}>
+        {/* Image Column - Hidden when hideImage is true */}
+        {!hideImage && (
+          <div className="relative group">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gray-100">
+              <Image
+                src="https://avatars.githubusercontent.com/u/149395358?v=4"
+                alt="Raihan Rabbani"
+                width={600}
+                height={750}
+                className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 filter grayscale hover:grayscale-0"
+              />
+            </div>
+            <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-[url('/dots.svg')] opacity-20"></div>
           </div>
-          {/* Decorative Pattern */}
-          <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-[url('/dots.svg')] opacity-20"></div>
-        </div>
+        )}
 
         {/* Content Column */}
         <div className="space-y-8 pt-4">
