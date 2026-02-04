@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, Loader2, CheckCircle } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -11,7 +11,7 @@ export default function Contact() {
     message: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -22,7 +22,7 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setStatus('submitting');
     await new Promise(resolve => setTimeout(resolve, 1000));
     console.log("Form submitted:", formData);
     setFormData({
@@ -31,8 +31,12 @@ export default function Contact() {
       subject: "",
       message: "",
     });
-    setIsSubmitting(false);
-    alert("Message sent successfully!");
+    setStatus('success');
+
+    // Reset status after 3 seconds
+    setTimeout(() => {
+      setStatus('idle');
+    }, 3000);
   };
 
   return (
@@ -143,11 +147,31 @@ export default function Contact() {
 
             <button
               type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-[#111111] text-white px-8 py-4 rounded-lg font-bold hover:bg-black transition-all flex items-center justify-center group"
+              disabled={status === 'submitting' || status === 'success'}
+              className={`w-full px-8 py-4 rounded-lg font-bold transition-all flex items-center justify-center group ${
+                status === 'success'
+                  ? 'bg-green-600 hover:bg-green-700 text-white'
+                  : 'bg-[#111111] text-white hover:bg-black'
+              }`}
             >
-              {isSubmitting ? "Sending..." : "Send Message"}
-              {!isSubmitting && <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+              {status === 'submitting' && (
+                <>
+                  <Loader2 className="mr-2 w-5 h-5 animate-spin" />
+                  Sending...
+                </>
+              )}
+              {status === 'success' && (
+                <>
+                  <CheckCircle className="mr-2 w-5 h-5" />
+                  Message Sent!
+                </>
+              )}
+              {status === 'idle' && (
+                <>
+                  Send Message
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </button>
           </form>
         </div>

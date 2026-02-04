@@ -1,0 +1,15 @@
+
+> nest.js@0.1.0 dev /app
+> next dev
+
+   ▲ Next.js 15.3.8
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+
+ ✓ Starting...
+ ✓ Ready in 1952ms
+ ○ Compiling / ...
+ ✓ Compiled / in 8.5s (861 modules)
+ GET / 200 in 9448ms
+ ✓ Compiled in 274ms (375 modules)
+ ✓ Compiled in 343ms (375 modules)

@@ -45,7 +45,6 @@ export default function Home() {
   
   // Font scaling (100% to 70%)
   const fontScale = 1 - (scrollProgress * 0.1);
-  const heroTranslateY = scrollY * 0.1;
 
   return (
     <div className="relative min-h-screen bg-[#18181B] text-[#18181B] selection:bg-blue-100 selection:text-blue-900">
@@ -108,6 +107,7 @@ export default function Home() {
               animation: scrollProgress < 0.5 ? 'bounce 2s infinite' : 'none'
             }}
           >
+            <ArrowDown className="w-8 h-8 text-[#18181B]" />
           </div>
         </section>
 
