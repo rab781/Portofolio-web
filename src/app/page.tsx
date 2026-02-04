@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
@@ -159,13 +160,56 @@ export default function Home() {
               }}
             >
               <div className="relative w-[280px] h-[450px] md:w-[400px] md:h-[650px]">
-                <Image
-                  src="/cartoon-pose.png"
-                  alt="Raihan Rabbani"
-                  fill
-                  className="object-cover filter hover:grayscale-0 transition-all duration-700"
-                  priority
-                />
+                {/* Entrance Animation Wrapper */}
+                <motion.div
+                  initial={{ scale: 0.5, opacity: 0, y: 100 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 15,
+                    delay: 0.6
+                  }}
+                  className="w-full h-full"
+                >
+                  {/* Floating Loop Wrapper */}
+                  <motion.div
+                    animate={{
+                      y: [-12, 12, -12],
+                      rotate: [-1, 1.5, -1]
+                    }}
+                    transition={{
+                      duration: 6,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="w-full h-full relative"
+                  >
+                    <Image
+                      src="/cartoon-pose.png"
+                      alt="Raihan Rabbani"
+                      fill
+                      className="object-cover filter hover:grayscale-0 transition-all duration-700 drop-shadow-2xl"
+                      priority
+                    />
+
+                    {/* Floating Badge - Follows Image */}
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0, x: 20 }}
+                      animate={{ scale: 1, opacity: 1, x: 0 }}
+                      transition={{ delay: 1, type: "spring" }}
+                      className="absolute -bottom-6 -right-6 md:bottom-10 md:-right-10 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/50 flex items-center gap-3 z-20 hover:scale-105 transition-transform cursor-default"
+                    >
+                      <div className="bg-[#FFA239] p-2 rounded-full text-white shadow-sm">
+                        <Sparkles size={20} fill="currentColor" />
+                      </div>
+                      <div>
+                        <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider leading-none mb-1">Status</div>
+                        <div className="text-sm font-bold text-[#111111] leading-none">Building & Scaling 🚀</div>
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
               </div>
             </div>
 
