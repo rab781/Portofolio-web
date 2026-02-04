@@ -1,23 +1,24 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Mohammad Raihan Rabbani - Portfolio | Full Stack Developer",
-  description: "Portfolio website of a passionate full stack developer specializing in React, Next.js, and modern web technologies. View my projects and get in touch.",
-  keywords: "portfolio, web developer, full stack, React, Next.js, TypeScript, JavaScript",
+  title: "Mohammad Raihan Rabbani - Portfolio | AI Engineer",
+  description: "Portfolio website of a passionate AI engineer showcasing projects in data analysis, AI, and machine learning.",
+  keywords: "portfolio, Data analysis, AI, machine learning, projects, contact, Mohammad Raihan Rabbani, AI engineer",
   authors: [{ name: "Mohammad Raihan Rabbani" }],
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -28,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} antialiased`}
       >
         {children}
       </body>

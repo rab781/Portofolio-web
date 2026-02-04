@@ -1,174 +1,179 @@
 @import "tailwindcss";
 
-/* Custom CSS untuk smooth scrolling dan animasi */
-html {
-  scroll-behavior: smooth;
+@theme {
+  /* Flat Premium Palette */
+  --color-brand-black: #111111;
+  --color-brand-white: #F9FAFB;
+  --color-brand-gray: #F3F4F6;
+
+  /* Data Accent Colors (Flat, No Gradient) */
+  --color-accent-blue: #2563EB;
+  /* Royal Blue */
+  --color-accent-orange: #EA580C;
+  /* Burnt Orange */
+  --color-accent-teal: #0D9488;
+  /* Deep Teal */
+  --color-accent-yellow: #CA8A04;
+  /* Muted Gold */
+
+  --color-text-primary: #18181B;
+  /* Zinc 900 */
+  --color-text-secondary: #52525B;
+  /* Zinc 600 */
 }
 
-/* Advanced 3D Transforms */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.backface-hidden {
-  backface-visibility: hidden;
-}
-
-/* 3D Rotation Classes */
-.rotateY-12 {
-  transform: rotateY(12deg);
-}
-
-.rotateX-5 {
-  transform: rotateX(5deg);
-}
-
-.rotateY-180 {
-  transform: rotateY(180deg);
-}
-
-.rotateX-90 {
-  transform: rotateX(90deg);
-}
-
-.rotateY-90 {
-  transform: rotateY(90deg);
-}
-
-.rotateZ-45 {
-  transform: rotateZ(45deg);
-}
-
-.rotateZ-90 {
-  transform: rotateZ(90deg);
-}
-
-.rotateZ--90 {
-  transform: rotateZ(-90deg);
-}
-
-.translateZ--8 {
-  transform: translateZ(-8px);
-}
-
-.translateX-2 {
-  transform: translateX(0.5rem);
-}
-
-/* Lanyard Animation */
-@keyframes subtleSway {
-  0%, 100% { 
-    transform: rotateZ(3deg) rotateY(8deg) rotateX(3deg); 
-  }
-  25% { 
-    transform: rotateZ(-2deg) rotateY(-4deg) rotateX(-2deg); 
-  }
-  50% { 
-    transform: rotateZ(-3deg) rotateY(-8deg) rotateX(-3deg); 
-  }
-  75% { 
-    transform: rotateZ(2deg) rotateY(4deg) rotateX(2deg); 
-  }
-}
-
-.animate-subtle-sway {
-  animation: subtleSway 6s ease-in-out infinite;
-}
-
-/* Animation delays */
-.animation-delay-0 {
-  animation-delay: 0s;
-}
-
-.animation-delay-300 {
-  animation-delay: 0.3s;
-}
-
-.animation-delay-500 {
-  animation-delay: 0.5s;
-}
-
-.animation-delay-1000 {
-  animation-delay: 1s;
-}
-
-/* Enhanced 3D rotation classes */
-.rotateY-15 {
-  transform: rotateY(15deg);
-}
-
-.rotateX-8 {
-  transform: rotateX(8deg);
-}
-
-/* Floating animation for rope segments */
-@keyframes floatRope {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-3px) rotate(2deg); }
-}
-
-.animate-float-rope {
-  animation: floatRope 3s ease-in-out infinite;
-}
-
-/* Enhanced 3D effects */
-.transform-gpu {
-  transform: translateZ(0);
-  will-change: transform;
-}
-
-/* Holographic effect */
-@keyframes holographic {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-.holographic-effect {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  background-size: 200% 100%;
-  animation: holographic 2s infinite;
-}
-
-/* Custom scrollbar untuk browser webkit */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #121212; /* Warna track scrollbar gelap */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #B8860B; /* Warna thumb scrollbar emas */
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #FFD700; /* Warna thumb scrollbar saat hover */
-}
-
-/* Mendefinisikan variabel warna baru */
 :root {
-  --background: #121212; /* Latar belakang utama hitam */
-  --foreground: #F5F5F5; /* Teks utama putih gading */
-  --gold-accent: #B8860B; /* Aksen emas */
-  --gold-accent-hover: #FFD700; /* Aksen emas saat hover */
-  --secondary-bg: #1f1f1f; /* Latar belakang sekunder */
-  --secondary-text: #a0a0a0; /* Teks sekunder */
+  --background: #F9FAFB;
+  /* Light Gray/Off-White */
+  --foreground: #18181B;
+  /* Dark Text */
 }
 
-/* Terapkan variabel warna ke body */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+  overflow-x: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar - Minimalist */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4D4D8;
+  /* Zinc 300 */
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A1A1AA;
+  /* Zinc 400 */
+}
+
+@layer components {
+
+  /* Clean Layout Utilities */
+  .section-padding {
+    @apply py-20 px-6 sm:px-12 lg:px-24;
+  }
+
+  .container-width {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* Typography */
+  .heading-xl {
+    @apply text-5xl sm:text-7xl font-bold tracking-tight leading-[1.1] text-brand-black;
+  }
+
+  .heading-lg {
+    @apply text-3xl sm:text-4xl font-bold tracking-tight text-brand-black mb-8;
+  }
+
+  .text-body {
+    @apply text-lg text-text-secondary leading-relaxed;
+  }
+
+  /* Cards (Flat, Clean Borders) */
+  .card-flat {
+    @apply bg-white border border-gray-200 rounded-xl p-8 hover:border-gray-400 transition-colors duration-300;
+  }
+
+  /* Interactive Hover (Marker Effect) */
+  .hover-mark {
+    @apply relative inline-block z-10 transition-colors duration-300;
+  }
+
+  .hover-mark::before {
+    content: "";
+    @apply absolute bottom-0 left-0 w-full h-[30%] -z-10 bg-accent-yellow/30 scale-x-0 origin-left transition-transform duration-300;
+  }
+
+  .hover-mark:hover::before {
+    @apply scale-x-100;
+  }
+
+  /* Hero Section Styles - Inspired by mindmarket.com */
+  .hero-title {
+    font-size: clamp(4.5rem, 8vw + 1rem, 10rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #2c2e2a;
+    font-family: var(--font-inter), 'Inter', sans-serif;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  .hero-tagline {
+    font-size: clamp(2rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #2c2e2a;
+    font-family: var(--font-inter), 'Inter', sans-serif;
+    margin-top: 1rem;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+  }
+
+  .hero-description {
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+  }
+
+  .hero-cta {
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+  }
+
+  /* Fade In Up Animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive Hero Title Wrapper */
+  .hero-title-wrapper,
+  .hero-tagline-wrapper {
+    overflow: hidden;
+  }
+
+  /* Smooth Scroll Behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .hover-mark:hover::before {
+    @apply scale-x-100;
+  }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
 }
