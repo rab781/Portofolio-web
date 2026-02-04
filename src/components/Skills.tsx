@@ -44,7 +44,8 @@ const getSkillsFromCategory = (indices: number[]) => {
     const category = skillCategories[idx];
     return category ? category.skills.map(skill => ({
       ...skill,
-      icon: category.icon // Pass parent category icon to skill
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      icon: category.icon as any // Pass parent category icon to skill
     })) : [];
   });
 };
@@ -54,6 +55,7 @@ const MarqueeRow = ({
   direction = "left",
   speed = 1.2
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   skills: any[],
   direction?: "left" | "right",
   speed?: number

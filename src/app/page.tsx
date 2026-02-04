@@ -10,7 +10,6 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Preloader from "@/components/Preloader";
-import ScrollLine from "@/components/ScrollLine";
 import Experience from "@/components/Experience";
 import Certificates from "@/components/Certificates";
 import HeroBackground from "@/components/HeroBackground";

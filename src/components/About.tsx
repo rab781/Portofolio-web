@@ -96,11 +96,11 @@ function About({ hideImage = false, triggerAnimation = false }: AboutProps) {
           {/* Description Paragraphs - Multi-column feel */}
           <motion.div variants={itemVariants} className="grid md:grid-cols-[1fr] gap-8 text-xl text-gray-600 leading-relaxed font-light">
             <p>
-              I am Mohammad Raihan Rabbani. I don't just write code; I orchestrate <strong className="text-[#111111] font-semibold">intelligence</strong>.
+              I am Mohammad Raihan Rabbani. I don&apos;t just write code; I orchestrate <strong className="text-[#111111] font-semibold">intelligence</strong>.
               Standing at the intersection of Artifical Intelligence and Software Engineering, I translate complex research papers into deployed products.
             </p>
             <p className="border-l-2 border-[#FFA239] pl-6 italic text-gray-800">
-              "Building systems that can see, learn, and trade—solving human problems with data-driven precision."
+              &quot;Building systems that can see, learn, and trade—solving human problems with data-driven precision.&quot;
             </p>
           </motion.div>
 
@@ -110,12 +110,14 @@ function About({ hideImage = false, triggerAnimation = false }: AboutProps) {
               <div className="text-6xl font-bold text-[#111111] tracking-tighter">
                 <NumberCounter value={2} suffix="+" />
               </div>
-              <div className="text-xs text-gray-400 uppercase tracking-widest font-semibold">Years of Research</div>
+              <p className="text-body text-base sm:text-lg">
+                I&apos;m a <span className="font-bold text-brand-black">Data Scientist</span> & <span className="font-bold text-brand-black">AI Engineer</span> who loves turning messy data into clear, actionable insights.
+              </p>
             </div>
             <div className="space-y-1">
-              <div className="text-6xl font-bold text-[#111111] tracking-tighter">
-                <NumberCounter value={15} suffix="+" />
-              </div>
+              <p className="text-body text-base sm:text-lg">
+                My approach is simple: <span className="italic text-brand-black">&quot;Build things that matter.&quot;</span> Whether it&apos;s a predictive model for finance or a computer vision system for historical archives, I focus on impact.
+              </p>
               <div className="text-xs text-gray-400 uppercase tracking-widest font-semibold">Projects Shipped</div>
             </div>
           </motion.div>

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Github, ExternalLink, Database, Brain, CheckCircle } from "lucide-react";
+import { ArrowLeft, Github, ExternalLink, Brain, CheckCircle } from "lucide-react";
 import { projects } from "@/data/projects";
 
 // Note: In a client component, we can't export async generateStaticParams directly in the same way if strictly strictly 'use client', 
