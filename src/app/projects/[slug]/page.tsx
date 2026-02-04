@@ -1,12 +1,35 @@
-// src/app/projects/[slug]/page.tsx
 
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Github, ExternalLink, Database, Brain, CheckCircle } from "lucide-react";
-import { projects } from "@/data/projects"; // Import data yang tadi dibuat
+import { projects } from "@/data/projects";
 
-// Fungsi ini diperlukan untuk generate static pages saat build (SEO Bagus)
+// Note: In a client component, we can't export async generateStaticParams directly in the same way if strictly strictly 'use client', 
+// but for Next.js app router hybrid, we often keep the page server-side or mix. 
+// However, to use Framer Motion, we need 'use client'. 
+// A common pattern is to wrap the content or just make this page client. 
+// Since generateStaticParams is a server feature, we'll assume this file was originally server.
+// To use Motion, let's keep it simple: We will NOT animate the layout root to avoid hydration issues, 
+// or we just animate the inner content.
+// Actually, let's just use standard <img> tags or className animations if we want to keep it server-side, 
+// OR we make it a client component and lose generateStaticParams export from *this* file (moved to layout or separate).
+//
+// BUT, to keep the user's existing build working:
+// We will return a CLIENT component from a SERVER wrapper if needed, OR just use standard Next.js logic.
+// The easiest refactor that maintains "Winner Awards" feel is to just use CSS animations + correct styling 
+// without converting the whole page to client if we want to keep generateStaticParams here.
+//
+// Wait, the previous file had `export async function generateStaticParams`. 
+// If I make this `use client`, that export breaks.
+// SOLUTION: I will keep this component SERVER SIDE, but render the *content* using a new client component wrapper 
+// or just use standard CSS classes. The user asked for "Seirama" (Matching). 
+// The main page uses Framer Motion. I can import a Client Component for the content.
+
+// Let's create `ProjectContent.tsx` first? No, that's too many files.
+// I will keep it Server Side for SEO/Performance, and use the new CSS classes (`bg-noise`, etc).
+// I will use `motion` via a small inline wrapper if needed, but standard CSS `animate-fade-in-up` is already global!
+
 export async function generateStaticParams() {
   return projects.map((project) => ({
     slug: project.id,
@@ -14,137 +37,154 @@ export async function generateStaticParams() {
 }
 
 export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
-  // Await params di Next.js 15
   const { slug } = await params;
-
-  // Cari proyek berdasarkan slug di URL
   const project = projects.find((p) => p.id === slug);
 
   if (!project) {
-    notFound(); // Tampilkan halaman 404 jika proyek tidak ada
+    notFound();
   }
 
   return (
-    <article className="min-h-screen bg-white dark:bg-gray-900 pt-24 pb-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <article className="min-h-screen bg-[#F9FAFB] bg-noise text-[#111111] pb-24 selection:bg-orange-100 selection:text-orange-900">
 
-        {/* Tombol Kembali */}
+      {/* Top Decoration */}
+      <div className="h-24 w-full bg-[#8CE4FF] absolute top-0 left-0 z-0" />
+
+      <div className="max-w-5xl mx-auto px-6 relative z-10 pt-12">
+
+        {/* Navigation */}
         <Link
           href="/#projects"
-          className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-blue-600 mb-8 transition-colors"
+          className="group inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-bold uppercase tracking-wider hover:border-[#FFA239] hover:text-[#FFA239] transition-all shadow-sm mb-12"
         >
-          <ArrowLeft size={20} className="mr-2" />
-          Back to Portfolio
+          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+          Back to Works
         </Link>
 
-        {/* Header Proyek */}
-        <header className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="px-3 py-1 text-xs font-semibold tracking-wide uppercase bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full">
+        {/* Header Section - Editorial Style */}
+        <header className="mb-16">
+          <div className="flex flex-wrap items-center gap-4 mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <span className="px-4 py-1.5 rounded-full border border-gray-900/5 bg-white text-xs font-bold tracking-widest text-[#FF5656] uppercase shadow-sm">
               {project.category}
             </span>
-            <span className="text-gray-500 text-sm">Case Study</span>
+            <span className="h-px w-8 bg-gray-300"></span>
+            <span className="text-gray-500 font-serif italic text-lg">Case Study</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+
+          <h1 className="text-5xl md:text-7xl font-bold text-[#111111] mb-8 leading-[1.1] animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             {project.title}
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+
+          <p className="text-2xl text-gray-600 font-light max-w-2xl leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             {project.subtitle}
           </p>
         </header>
 
-        {/* Gambar Utama / Visualisasi */}
-        <div className="relative w-full h-[400px] rounded-2xl overflow-hidden mb-16 shadow-2xl">
+        {/* Featured Image - Floating Card */}
+        <div className="relative w-full aspect-video rounded-3xl overflow-hidden mb-20 shadow-2xl animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
           <Image
             src={project.image}
             alt={project.title}
             fill
-            className="object-cover"
+            className="object-cover hover:scale-105 transition-transform duration-700"
             priority
           />
+          {/* Overlay Gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
         </div>
 
-        {/* Konten Utama: 2 Kolom */}
-        <div className="grid md:grid-cols-3 gap-12">
+        {/* Main Content Grid */}
+        <div className="grid md:grid-cols-12 gap-12 lg:gap-20">
 
-          {/* Kolom Kiri: Detail Analisis (Lebih Lebar) */}
-          <div className="md:col-span-2 space-y-12">
+          {/* Left Column: Narrative (8 cols) */}
+          <div className="md:col-span-8 space-y-16">
 
-            {/* 1. Masalah Bisnis */}
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                <Brain className="mr-3 text-blue-600" />
+            {/* The Problem */}
+            <section className="bg-white bg-dot-pattern p-8 md:p-10 rounded-[2rem] border border-gray-100 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
+              <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Brain size={120} />
+              </div>
+
+              <h2 className="text-2xl font-bold text-[#111111] mb-6 flex items-center gap-3 relative z-10">
+                <span className="w-8 h-8 rounded-full bg-[#8CE4FF] flex items-center justify-center text-xs border border-gray-900">01</span>
                 The Problem
               </h2>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed relative z-10">
                 {project.problem}
               </p>
             </section>
 
-            {/* 2. Metodologi */}
+            {/* Methodology */}
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                <Database className="mr-3 text-blue-600" />
-                Data & Methodology
+              <h2 className="text-2xl font-bold text-[#111111] mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-[#FEEE91] flex items-center justify-center text-xs border border-gray-900">02</span>
+                Approach & Methodology
               </h2>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
-                {project.dataOverview}
-              </p>
-              <ul className="space-y-3">
-                {project.methodology.map((step, idx) => (
-                  <li key={idx} className="flex items-start bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                    <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-blue-600 text-white text-xs font-bold rounded-full mr-4 mt-0.5">
-                      {idx + 1}
-                    </span>
-                    <span className="text-gray-700 dark:text-gray-300">{step}</span>
-                  </li>
-                ))}
-              </ul>
+
+              <div className="space-y-6">
+                <p className="text-lg text-gray-600 italic border-l-4 border-[#FFA239] pl-6 py-2 bg-orange-50/50 rounded-r-lg">
+                  {project.dataOverview}
+                </p>
+
+                <div className="grid gap-4">
+                  {project.methodology.map((step, idx) => (
+                    <div key={idx} className="flex items-start p-4 bg-white rounded-xl border border-gray-100 hover:border-[#8CE4FF] transition-colors">
+                      <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center bg-[#111111] text-white text-[10px] font-bold rounded-full mr-4 mt-1">
+                        {idx + 1}
+                      </span>
+                      <span className="text-gray-700 font-medium">{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </section>
 
-            {/* 3. Hasil & Temuan */}
+            {/* Results */}
             <section>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                <CheckCircle className="mr-3 text-green-600" />
-                Key Results
+              <h2 className="text-2xl font-bold text-[#111111] mb-8 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-[#FF5656] flex items-center justify-center text-xs text-white border border-gray-900">03</span>
+                Key Outcomes
               </h2>
-              <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-600 p-6 rounded-r-lg">
-                <ul className="space-y-3">
-                  {project.results.map((res, idx) => (
-                    <li key={idx} className="flex items-start text-gray-800 dark:text-gray-200">
-                      <span className="mr-2 text-blue-600">•</span>
-                      {res}
-                    </li>
-                  ))}
-                </ul>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {project.results.map((res, idx) => (
+                  <div key={idx} className="bg-[#111111] text-white p-6 rounded-2xl flex flex-col justify-between">
+                    <CheckCircle className="text-[#8CE4FF] mb-4" />
+                    <p className="font-medium text-lg leading-snug">{res}</p>
+                  </div>
+                ))}
               </div>
             </section>
 
           </div>
 
-          {/* Kolom Kanan: Info Teknis & Link (Sticky) */}
-          <div className="md:col-span-1">
-            <div className="sticky top-24 bg-gray-50 dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">
-                Tech Stack
-              </h3>
-              <div className="flex flex-wrap gap-2 mb-8">
-                {project.technologies.map((tech) => (
-                  <span key={tech} className="px-3 py-1 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md text-sm text-gray-700 dark:text-gray-300">
-                    {tech}
-                  </span>
-                ))}
+          {/* Right Column: Meta (4 cols) - Sticky */}
+          <div className="md:col-span-4">
+            <div className="sticky top-12 space-y-8">
+
+              {/* Tech Stack Card */}
+              <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-lg shadow-gray-200/50">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">Technologies</h3>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech) => (
+                    <span key={tech} className="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs font-bold text-gray-700 hover:bg-[#FEEE91] hover:border-[#FEEE91] transition-colors cursor-default">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
 
-              <div className="space-y-4">
+              {/* Links Card */}
+              <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-lg shadow-gray-200/50 space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">Links & Resources</h3>
+
                 <a
                   href={project.githubUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-center w-full py-3 px-4 bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-gray-900 font-medium rounded-lg transition-all"
+                  className="flex items-center justify-center w-full py-4 px-6 bg-[#111111] text-white font-bold rounded-xl hover:scale-[1.02] transition-transform shadow-md"
                 >
-                  <Github size={18} className="mr-2" />
-                  View Notebook
+                  <Github size={20} className="mr-3" />
+                  View Codebase
                 </a>
 
                 {project.demoUrl && (
@@ -152,13 +192,14 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                     href={project.demoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center justify-center w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all"
+                    className="flex items-center justify-center w-full py-4 px-6 bg-[#2563EB] text-white font-bold rounded-xl hover:bg-blue-700 hover:scale-[1.02] transition-all shadow-md shadow-blue-200"
                   >
-                    <ExternalLink size={18} className="mr-2" />
-                    Live Dashboard
+                    <ExternalLink size={20} className="mr-3" />
+                    Live Demo
                   </a>
                 )}
               </div>
+
             </div>
           </div>
 
