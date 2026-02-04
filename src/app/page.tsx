@@ -36,14 +36,33 @@ export default function Home() {
   const imageMaxScroll = typeof window !== 'undefined' ? window.innerHeight * 0.8 : 800;
   const imageProgress = Math.min(scrollY / imageMaxScroll, 1);
 
-  // Image transforms
-  const imageScale = 0.3 + (imageProgress * 0.7); // From 30% to 100%
-  const imageTranslateY = scrollY * 0.5; // Move down slower than scroll
-  const imageOpacity = 0.3 + (imageProgress * 0.7); // Fade in as it grows
 
   // Calculate if image should stick to About section
   const aboutOffset = aboutRef.current?.offsetTop || 1000;
-  const shouldStick = scrollY >= aboutOffset - 400;
+  const vh = typeof window !== 'undefined' ? window.innerHeight : 900;
+
+  // The exact Y position (relative to document) where we want the image CENTER to land
+  // "About Me" title is at aboutOffset. Spacer starts below it.
+  // We place the image center approx 480px inside the section (Below the ~200px header)
+  const stickyTargetY = aboutOffset + 780;
+
+  // The scroll position where stickyTargetY exactly hits the middle of the viewport
+  const triggerScroll = stickyTargetY - (vh / 2);
+
+  const shouldStick = scrollY >= triggerScroll;
+
+  // ANIMATION LOGIC:
+  // Phase 1 (Before Trigger): Move from StartPos (280) to 0. Slower parallax.
+  // Phase 2 (After Trigger): Lock to document.
+  // At scrollY = triggerScroll, both formulas return 0, ensuring seamless transition.
+
+  const startY = 280;
+
+  // Linear interpolation: When scrollY is 0, val is startY. When scrollY is triggerScroll, val is 0.
+  const parallaxY = startY * (1 - (scrollY / (triggerScroll || 1)));
+
+  // Sticky math: The offset needed to keep it at stickyTargetY relative to fixed center (vh/2)
+  const stickyY = stickyTargetY - (scrollY + (vh / 2));
 
   const bgDarkness = scrollProgress * 0.1;
   const backgroundColor = `rgba(140, 228, 255, ${1 - bgDarkness})`;
@@ -122,9 +141,7 @@ export default function Home() {
           className="fixed z-40 left-1/2 pointer-events-none will-change-transform"
           style={{
             top: '50%',
-            transform: `translate(-50%, -50%) translateY(${shouldStick
-              ? (aboutOffset - 400) * 0.5 - (scrollY - (aboutOffset - 400))
-              : 280 + scrollY * (0.5 - 280 / (aboutOffset - 400 || 1))
+            transform: `translate(-50%, -50%) translateY(${shouldStick ? stickyY : parallaxY
               }px)`,
             opacity: 1,
           }}
@@ -149,9 +166,9 @@ export default function Home() {
           <div
             ref={aboutRef}
             id="about"
-            className="section-padding bg-white border-t border-gray-100 rounded-t-[40px] pt-[400px] md:pt-[450px]"
+            className="section-padding bg-white border-t border-gray-100 rounded-t-[40px] pt-32"
           >
-            <About hideImage={true} />
+            <About hideImage={true} triggerAnimation={shouldStick} />
           </div>
 
           <div id="skills" className="section-padding bg-[#F9FAFB]">
