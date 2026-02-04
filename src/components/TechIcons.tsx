@@ -7,6 +7,7 @@ interface IconProps {
 }
 
 // Helper to standardise generic icon wrapper
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SvgIcon = ({ className, size = 24, children, viewBox = "0 0 24 24", fill = "currentColor" }: any) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"

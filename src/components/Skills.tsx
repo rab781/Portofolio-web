@@ -2,7 +2,7 @@
 
 import { memo } from "react";
 import { motion } from "framer-motion";
-import { Code2, Brain, Globe, Wrench, Database } from "lucide-react";
+import { Code2, Brain, Globe, Wrench } from "lucide-react";
 import { skillCategories } from "@/data/skills";
 import * as TechIcons from "@/components/TechIcons";
 

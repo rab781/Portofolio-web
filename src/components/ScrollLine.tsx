@@ -23,21 +23,6 @@ export default function ScrollLine() {
 
     // Simple S-curve path generator based on height
     // Starts top-center, curves left, then right, then center
-    const width = 100; // Viewport width of SVG (not screen pixels)
-    const pathD = `
-    M ${width / 2} 0 
-    L ${width / 2} 200
-    C ${width / 2} 400, 0 600, 0 900
-    C 0 1200, ${width} 1500, ${width} 1800
-    C ${width} 2100, ${width / 2} 2400, ${width / 2} ${svgHeight}
-  `;
-
-    // A straight line with some wiggles is safer for responsive heights than complex curves
-    // Let's use a simpler "Timeline" style line that stays mostly central but has character
-    const simplePath = `
-    M 20 0 
-    L 20 ${svgHeight}
-  `;
 
     return (
         <div

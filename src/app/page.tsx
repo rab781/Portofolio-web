@@ -13,6 +13,8 @@ import Preloader from "@/components/Preloader";
 import ScrollLine from "@/components/ScrollLine";
 import Experience from "@/components/Experience";
 import Certificates from "@/components/Certificates";
+import HeroBackground from "@/components/HeroBackground";
+import MaskedReveal from "@/components/MaskedReveal";
 
 
 export default function Home() {
@@ -93,6 +95,8 @@ export default function Home() {
                 backgroundColor: backgroundColor,
               }}
             >
+              <HeroBackground />
+
               {/* Dark overlay that appears on scroll */}
               <div
                 className="absolute inset-0 bg-gradient-to-b from-gray-900/0 via-gray-900/50 to-gray-900/70 pointer-events-none transition-opacity duration-300"
@@ -111,18 +115,18 @@ export default function Home() {
                 variants={containerVariants}
               >
                 {/* Main Title with staggered animation */}
-                <div className="hero-title-wrapper overflow-hidden">
-                  <motion.h1 className="hero-title" variants={heroVariants}>
+                <MaskedReveal delay={0.2} className="mb-4">
+                  <h1 className="hero-title pt-4">
                     Mohammad Raihan Rabbani
-                  </motion.h1>
-                </div>
+                  </h1>
+                </MaskedReveal>
 
                 {/* Tagline */}
-                <div className="hero-tagline-wrapper overflow-hidden">
-                  <motion.h2 className="hero-tagline" variants={heroVariants}>
+                <MaskedReveal delay={0.4}>
+                  <h2 className="hero-tagline">
                     One Passionate Builder
-                  </motion.h2>
-                </div>
+                  </h2>
+                </MaskedReveal>
 
                 {/* CTA Buttons */}
                 <motion.div className="flex flex-wrap gap-4 justify-center pt-12 hero-cta" variants={heroVariants}>
