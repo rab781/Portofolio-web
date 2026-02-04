@@ -4,6 +4,7 @@ import { memo, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import CircularBadge from "./CircularBadge";
+import GeometricShards from "./GeometricShards";
 
 interface AboutProps {
   hideImage?: boolean;
@@ -156,6 +157,9 @@ function About({ hideImage = false, triggerAnimation = false }: AboutProps) {
             <div className="absolute -top-12 -right-12 hidden md:block z-10">
               <CircularBadge text="AVAILABLE FOR HIRE • NOW •" radius={60} className="text-[#111111]" />
             </div>
+
+            {/* Geometric Elements */}
+            <GeometricShards />
           </div>
         )}
       </div>

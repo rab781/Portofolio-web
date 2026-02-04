@@ -8,7 +8,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
 
     useEffect(() => {
         // Counter animation from 0 to 100
-        const duration = 2000; // 2 seconds loading
+        const duration = 1000; // 2 seconds loading
         const steps = 20;
         const intervalTime = duration / steps;
 
@@ -35,7 +35,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
 
     return (
         <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#111111] text-white"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#ffffff] text-black"
             initial={{ y: 0 }}
             exit={{ y: "-100%", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
         >

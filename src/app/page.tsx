@@ -14,6 +14,7 @@ import Experience from "@/components/Experience";
 import Certificates from "@/components/Certificates";
 import HeroBackground from "@/components/HeroBackground";
 import MaskedReveal from "@/components/MaskedReveal";
+import GeometricShards from "@/components/GeometricShards";
 
 
 export default function Home() {
@@ -36,7 +37,7 @@ export default function Home() {
   const vh = typeof window !== 'undefined' ? window.innerHeight : 900;
 
   // The exact Y position (relative to document) where we want the image CENTER to land
-  const stickyTargetY = aboutOffset + 1020;
+  const stickyTargetY = aboutOffset + 690;
 
   // The scroll position where stickyTargetY exactly hits the middle of the viewport
   const triggerScroll = stickyTargetY - (vh / 2);
@@ -192,9 +193,12 @@ export default function Home() {
                       src="/cartoon-pose.png"
                       alt="Raihan Rabbani"
                       fill
-                      className="object-cover filter hover:grayscale-0 transition-all duration-700 drop-shadow-2xl"
+                      className="object-cover filter hover:grayscale-0 transition-all duration-700 drop-shadow-2xl relative z-10"
                       priority
                     />
+
+                    {/* Geometric Elements behind character */}
+                    <GeometricShards />
 
                     {/* Floating Badge - Follows Image */}
                     <motion.div
