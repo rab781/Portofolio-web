@@ -3,6 +3,15 @@
 import { useState, useEffect, memo } from "react";
 import { Menu, X } from "lucide-react";
 
+const navLinks = [
+  { href: "#home", label: "Home" },
+  { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+  { href: "#contact", label: "Contact" },
+];
+
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -32,16 +41,9 @@ function Navigation() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [navLinks]);
 
-  const navLinks = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#skills", label: "Skills" },
-    { href: "#projects", label: "Projects" },
-    { href: "#experience", label: "Experience" },
-    { href: "#contact", label: "Contact" },
-  ];
+
 
   return (
     <div className="fixed top-6 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8">
@@ -67,8 +69,8 @@ function Navigation() {
                     key={link.href}
                     href={link.href}
                     className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${isActive
-                        ? "bg-[#111111] text-white shadow-md transform scale-105"
-                        : "text-gray-600 hover:text-[#FFA239] hover:bg-gray-50"
+                      ? "bg-[#111111] text-white shadow-md transform scale-105"
+                      : "text-gray-600 hover:text-[#FFA239] hover:bg-gray-50"
                       }`}
                   >
                     {link.label}
@@ -101,8 +103,8 @@ function Navigation() {
                     key={link.href}
                     href={link.href}
                     className={`block px-4 py-3 rounded-xl text-base font-semibold transition-colors ${isActive
-                        ? "bg-[#FEEE91] text-[#111111]" // Active mobile style (Pop Yellow)
-                        : "text-gray-600 hover:text-[#FFA239] hover:bg-gray-50"
+                      ? "bg-[#FEEE91] text-[#111111]" // Active mobile style (Pop Yellow)
+                      : "text-gray-600 hover:text-[#FFA239] hover:bg-gray-50"
                       }`}
                     onClick={() => setIsOpen(false)}
                   >

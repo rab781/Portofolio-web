@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Github, ExternalLink, Brain, CheckCircle } from "lucide-react";
+import type { Project } from "@/types/project";
 import MaskedReveal from "@/components/MaskedReveal";
 import GeometricShards from "@/components/GeometricShards";
 
-export default function ProjectClientWrapper({ project }: { project: any }) {
+export default function ProjectClientWrapper({ project }: { project: Project }) {
     return (
         <article className="min-h-screen bg-[#8CE4FF] text-[#111111] selection:bg-orange-100 selection:text-orange-900 overflow-hidden relative">
 
