@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 
-export default function Contact() {
+function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -165,3 +165,5 @@ export default function Contact() {
     </div>
   );
 }
+
+export default memo(Contact);

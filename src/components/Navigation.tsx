@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { Menu, X } from "lucide-react";
 
-export default function Navigation() {
+function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -86,3 +86,5 @@ export default function Navigation() {
     </div>
   );
 }
+
+export default memo(Navigation);

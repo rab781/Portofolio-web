@@ -7,7 +7,6 @@ import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
-import { ArrowDown } from "lucide-react";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -15,8 +14,15 @@ export default function Home() {
   const aboutRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -45,7 +51,6 @@ export default function Home() {
 
   // Font scaling (100% to 70%)
   const fontScale = 1 - (scrollProgress * 0.1);
-  const heroTranslateY = scrollY * 0.1;
 
   return (
     <div className="relative min-h-screen bg-[#8CE4FF] text-[#18181B] selection:bg-blue-100 selection:text-blue-900">
