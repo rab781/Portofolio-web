@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Code2, Brain, Globe, Wrench } from "lucide-react";
 import { skillCategories } from "@/data/skills";
 import type { LucideProps } from "lucide-react";
@@ -14,7 +15,7 @@ const getIcon = (iconName: string) => {
   return <IconComponent className="w-6 h-6" />;
 };
 
-export default function Skills() {
+function Skills() {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="mb-16">
@@ -65,3 +66,5 @@ export default function Skills() {
     </div>
   );
 }
+
+export default memo(Skills);

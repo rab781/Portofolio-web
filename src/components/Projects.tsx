@@ -1,9 +1,10 @@
+import { memo } from "react";
 import { Github, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { projects } from "@/data/projects";
 
-export default function Projects() {
+function Projects() {
   const displayedProjects = projects;
 
   return (
@@ -87,3 +88,5 @@ export default function Projects() {
     </div>
   );
 }
+
+export default memo(Projects);
