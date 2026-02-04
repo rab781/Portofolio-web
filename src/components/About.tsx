@@ -1,10 +1,11 @@
+import { memo } from "react";
 import Image from "next/image";
 
 interface AboutProps {
   hideImage?: boolean;
 }
 
-export default function About({ hideImage = false }: AboutProps) {
+function About({ hideImage = false }: AboutProps) {
   return (
     <div className="max-w-7xl mx-auto rounded-7xl bg-white/80 backdrop-blur-lg p-10 md:p-16 shadow-lg">
       <div className={`grid ${hideImage ? 'md:grid-cols-1' : 'md:grid-cols-2'} gap-16 items-start`}>
@@ -71,3 +72,5 @@ export default function About({ hideImage = false }: AboutProps) {
     </div>
   );
 }
+
+export default memo(About);
