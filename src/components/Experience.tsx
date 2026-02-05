@@ -4,28 +4,34 @@ import { useScroll, useSpring, motion, useTransform } from "framer-motion";
 import { Briefcase } from "lucide-react";
 import { useRef } from "react";
 
-// Mock Data - User can update this
 const experiences = [
     {
-        role: "Head of AI Research",
-        org: "University Tech Club",
-        period: "2023 - Present",
-        desc: "Leading a team of 15 students in researching LLMs and Computer Vision methods for localized applications.",
-        tags: ["Leadership", "LLMs", "Research"]
+        role: "Head of Practicum Assistant Division",
+        org: "Artificial Intelligence Laboratory",
+        period: "Jan 2025 - Present",
+        desc: "Coordinated practicum execution for 12 core courses including Machine Learning and Deep Learning. Led a team of assistants, managed teaching standards, and provided technical mentoring for new staff.",
+        tags: ["Management", "Leadership", "Technical Mentoring"]
     },
     {
-        role: "Full Stack Developer Intern",
-        org: "Tech Solutions Inc.",
-        period: "2022 - 2023",
-        desc: "Developed scalable APIs and optimized database queries for high-volume traffic, reducing latency by 40%.",
-        tags: ["React", "Node.js", "Performance"]
+        role: "Head of Strategic Studies & Action",
+        org: "Student Executive Board (BEM Fasilkom)",
+        period: "Jan 2025 - Present",
+        desc: "Led the division in formulating strategic issue studies and organizational stances. Managed staff performance to achieve effective work programs and advocated for student and social-political issues.",
+        tags: ["Strategic Leadership", "Public Advocacy", "Team Management"]
     },
     {
-        role: "Junior Web Developer",
-        org: "Creative Studio",
-        period: "2021 - 2022",
-        desc: "Built responsive frontend interfaces for 10+ client projects using React and Tailwind CSS.",
-        tags: ["Frontend", "UI/UX", "Tailwind"]
+        role: "Publication & Documentation Staff",
+        org: "Artificial Intelligence Laboratory",
+        period: "Jan 2024 - Dec 2024",
+        desc: "Managed lab branding through social media and campus communication channels to increase student awareness. Provided creative visual and documentation support for workshops and seminars.",
+        tags: ["Branding", "Social Media", "Event Support"]
+    },
+    {
+        role: "Student Advocacy & Welfare Staff",
+        org: "Student Executive Board (BEM Fasilkom)",
+        period: "Jan 2024 - Dec 2024",
+        desc: "Bridged communication between students and the dean's office regarding academic and facility issues. Handled student complaints responsively and provided tactical solutions for administrative problems.",
+        tags: ["Student Advocacy", "Problem Solving", "Communication"]
     }
 ];
 

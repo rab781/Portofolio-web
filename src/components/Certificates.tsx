@@ -2,40 +2,53 @@
 
 import { motion } from "framer-motion";
 import { Award, Calendar, ExternalLink, BadgeCheck } from "lucide-react";
+import Image from "next/image";
 
-// Mock Data
+// Real Data from Resume
 const certificates = [
     {
-        name: "TensorFlow Developer",
-        issuer: "Google",
+        name: "Belajar Dasar Data Science",
+        issuer: "Dicoding Indonesia",
         date: "2023",
-        // Using distinct gradients for variety while keeping it subtle
-        gradient: "from-orange-50 to-orange-100/50",
-        iconColor: "text-orange-600",
+        gradient: "from-blue-50 to-blue-100/50",
+        iconColor: "text-blue-600",
+        image: "/certificates/dicoding-placeholder.svg",
         url: "#"
     },
     {
-        name: "AWS Certified ML",
-        issuer: "Amazon Web Services",
+        name: "Belajar Dasar AI (Artificial Intelligence)",
+        issuer: "Dicoding Indonesia",
         date: "2023",
-        gradient: "from-slate-50 to-slate-100/50",
-        iconColor: "text-[#232F3E]", // AWS color
+        gradient: "from-purple-50 to-purple-100/50",
+        iconColor: "text-purple-600",
+        image: "/certificates/dicoding-placeholder.svg",
         url: "#"
     },
     {
-        name: "Deep Learning Specialization",
-        issuer: "DeepLearning.AI",
-        date: "2022",
+        name: "Belajar Dasar Visualisasi Data",
+        issuer: "Dicoding Indonesia",
+        date: "2023",
+        gradient: "from-teal-50 to-teal-100/50",
+        iconColor: "text-teal-600",
+        image: "/certificates/dicoding-placeholder.svg",
+        url: "#"
+    },
+    {
+        name: "Belajar Dasar Structured Query Language (SQL)",
+        issuer: "Dicoding Indonesia",
+        date: "2023",
+        gradient: "from-indigo-50 to-indigo-100/50",
+        iconColor: "text-indigo-600",
+        image: "/certificates/dicoding-placeholder.svg",
+        url: "#"
+    },
+    {
+        name: "Belajar Pemrograman Prosedural dengan Python",
+        issuer: "Dicoding Indonesia",
+        date: "2023",
         gradient: "from-yellow-50 to-yellow-100/50",
         iconColor: "text-yellow-600",
-        url: "#"
-    },
-    {
-        name: "Data Scientist Associate",
-        issuer: "DataCamp",
-        date: "2021",
-        gradient: "from-green-50 to-green-100/50",
-        iconColor: "text-green-600",
+        image: "/certificates/dicoding-placeholder.svg",
         url: "#"
     }
 ];
@@ -89,7 +102,7 @@ export default function Certificates() {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ margin: "-50px" }}
-                    className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+                    className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
                     {certificates.map((cert, idx) => (
                         <motion.div
@@ -98,43 +111,54 @@ export default function Certificates() {
                             whileHover={{ y: -8 }}
                             className="group relative h-full"
                         >
-                            <div className={`
-                                h-full p-8 rounded-[2rem]
-                                bg-white/60 backdrop-blur-xl
-                                border border-white/60
-                                shadow-[0_4px_20px_-2px_rgba(0,0,0,0.02)]
-                                hover:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.05)]
+                            <div className="
+                                h-full rounded-[2rem]
+                                bg-white
+                                border border-gray-100
+                                shadow-sm
+                                hover:shadow-xl hover:shadow-gray-200/50
                                 transition-all duration-500
-                                flex flex-col justify-between
+                                flex flex-col
                                 overflow-hidden
-                           `}>
-                                {/* Gradient Background */}
-                                <div className={`absolute inset-0 bg-gradient-to-br ${cert.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-
-                                <div className="relative z-10">
-                                    <div className="flex justify-between items-start mb-8">
-                                        <div className={`p-3 rounded-2xl bg-white shadow-sm ring-1 ring-black/5 ${cert.iconColor}`}>
-                                            <BadgeCheck size={24} />
-                                        </div>
-                                        {/* External Link Icon (Implied Action) */}
-                                        <div className="text-gray-300 group-hover:text-gray-600 transition-colors">
-                                            <ExternalLink size={20} />
-                                        </div>
+                           ">
+                                {/* Image Section */}
+                                <div className="relative h-48 w-full overflow-hidden bg-gray-50 border-b border-gray-100">
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${cert.gradient} opacity-20`} />
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <Image
+                                            src={cert.image}
+                                            alt={cert.name}
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                        />
                                     </div>
-
-                                    <div className="mb-2">
-                                        <div className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
-                                            {cert.issuer}
-                                        </div>
-                                        <h3 className="text-lg font-bold text-gray-900 leading-snug group-hover:text-black transition-colors">
-                                            {cert.name}
-                                        </h3>
+                                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <ExternalLink size={18} className="text-gray-600" />
                                     </div>
                                 </div>
 
-                                <div className="relative z-10 pt-6 mt-6 border-t border-gray-100 group-hover:border-gray-200 transition-colors">
-                                    <div className="flex items-center gap-2 text-sm font-medium text-gray-500">
-                                        <Calendar size={14} className="text-gray-400" />
+                                {/* Content Section */}
+                                <div className="p-6 md:p-8 flex flex-col flex-grow justify-between relative">
+                                    {/* Subtle Gradient background on hover */}
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${cert.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none`} />
+
+                                    <div>
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className={`p-1.5 rounded-lg bg-gray-50 ring-1 ring-gray-100 ${cert.iconColor}`}>
+                                                <BadgeCheck size={18} />
+                                            </div>
+                                            <div className="text-xs font-bold uppercase tracking-widest text-gray-500">
+                                                {cert.issuer}
+                                            </div>
+                                        </div>
+
+                                        <h3 className="text-xl font-bold text-gray-900 leading-tight mb-2 group-hover:text-[#0D9488] transition-colors">
+                                            {cert.name}
+                                        </h3>
+                                    </div>
+
+                                    <div className="pt-6 mt-6 border-t border-gray-50 flex items-center gap-2 text-sm font-medium text-gray-400">
+                                        <Calendar size={14} />
                                         <span>Issued {cert.date}</span>
                                     </div>
                                 </div>
