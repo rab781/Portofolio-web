@@ -37,7 +37,7 @@ export default function Home() {
   const vh = typeof window !== 'undefined' ? window.innerHeight : 900;
 
   // The exact Y position (relative to document) where we want the image CENTER to land
-  const stickyTargetY = aboutOffset + 690;
+  const stickyTargetY = aboutOffset + (vh * 0.65);
 
   // The scroll position where stickyTargetY exactly hits the middle of the viewport
   const triggerScroll = stickyTargetY - (vh / 2);
@@ -106,7 +106,7 @@ export default function Home() {
               />
 
               <motion.div
-                className="text-center max-w-6xl mx-auto transition-all duration-300 relative z-10 -mt-80"
+                className="text-center max-w-6xl mx-auto transition-all duration-300 relative z-10 -mt-[15vh] pt-20"
                 style={{
                   transform: `scale(${fontScale})`
                 }}
@@ -143,7 +143,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 1.5, duration: 1 } }}
-                className="absolute bottom-20 left-1/2 -translate-x-1/2 transition-opacity duration-300 z-10"
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 transition-opacity duration-300 z-10"
                 style={{
                   opacity: 1 - scrollProgress,
                   animation: scrollProgress < 0.5 ? 'bounce 2s infinite' : 'none'
@@ -163,7 +163,7 @@ export default function Home() {
                 opacity: 1,
               }}
             >
-              <div className="relative w-[280px] h-[450px] md:w-[400px] md:h-[650px]">
+              <div className="relative w-auto h-[55vh] md:h-[65vh] max-h-[650px] aspect-[400/650]">
                 {/* Entrance Animation Wrapper */}
                 <motion.div
                   initial={{ scale: 0.5, opacity: 0, y: 100 }}
@@ -193,7 +193,7 @@ export default function Home() {
                       src="/cartoon-pose.png"
                       alt="Raihan Rabbani"
                       fill
-                      className="object-cover filter hover:grayscale-0 transition-all duration-700 drop-shadow-2xl relative z-10"
+                      className="object-contain filter hover:grayscale-0 transition-all duration-700 drop-shadow-2xl relative z-10"
                       priority
                     />
 

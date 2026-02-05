@@ -112,7 +112,7 @@ body {
 
   /* Hero Section Styles - Inspired by mindmarket.com */
   .hero-title {
-    font-size: clamp(4.5rem, 8vw + 1rem, 10rem);
+    font-size: clamp(3.5rem, 6vw + 1rem, 9rem);
     font-weight: 700;
     line-height: 0.95;
     letter-spacing: -0.03em;
