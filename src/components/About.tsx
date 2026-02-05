@@ -4,7 +4,7 @@ import { memo, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import CircularBadge from "./CircularBadge";
-import GeometricShards from "./GeometricShards";
+import MagneticPortrait from "./MagneticPortrait";
 
 interface AboutProps {
   hideImage?: boolean;
@@ -141,29 +141,13 @@ function About({ hideImage = false, triggerAnimation = false }: AboutProps) {
 
         {/* Image Column - Hidden when hideImage is true */}
         {!hideImage && (
-          <div className="relative group pt-20">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gray-100">
-              <Image
-                src="/cartoon-pose.png"
-                alt="Raihan Rabbani"
-                width={600}
-                height={750}
-                className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105 filter grayscale hover:grayscale-0"
-              />
-            </div>
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse"></div>
-
-            {/* Badge overlap for desktop default view */}
-            <div className="absolute -top-12 -right-12 hidden md:block z-10">
-              <CircularBadge text="AVAILABLE FOR HIRE • NOW •" radius={60} className="text-[#111111]" />
-            </div>
-
-            {/* Geometric Elements */}
-            <GeometricShards />
+          <div className="pt-20 md:pt-0">
+            <MagneticPortrait />
           </div>
         )}
       </div>
-    </motion.div>
+
+    </motion.div >
   );
 }
 
