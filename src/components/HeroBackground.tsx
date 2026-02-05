@@ -1,22 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
 
 export default function HeroBackground() {
     const [mounted, setMounted] = useState(false);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const requestRef = useRef<number>(0);
 
     useEffect(() => {
         setMounted(true);
+        // ⚡ Bolt: Throttled mouse move handler using requestAnimationFrame
+        // Reduces main thread work by syncing updates with screen refresh
         const handleMouseMove = (e: MouseEvent) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
+            if (requestRef.current) return;
+            requestRef.current = requestAnimationFrame(() => {
+                setMousePosition({ x: e.clientX, y: e.clientY });
+                requestRef.current = 0;
+            });
         };
         window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            if (requestRef.current) cancelAnimationFrame(requestRef.current);
+        };
     }, []);
-
-    if (!mounted) return null;
 
     // Grid configuration
     const gridSize = 40;
@@ -24,13 +32,17 @@ export default function HeroBackground() {
     const numCols = 30;
 
     // Generate random blinking cells
-    const blinkingCells = Array.from({ length: 40 }).map((_, i) => ({
+    // ⚡ Bolt: Memoized to prevent regenerating 40 objects on every render/mouse move
+    const blinkingCells = useMemo(() => Array.from({ length: 40 }).map((_, i) => ({
         id: i,
         row: Math.floor(Math.random() * numRows),
         col: Math.floor(Math.random() * numCols),
         duration: 2 + Math.random() * 3,
         delay: Math.random() * 5,
-    }));
+    })), []);
+
+    // Hooks must be called before conditional return
+    if (!mounted) return null;
 
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
