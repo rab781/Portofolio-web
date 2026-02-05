@@ -1,9 +1,0 @@
-
-> nest.js@0.1.0 lint
-> next lint
-
-
-./src/components/About.tsx
-100:12  Error: Parsing error: Expected corresponding JSX closing tag for 'motion.div'.
-
-info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules

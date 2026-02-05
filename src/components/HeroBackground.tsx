@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, memo } from "react";
 import { motion } from "framer-motion";
 
-export default function HeroBackground() {
+function HeroBackground() {
     const [mounted, setMounted] = useState(false);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -16,21 +16,23 @@ export default function HeroBackground() {
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, []);
 
-    if (!mounted) return null;
-
     // Grid configuration
     const gridSize = 40;
     const numRows = 20;
     const numCols = 30;
 
     // Generate random blinking cells
-    const blinkingCells = Array.from({ length: 40 }).map((_, i) => ({
+    // Optimized: Memoized to prevent regeneration on every render/mouse move
+    // This stops the cells from jumping around chaotically when the mouse moves
+    const blinkingCells = useMemo(() => Array.from({ length: 40 }).map((_, i) => ({
         id: i,
         row: Math.floor(Math.random() * numRows),
         col: Math.floor(Math.random() * numCols),
         duration: 2 + Math.random() * 3,
         delay: Math.random() * 5,
-    }));
+    })), [numRows, numCols]);
+
+    if (!mounted) return null;
 
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -83,3 +85,5 @@ export default function HeroBackground() {
         </div>
     );
 }
+
+export default memo(HeroBackground);
