@@ -64,8 +64,15 @@ function Projects() {
                   <ArrowUpRight className="ml-2 w-5 h-5 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
-                {index === 0 && ( // Example of conditional extra button
-                  <a href="https://github.com/rab781" target="_blank" className="text-gray-400 hover:text-[#111111]">
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-[#111111]"
+                    aria-label="View source code on GitHub"
+                    title="View source code on GitHub"
+                  >
                     <Github size={24} />
                   </a>
                 )}
