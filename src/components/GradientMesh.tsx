@@ -23,6 +23,7 @@ export default function GradientMesh() {
             duration: 15,
             repeat: Infinity,
             repeatType: "mirror" as const,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ease: [0.4, 0.0, 0.2, 1] as any,
             delay: delay,
         },

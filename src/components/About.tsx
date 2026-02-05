@@ -1,7 +1,6 @@
 'use client';
 
 import { memo, useEffect, useRef } from "react";
-import Image from "next/image";
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import CircularBadge from "./CircularBadge";
 import MagneticPortrait from "./MagneticPortrait";
