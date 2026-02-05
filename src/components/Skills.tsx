@@ -89,11 +89,12 @@ const MarqueeRow = ({
               flex flex-col items-center justify-center
               w-[160px] h-[160px] sm:w-[180px] sm:h-[180px]
               rounded-2xl
-              bg-white/40 backdrop-blur-md
-              border border-white/60
-              shadow-[0_4px_20px_-2px_rgba(0,0,0,0.02)]
-              hover:shadow-[0_20px_40px_-4px_rgba(0,0,0,0.05)]
-              hover:bg-white/80
+              bg-gray-100/50 backdrop-blur-md
+              border border-gray-200/60
+              shadow-sm
+              hover:shadow-lg
+              hover:bg-white
+              hover:border-gray-200
               hover:scale-105
               transition-all duration-500 ease-out
               cursor-default
@@ -104,17 +105,13 @@ const MarqueeRow = ({
             <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/[0.02] opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
 
             {/* Icon Container */}
-            <div className={`
+            <div className="
               mb-4 p-4 rounded-2xl
-              bg-white/50
+              bg-white/90
               shadow-sm
               group-hover/card:scale-110 group-hover/card:shadow-md
               transition-all duration-500
-              ${skill.proficiency === 'expert' ? 'text-black' :
-                skill.proficiency === 'advanced' ? 'text-blue-600' :
-                  'text-orange-600'
-              }
-            `}>
+            ">
               <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center">
                 {getSkillIcon(skill.name, skill.icon)}
               </div>

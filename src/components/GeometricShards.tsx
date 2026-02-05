@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 export default function GeometricShards() {
     return (
         <div className="absolute inset-0 pointer-events-none z-[-1]" style={{ perspective: "1000px" }}>
-            {/* White Triangles - 3D Float */}
+            {/* red Triangles - 3D Float */}
             <motion.div
-                className="absolute w-28 h-28 bg-white shadow-xl backdrop-blur-sm"
+                className="absolute w-28 h-28 bg-red-500 shadow-xl backdrop-blur-sm"
                 style={{
                     top: "20%",
                     left: "-10%",
@@ -29,7 +29,7 @@ export default function GeometricShards() {
                 }}
             />
             <motion.div
-                className="absolute w-20 h-20 bg-white/90 shadow-lg backdrop-blur-md"
+                className="absolute w-20 h-20 bg-red-500 shadow-lg backdrop-blur-md"
                 style={{
                     top: "60%",
                     right: "-15%",
