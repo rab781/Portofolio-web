@@ -24,12 +24,26 @@ export default function Home() {
   const aboutRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let ticking = false;
+    let animationFrameId: number;
+
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (!ticking) {
+        animationFrameId = window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, []);
 
   // Calculate if image should stick to About section
