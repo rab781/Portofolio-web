@@ -85,6 +85,7 @@ function Projects() {
                 src={project.image}
                 alt={project.title}
                 fill
+                sizes="(max-width: 767px) 100vw, 50vw"
                 className="object-cover transition-transform duration-700 hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/5 hover:bg-transparent transition-colors duration-300"></div>
