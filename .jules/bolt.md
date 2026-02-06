@@ -6,6 +6,6 @@
 **Learning:** The `Navigation` component was calling `getBoundingClientRect` synchronously inside an unthrottled scroll listener. This forces the browser to recalculate layout on every scroll event, causing significant main thread blocking and jank.
 **Action:** Throttle scroll handlers with `requestAnimationFrame` when performing layout measurements, and use `{ passive: true }` for listeners to allow threaded scrolling.
 
-## 2026-05-21 - [Replacing Scroll Loop with IntersectionObserver]
-**Learning:** Iterating through elements to check position via `getBoundingClientRect` inside a scroll loop is inefficient (O(N) * Scroll Freq). `IntersectionObserver` provides a more performant, asynchronous API for detecting element visibility without polling.
-**Action:** Replace scroll-based visibility checks with `IntersectionObserver` where possible to offload geometric calculations to the browser engine and avoid layout thrashing.
+## 2025-02-23 - [Unused Dependency Verification]
+**Learning:** Task descriptions or automated tools may incorrectly identify dependencies as unused (e.g., `framer-motion` was flagged but heavily used). Removing them without verification breaks the application.
+**Action:** Always verify "unused" dependencies by searching the codebase (e.g., `grep`) before removal to ensure correctness.
