@@ -5,3 +5,7 @@
 ## 2026-02-06 - [Synchronous Layout Thrashing in Scroll Handlers]
 **Learning:** The `Navigation` component was calling `getBoundingClientRect` synchronously inside an unthrottled scroll listener. This forces the browser to recalculate layout on every scroll event, causing significant main thread blocking and jank.
 **Action:** Throttle scroll handlers with `requestAnimationFrame` when performing layout measurements, and use `{ passive: true }` for listeners to allow threaded scrolling.
+
+## 2025-02-23 - [Unused Dependency Verification]
+**Learning:** Task descriptions or automated tools may incorrectly identify dependencies as unused (e.g., `framer-motion` was flagged but heavily used). Removing them without verification breaks the application.
+**Action:** Always verify "unused" dependencies by searching the codebase (e.g., `grep`) before removal to ensure correctness.
