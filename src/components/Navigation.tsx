@@ -18,32 +18,16 @@ function Navigation() {
   const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    // ⚡ Bolt: Throttled scroll handler using requestAnimationFrame
-    // Reduces main thread blocking by preventing excessive layout recalculations
+    // ⚡ Bolt: Throttled scroll handler for navbar background
     let ticking = false;
-    const sections = navLinks.map((link) => link.href.substring(1));
 
     const handleScroll = () => {
       if (!ticking) {
+        ticking = true;
         window.requestAnimationFrame(() => {
           setScrolled(window.scrollY > 20);
-
-          // Find the current section
-          for (const section of sections) {
-            const element = document.getElementById(section);
-            if (element) {
-              const rect = element.getBoundingClientRect();
-              // If the section top is near the top of viewport (with some buffer)
-              // Or if we are near bottom of page and contact is last
-              if (rect.top <= 150 && rect.bottom >= 150) {
-                setActiveSection(section);
-                break;
-              }
-            }
-          }
           ticking = false;
         });
-        ticking = true;
       }
     };
 
@@ -51,7 +35,32 @@ function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    // ⚡ Bolt: IntersectionObserver for active section detection
+    // Removes O(N) getBoundingClientRect calls during scroll
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-150px 0px -50% 0px", // Approximate 'top 150px' logic
+      }
+    );
 
+    const sections = navLinks.map((link) => link.href.substring(1));
+    sections.forEach((section) => {
+      const element = document.getElementById(section);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="fixed top-4 md:top-6 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8">
