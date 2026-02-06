@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, memo } from "react";
-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { useState, memo, useEffect, useRef } from "react";
+import { Mail, Phone, MapPin, ArrowRight, CheckCircle } from "lucide-react";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -12,6 +12,19 @@ function Contact() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const timeoutRef = useRef<NodeJS.Timeout>(null);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -23,7 +36,17 @@ function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    setSubmitStatus('idle');
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    if (!isMounted.current) return;
+
     console.log("Form submitted:", formData);
     setFormData({
       name: "",
@@ -32,7 +55,14 @@ function Contact() {
       message: "",
     });
     setIsSubmitting(false);
-    alert("Message sent successfully!");
+    setSubmitStatus('success');
+
+    // Reset status after 5 seconds
+    timeoutRef.current = setTimeout(() => {
+      if (isMounted.current) {
+        setSubmitStatus('idle');
+      }
+    }, 5000);
   };
 
   return (
@@ -86,7 +116,9 @@ function Contact() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-bold text-gray-700 mb-2">Name</label>
+                <label htmlFor="name" className="block text-sm font-bold text-gray-700 mb-2">
+                  Name <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
                   id="name"
@@ -99,7 +131,9 @@ function Contact() {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">Email</label>
+                <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">
+                  Email <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="email"
                   id="email"
@@ -114,7 +148,9 @@ function Contact() {
             </div>
 
             <div>
-              <label htmlFor="subject" className="block text-sm font-bold text-gray-700 mb-2">Subject</label>
+              <label htmlFor="subject" className="block text-sm font-bold text-gray-700 mb-2">
+                Subject <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 id="subject"
@@ -128,7 +164,9 @@ function Contact() {
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2">Message</label>
+              <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2">
+                Message <span className="text-red-500">*</span>
+              </label>
               <textarea
                 id="message"
                 name="message"
@@ -149,6 +187,17 @@ function Contact() {
               {isSubmitting ? "Sending..." : "Send Message"}
               {!isSubmitting && <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />}
             </button>
+
+            {submitStatus === 'success' && (
+              <div
+                role="status"
+                aria-live="polite"
+                className="mt-4 p-4 bg-green-50 text-green-800 rounded-lg flex items-center animate-in fade-in slide-in-from-bottom-2 border border-green-100"
+              >
+                <CheckCircle className="w-5 h-5 mr-2 shrink-0" />
+                <span>Message sent successfully! I&apos;ll get back to you soon.</span>
+              </div>
+            )}
           </form>
         </div>
       </div>
