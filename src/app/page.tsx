@@ -207,6 +207,7 @@ export default function Home() {
                       src="/cartoon-pose.png"
                       alt="Raihan Rabbani"
                       fill
+                      sizes="(max-width: 768px) 80vw, 400px"
                       className="object-contain filter hover:grayscale-0 transition-all duration-700 drop-shadow-2xl relative z-10"
                       priority
                     />
