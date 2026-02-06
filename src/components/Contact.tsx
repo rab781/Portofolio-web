@@ -4,13 +4,6 @@ import { useState, memo, useEffect, useRef } from "react";
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle } from "lucide-react";
 
 function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const timeoutRef = useRef<NodeJS.Timeout>(null);
@@ -26,15 +19,9 @@ function Contact() {
     };
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -42,18 +29,23 @@ function Contact() {
       clearTimeout(timeoutRef.current);
     }
 
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      subject: formData.get('subject'),
+      message: formData.get('message'),
+    };
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     if (!isMounted.current) return;
 
-    console.log("Form submitted:", formData);
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
+    console.log("Form submitted:", data);
+
+    form.reset();
+
     setIsSubmitting(false);
     setSubmitStatus('success');
 
@@ -123,8 +115,6 @@ function Contact() {
                   type="text"
                   id="name"
                   name="name"
-                  value={formData.name}
-                  onChange={handleChange}
                   required
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                   placeholder="John Doe"
@@ -138,8 +128,6 @@ function Contact() {
                   type="email"
                   id="email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleChange}
                   required
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                   placeholder="john@example.com"
@@ -155,8 +143,6 @@ function Contact() {
                 type="text"
                 id="subject"
                 name="subject"
-                value={formData.subject}
-                onChange={handleChange}
                 required
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                 placeholder="Project Inquiry"
@@ -170,8 +156,6 @@ function Contact() {
               <textarea
                 id="message"
                 name="message"
-                value={formData.message}
-                onChange={handleChange}
                 required
                 rows={4}
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all resize-none"
