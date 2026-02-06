@@ -18,28 +18,36 @@ function Navigation() {
   const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
+    // ⚡ Bolt: Throttled scroll handler using requestAnimationFrame
+    // Reduces main thread blocking by preventing excessive layout recalculations
+    let ticking = false;
+    const sections = navLinks.map((link) => link.href.substring(1));
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
 
-      // Active Section Logic
-      const sections = navLinks.map(link => link.href.substring(1)); // ['home', 'about', ...]
-
-      // Find the current section
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          // If the section top is near the top of viewport (with some buffer)
-          // Or if we are near bottom of page and contact is last
-          if (rect.top <= 150 && rect.bottom >= 150) {
-            setActiveSection(section);
-            break;
+          // Find the current section
+          for (const section of sections) {
+            const element = document.getElementById(section);
+            if (element) {
+              const rect = element.getBoundingClientRect();
+              // If the section top is near the top of viewport (with some buffer)
+              // Or if we are near bottom of page and contact is last
+              if (rect.top <= 150 && rect.bottom >= 150) {
+                setActiveSection(section);
+                break;
+              }
+            }
           }
-        }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
