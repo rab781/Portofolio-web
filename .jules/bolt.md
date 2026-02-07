@@ -9,3 +9,7 @@
 ## 2025-02-23 - [Unused Dependency Verification]
 **Learning:** Task descriptions or automated tools may incorrectly identify dependencies as unused (e.g., `framer-motion` was flagged but heavily used). Removing them without verification breaks the application.
 **Action:** Always verify "unused" dependencies by searching the codebase (e.g., `grep`) before removal to ensure correctness.
+
+## 2025-05-30 - [Global Scroll State Reactivity]
+**Learning:** `Home` component was updating state on every scroll event (throttled by rAF) which triggered re-renders of the entire page tree. Even with rAF, continuous re-renders at 60fps are expensive for complex component trees.
+**Action:** Use `framer-motion`'s `useScroll` and `useTransform` to bind scroll position directly to DOM styles, bypassing React's render cycle completely for scroll animations.
