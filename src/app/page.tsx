@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import About from "@/components/About";
@@ -18,57 +18,74 @@ import GeometricShards from "@/components/GeometricShards";
 
 
 export default function Home() {
-  const [scrollY, setScrollY] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const imageRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
 
+  // ⚡ Bolt: Use useScroll hook for performant scroll tracking without re-renders
+  const { scrollY } = useScroll();
+  const [shouldStick, setShouldStick] = useState(false);
+
+  // Layout metrics
+  const [metrics, setMetrics] = useState({ triggerScroll: 1000, stickyTargetY: 1000 });
+
   useEffect(() => {
-    let ticking = false;
-    let animationFrameId: number;
+    const updateMetrics = () => {
+      const vh = window.innerHeight;
+      const aboutOffset = aboutRef.current?.offsetTop || 1000;
+      // The exact Y position (relative to document) where we want the image CENTER to land
+      const stickyTargetY = aboutOffset + (vh * 0.65);
+      // The scroll position where stickyTargetY exactly hits the middle of the viewport
+      const triggerScroll = stickyTargetY - (vh / 2);
 
-    const handleScroll = () => {
-      if (!ticking) {
-        animationFrameId = window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
+      setMetrics({ triggerScroll, stickyTargetY });
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (animationFrameId) {
-        window.cancelAnimationFrame(animationFrameId);
-      }
-    };
-  }, []);
+    // Initial calculation
+    updateMetrics();
 
-  // Calculate if image should stick to About section
-  const aboutOffset = aboutRef.current?.offsetTop || 1000;
-  const vh = typeof window !== 'undefined' ? window.innerHeight : 900;
+    // Recalculate on resize
+    window.addEventListener('resize', updateMetrics);
+    return () => window.removeEventListener('resize', updateMetrics);
+  }, [isLoading]); // Recalculate when loading state changes (content might shift)
 
-  // The exact Y position (relative to document) where we want the image CENTER to land
-  const stickyTargetY = aboutOffset + (vh * 0.65);
+  const { triggerScroll } = metrics;
 
-  // The scroll position where stickyTargetY exactly hits the middle of the viewport
-  const triggerScroll = stickyTargetY - (vh / 2);
-
-  const shouldStick = scrollY >= triggerScroll;
+  // ⚡ Bolt: Only update state when crossing the threshold to minimize re-renders
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const isSticking = latest >= triggerScroll;
+    if (isSticking !== shouldStick) {
+      setShouldStick(isSticking);
+    }
+  });
 
   // ANIMATION LOGIC:
   const startY = 280;
-  const parallaxY = startY * (1 - (scrollY / (triggerScroll || 1)));
-  const stickyY = stickyTargetY - (scrollY + (vh / 2));
+
+  // ⚡ Bolt: Calculate transforms directly from scrollY MotionValue
+  // This bypasses React render cycle for smooth 60fps animations
+  const imageY = useTransform(scrollY, (y) => {
+    if (y < triggerScroll) {
+      // Parallax effect
+      return startY * (1 - (y / (triggerScroll || 1)));
+    } else {
+      // Sticky effect: stick to the target position relative to viewport
+      // stickyY = stickyTargetY - (scrollY + vh/2)
+      // Since triggerScroll = stickyTargetY - vh/2
+      // stickyY = triggerScroll - scrollY
+      return triggerScroll - y;
+    }
+  });
 
   const maxScroll = 500;
-  const scrollProgress = Math.min(scrollY / maxScroll, 1);
-  const bgDarkness = scrollProgress * 0.1;
-  const backgroundColor = `rgba(140, 228, 255, ${1 - bgDarkness})`;
-  const overlayOpacity = scrollProgress * 0.6;
-  const fontScale = 1 - (scrollProgress * 0.1);
+  const scrollProgress = useTransform(scrollY, [0, maxScroll], [0, 1], { clamp: true });
+
+  const backgroundColor = useTransform(scrollProgress, [0, 1], ['rgba(140, 228, 255, 1)', 'rgba(140, 228, 255, 0.9)']);
+  const overlayOpacity = useTransform(scrollProgress, [0, 1], [0, 0.6]);
+  const fontScale = useTransform(scrollProgress, [0, 1], [1, 0.9]);
+
+  const scrollIndicatorOpacity = useTransform(scrollProgress, [0, 1], [1, 0]);
+  const scrollIndicatorAnimation = useTransform(scrollProgress, (v) => v < 0.5 ? 'bounce 2s infinite' : 'none');
 
   // Hero Animation Variants
   const heroVariants = {
@@ -102,7 +119,7 @@ export default function Home() {
           <main className="relative">
 
             {/* HERO SECTION - Fixed in center, will be covered by sections below */}
-            <section
+            <motion.section
               id="home"
               className="fixed top-0 left-0 w-full h-screen flex items-center justify-center px-6 transition-colors duration-300"
               style={{
@@ -112,7 +129,7 @@ export default function Home() {
               <HeroBackground />
 
               {/* Dark overlay that appears on scroll */}
-              <div
+              <motion.div
                 className="absolute inset-0 bg-gradient-to-b from-gray-900/0 via-gray-900/50 to-gray-900/70 pointer-events-none transition-opacity duration-300"
                 style={{
                   opacity: overlayOpacity
@@ -122,7 +139,7 @@ export default function Home() {
               <motion.div
                 className="text-center max-w-6xl mx-auto transition-all duration-300 relative z-10 -mt-[15vh] pt-20"
                 style={{
-                  transform: `scale(${fontScale})`
+                  scale: fontScale
                 }}
                 initial="hidden"
                 animate="visible"
@@ -159,21 +176,22 @@ export default function Home() {
                 animate={{ opacity: 1, transition: { delay: 1.5, duration: 1 } }}
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 transition-opacity duration-300 z-10"
                 style={{
-                  opacity: 1 - scrollProgress,
-                  animation: scrollProgress < 0.5 ? 'bounce 2s infinite' : 'none'
+                  opacity: scrollIndicatorOpacity,
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  animation: scrollIndicatorAnimation as any // Cast to any because MotionValue<string> isn't perfectly typed for animation prop but works
                 }}
               >
               </motion.div>
-            </section>
+            </motion.section>
 
             {/* Animated Profile Image */}
-            <div
+            <motion.div
               ref={imageRef}
               className="fixed z-40 left-1/2 pointer-events-none will-change-transform"
               style={{
                 top: '50%',
-                transform: `translate(-50%, -50%) translateY(${shouldStick ? stickyY : parallaxY
-                  }px)`,
+                x: "-50%",
+                y: imageY,
                 opacity: 1,
               }}
             >
@@ -233,7 +251,7 @@ export default function Home() {
                   </motion.div>
                 </motion.div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Spacer */}
             <div className="h-screen" />

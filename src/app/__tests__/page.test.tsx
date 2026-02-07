@@ -71,12 +71,18 @@ jest.mock('next/image', () => ({
 }));
 
 // Mock framer-motion
-jest.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-}));
+jest.mock('framer-motion', () => {
+  return {
+    motion: {
+      div: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,
+      section: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <section {...props}>{children}</section>,
+    },
+    AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+    useScroll: () => ({ scrollY: { on: jest.fn(), get: () => 0, onChange: jest.fn() } }),
+    useTransform: () => ({ get: () => 0 }),
+    useMotionValueEvent: jest.fn(),
+  };
+});
 
 describe('Home Page Scroll Performance', () => {
   beforeEach(() => {
@@ -88,7 +94,7 @@ describe('Home Page Scroll Performance', () => {
     jest.useRealTimers();
   });
 
-  it('throttles scroll updates using requestAnimationFrame', () => {
+  it('optimizes scroll updates to avoid re-rendering children', () => {
     jest.useFakeTimers();
     render(<Home />);
 
@@ -105,15 +111,16 @@ describe('Home Page Scroll Performance', () => {
         window.dispatchEvent(new Event('scroll'));
     });
 
-    // With optimization (RAF), render should NOT have happened yet because timer hasn't run.
+    // With useScroll and useTransform, Home component does NOT re-render on scroll
+    // because styles are updated directly on the DOM via MotionValues.
+    // Therefore, HeroBackground should NOT re-render.
     expect(HeroBackgroundMock).toHaveBeenCalledTimes(0);
 
-    // Execute pending timers / animation frames
+    // Even after running timers (if any were used), it should remain 0
     act(() => {
         jest.runAllTimers();
     });
 
-    // Now it should have rendered exactly once (reflecting the latest state)
-    expect(HeroBackgroundMock).toHaveBeenCalledTimes(1);
+    expect(HeroBackgroundMock).toHaveBeenCalledTimes(0);
   });
 });
