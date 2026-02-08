@@ -44,7 +44,7 @@ const getSkillsFromCategory = (indices: number[]) => {
     const category = skillCategories[idx];
     return category ? category.skills.map(skill => ({
       ...skill,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
       icon: category.icon as any // Pass parent category icon to skill
     })) : [];
   });
@@ -89,7 +89,7 @@ const MarqueeRow = ({
               flex flex-col items-center justify-center
               w-[160px] h-[160px] sm:w-[180px] sm:h-[180px]
               rounded-2xl
-              bg-gray-100/50 backdrop-blur-md
+              bg-[#D4D4D4] backdrop-blur-md
               border border-gray-200/60
               shadow-sm
               hover:shadow-lg
@@ -166,9 +166,9 @@ function Skills() {
       </div>
 
       <div className="space-y-2 relative z-10">
-        <MarqueeRow skills={row1} direction="left" speed={40} />
-        <MarqueeRow skills={row2} direction="right" speed={50} />
-        <MarqueeRow skills={row3} direction="left" speed={45} />
+        <MarqueeRow skills={row1} direction="left" speed={10} />
+        <MarqueeRow skills={row2} direction="right" speed={10} />
+        <MarqueeRow skills={row3} direction="left" speed={10} />
       </div>
 
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
