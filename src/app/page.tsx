@@ -99,7 +99,7 @@ export default function Home() {
         <>
           <Navigation />
 
-          <main className="relative">
+          <main id="main-content" className="relative">
 
             {/* HERO SECTION - Fixed in center, will be covered by sections below */}
             <section
