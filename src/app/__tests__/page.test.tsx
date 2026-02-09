@@ -74,8 +74,15 @@ jest.mock('next/image', () => ({
 jest.mock('framer-motion', () => ({
   motion: {
     div: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>,
+    section: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <section {...props}>{children}</section>,
   },
   AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  useScroll: () => ({ scrollY: { on: jest.fn(), get: () => 0 } }),
+  useTransform: () => ({ get: () => 0 }),
+  useMotionValue: (v: any) => ({ get: () => v, set: jest.fn() }),
+  useSpring: () => ({ get: () => 0 }),
+  useInView: () => false,
+  useMotionValueEvent: jest.fn(),
 }));
 
 describe('Home Page Scroll Performance', () => {
@@ -88,7 +95,7 @@ describe('Home Page Scroll Performance', () => {
     jest.useRealTimers();
   });
 
-  it('throttles scroll updates using requestAnimationFrame', () => {
+  it('avoids re-renders on scroll by using Framer Motion hooks directly', () => {
     jest.useFakeTimers();
     render(<Home />);
 
@@ -105,15 +112,13 @@ describe('Home Page Scroll Performance', () => {
         window.dispatchEvent(new Event('scroll'));
     });
 
-    // With optimization (RAF), render should NOT have happened yet because timer hasn't run.
-    expect(HeroBackgroundMock).toHaveBeenCalledTimes(0);
-
     // Execute pending timers / animation frames
     act(() => {
         jest.runAllTimers();
     });
 
-    // Now it should have rendered exactly once (reflecting the latest state)
-    expect(HeroBackgroundMock).toHaveBeenCalledTimes(1);
+    // With optimization using useScroll/useTransform, scroll events should NOT trigger React re-renders
+    // for child components like HeroBackground, as updates happen directly on DOM via Framer Motion.
+    expect(HeroBackgroundMock).toHaveBeenCalledTimes(0);
   });
 });

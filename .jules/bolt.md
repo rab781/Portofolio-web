@@ -9,3 +9,7 @@
 ## 2025-02-23 - [Unused Dependency Verification]
 **Learning:** Task descriptions or automated tools may incorrectly identify dependencies as unused (e.g., `framer-motion` was flagged but heavily used). Removing them without verification breaks the application.
 **Action:** Always verify "unused" dependencies by searching the codebase (e.g., `grep`) before removal to ensure correctness.
+
+## 2025-10-27 - [React Render Cycle Bypass]
+**Learning:** Even with `requestAnimationFrame`, updating React state (`useState`) on every frame triggers a full component re-render. For high-frequency updates like scroll animations, this is a performance bottleneck.
+**Action:** Replace state-driven animations with direct DOM manipulation libraries like Framer Motion's `useScroll`/`useTransform` to animate values off the main React thread.
