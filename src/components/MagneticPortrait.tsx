@@ -86,17 +86,18 @@ export default function MagneticPortrait() {
             onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative w-full aspect-[4/5] cursor-none perspective-1000 group" // cursor-none if we assume custom cursor handles it, otherwise default
+            className="relative w-full aspect-[4/5] cursor-none perspective-1000 group"
             style={{ perspective: 1000 }}
         >
             {/* 3D Container */}
+            {/* ⚡ Bolt: pointer-events-none ensures mouse events always target the parent, making offsetX reliable */}
             <motion.div
                 style={{
                     rotateX,
                     rotateY,
                     transformStyle: "preserve-3d",
                 }}
-                className="relative w-full h-full rounded-2xl bg-gray-100 shadow-xl transition-shadow duration-500 hover:shadow-2xl hover:shadow-blue-500/20"
+                className="relative w-full h-full rounded-2xl bg-gray-100 shadow-xl transition-shadow duration-500 hover:shadow-2xl hover:shadow-blue-500/20 pointer-events-none"
             >
                 {/* Background Elements (Depth -50) */}
                 <div
