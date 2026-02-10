@@ -8,9 +8,7 @@ import GeometricShards from "./GeometricShards";
 
 export default function MagneticPortrait() {
     const ref = useRef<HTMLDivElement>(null);
-    // ⚡ Bolt: Cache dimensions to avoid getBoundingClientRect thrashing
-    const widthRef = useRef(0);
-    const heightRef = useRef(0);
+    const rectRef = useRef<{ width: number; height: number; left: number; top: number } | null>(null);
 
     // Motion values for mouse position
     const x = useMotionValue(0);
@@ -29,40 +27,52 @@ export default function MagneticPortrait() {
     const bgX = useSpring(useTransform(x, [-0.5, 0.5], [20, -20]), springConfig);
     const bgY = useSpring(useTransform(y, [-0.5, 0.5], [20, -20]), springConfig);
 
-    // ⚡ Bolt: Track size with ResizeObserver instead of reading layout on every frame
+    // ⚡ Bolt: Invalidates cached rect on resize to ensure accuracy
     useEffect(() => {
-        if (!ref.current) return;
-
-        const observer = new ResizeObserver((entries) => {
-            for (const entry of entries) {
-                // Use contentRect which is efficient and available
-                widthRef.current = entry.contentRect.width;
-                heightRef.current = entry.contentRect.height;
-            }
-        });
-
-        observer.observe(ref.current);
-        return () => observer.disconnect();
+        const handleResize = () => {
+            rectRef.current = null;
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    const updateRect = () => {
+        if (!ref.current) return;
+        const rect = ref.current.getBoundingClientRect();
+        rectRef.current = {
+            width: rect.width,
+            height: rect.height,
+            left: rect.left + window.scrollX,
+            top: rect.top + window.scrollY
+        };
+    };
+
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const width = widthRef.current;
-        const height = heightRef.current;
+        if (!rectRef.current) {
+            updateRect();
+        }
 
-        // Prevent division by zero or invalid state
-        if (width === 0 || height === 0) return;
+        const rect = rectRef.current;
+        if (!rect) return;
 
-        // ⚡ Bolt: Use offsetX/Y (relative to target) instead of clientX/Y - rect.left/top
-        // This avoids getBoundingClientRect() which forces a synchronous layout (thrashing)
-        // We ensure e.target is always this container by setting pointer-events-none on children
-        const mouseX = e.nativeEvent.offsetX;
-        const mouseY = e.nativeEvent.offsetY;
+        const width = rect.width;
+        const height = rect.height;
+
+        // Normalized coordinates (-0.5 to 0.5)
+        // 0,0 is center
+        // ⚡ Bolt: Use pageX/Y and cached rect to avoid getBoundingClientRect thrashing
+        const mouseX = e.pageX - rect.left;
+        const mouseY = e.pageY - rect.top;
 
         const xPct = (mouseX / width) - 0.5;
         const yPct = (mouseY / height) - 0.5;
 
         x.set(xPct);
         y.set(yPct);
+    };
+
+    const handleMouseEnter = () => {
+        updateRect();
     };
 
     const handleMouseLeave = () => {
@@ -73,6 +83,7 @@ export default function MagneticPortrait() {
     return (
         <motion.div
             ref={ref}
+            onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             className="relative w-full aspect-[4/5] cursor-none perspective-1000 group"

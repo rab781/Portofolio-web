@@ -10,6 +10,6 @@
 **Learning:** Task descriptions or automated tools may incorrectly identify dependencies as unused (e.g., `framer-motion` was flagged but heavily used). Removing them without verification breaks the application.
 **Action:** Always verify "unused" dependencies by searching the codebase (e.g., `grep`) before removal to ensure correctness.
 
-## 2026-02-10 - [Layout Thrashing in Magnetic Component]
-**Learning:** `MagneticPortrait` used `getBoundingClientRect` synchronously within `mousemove`, forcing layout recalculation on every frame.
-**Action:** Use `ResizeObserver` to cache dimensions and `e.nativeEvent.offsetX/Y` (ensured by `pointer-events-none` on children) to avoid synchronous layout reads during interactions.
+## 2025-02-23 - [Layout Thrashing in Mouse Handlers]
+**Learning:** The `MagneticPortrait` component was calling `getBoundingClientRect` on every `mousemove` event. This forces synchronous layout recalculation on every frame of mouse movement, which is a performance bottleneck.
+**Action:** Cache the element's bounding rect on `mouseenter` (or first move) and invalidate on `resize`. Use `e.pageX/Y` (document relative) minus cached document position to calculate offsets, avoiding layout reads during animation loops.
