@@ -5,8 +5,13 @@ import { motion } from "framer-motion";
 import { Code2, Brain, Globe, Wrench } from "lucide-react";
 import { skillCategories } from "@/data/skills";
 import * as TechIcons from "@/components/TechIcons";
+import { Skill } from "@/types/skill";
 
-const getSkillIcon = (skillName: string, categoryIconName: string) => {
+interface SkillWithIcon extends Skill {
+  icon?: string;
+}
+
+const getSkillIcon = (skillName: string, categoryIconName?: string) => {
   // Map specific skill names to their icons
   const normalize = (s: string) => s.toLowerCase().replace(/\./g, '');
   const name = normalize(skillName);
@@ -45,7 +50,7 @@ const getSkillsFromCategory = (indices: number[]) => {
     return category ? category.skills.map(skill => ({
       ...skill,
 
-      icon: category.icon as any // Pass parent category icon to skill
+      icon: category.icon // Pass parent category icon to skill
     })) : [];
   });
 };
@@ -55,8 +60,7 @@ const MarqueeRow = ({
   direction = "left",
   speed = 1.2
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  skills: any[],
+  skills: SkillWithIcon[],
   direction?: "left" | "right",
   speed?: number
 }) => {
