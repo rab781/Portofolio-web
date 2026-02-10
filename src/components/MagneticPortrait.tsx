@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Code, Zap, Sparkles } from "lucide-react";
@@ -8,6 +8,7 @@ import GeometricShards from "./GeometricShards";
 
 export default function MagneticPortrait() {
     const ref = useRef<HTMLDivElement>(null);
+    const rectRef = useRef<{ width: number; height: number; left: number; top: number } | null>(null);
 
     // Motion values for mouse position
     const x = useMotionValue(0);
@@ -26,22 +27,52 @@ export default function MagneticPortrait() {
     const bgX = useSpring(useTransform(x, [-0.5, 0.5], [20, -20]), springConfig);
     const bgY = useSpring(useTransform(y, [-0.5, 0.5], [20, -20]), springConfig);
 
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // ⚡ Bolt: Invalidates cached rect on resize to ensure accuracy
+    useEffect(() => {
+        const handleResize = () => {
+            rectRef.current = null;
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const updateRect = () => {
         if (!ref.current) return;
         const rect = ref.current.getBoundingClientRect();
+        rectRef.current = {
+            width: rect.width,
+            height: rect.height,
+            left: rect.left + window.scrollX,
+            top: rect.top + window.scrollY
+        };
+    };
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!rectRef.current) {
+            updateRect();
+        }
+
+        const rect = rectRef.current;
+        if (!rect) return;
+
         const width = rect.width;
         const height = rect.height;
 
         // Normalized coordinates (-0.5 to 0.5)
         // 0,0 is center
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
+        // ⚡ Bolt: Use pageX/Y and cached rect to avoid getBoundingClientRect thrashing
+        const mouseX = e.pageX - rect.left;
+        const mouseY = e.pageY - rect.top;
 
         const xPct = (mouseX / width) - 0.5;
         const yPct = (mouseY / height) - 0.5;
 
         x.set(xPct);
         y.set(yPct);
+    };
+
+    const handleMouseEnter = () => {
+        updateRect();
     };
 
     const handleMouseLeave = () => {
@@ -52,19 +83,21 @@ export default function MagneticPortrait() {
     return (
         <motion.div
             ref={ref}
+            onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative w-full aspect-[4/5] cursor-none perspective-1000 group" // cursor-none if we assume custom cursor handles it, otherwise default
+            className="relative w-full aspect-[4/5] cursor-none perspective-1000 group"
             style={{ perspective: 1000 }}
         >
             {/* 3D Container */}
+            {/* ⚡ Bolt: pointer-events-none ensures mouse events always target the parent, making offsetX reliable */}
             <motion.div
                 style={{
                     rotateX,
                     rotateY,
                     transformStyle: "preserve-3d",
                 }}
-                className="relative w-full h-full rounded-2xl bg-gray-100 shadow-xl transition-shadow duration-500 hover:shadow-2xl hover:shadow-blue-500/20"
+                className="relative w-full h-full rounded-2xl bg-gray-100 shadow-xl transition-shadow duration-500 hover:shadow-2xl hover:shadow-blue-500/20 pointer-events-none"
             >
                 {/* Background Elements (Depth -50) */}
                 <div

@@ -43,14 +43,17 @@ const getSkillIcon = (skillName: string, categoryIconName?: string) => {
   }
 };
 
+interface MarqueeSkill extends Skill {
+  icon: string;
+}
+
 // Helper to flatten categories for specific rows
-const getSkillsFromCategory = (indices: number[]) => {
+const getSkillsFromCategory = (indices: number[]): MarqueeSkill[] => {
   return indices.flatMap(idx => {
     const category = skillCategories[idx];
     return category ? category.skills.map(skill => ({
       ...skill,
-
-      icon: category.icon // Pass parent category icon to skill
+      icon: category.icon
     })) : [];
   });
 };
@@ -60,7 +63,7 @@ const MarqueeRow = ({
   direction = "left",
   speed = 1.2
 }: {
-  skills: SkillWithIcon[],
+  skills: MarqueeSkill[],
   direction?: "left" | "right",
   speed?: number
 }) => {
