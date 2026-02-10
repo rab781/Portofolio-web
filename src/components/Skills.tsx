@@ -7,10 +7,6 @@ import { skillCategories } from "@/data/skills";
 import * as TechIcons from "@/components/TechIcons";
 import { Skill } from "@/types/skill";
 
-interface SkillWithIcon extends Skill {
-  icon?: string;
-}
-
 const getSkillIcon = (skillName: string, categoryIconName?: string) => {
   // Map specific skill names to their icons
   const normalize = (s: string) => s.toLowerCase().replace(/\./g, '');
