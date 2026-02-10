@@ -9,3 +9,7 @@
 ## 2025-02-23 - [Unused Dependency Verification]
 **Learning:** Task descriptions or automated tools may incorrectly identify dependencies as unused (e.g., `framer-motion` was flagged but heavily used). Removing them without verification breaks the application.
 **Action:** Always verify "unused" dependencies by searching the codebase (e.g., `grep`) before removal to ensure correctness.
+
+## 2026-02-10 - [Layout Thrashing in Magnetic Component]
+**Learning:** `MagneticPortrait` used `getBoundingClientRect` synchronously within `mousemove`, forcing layout recalculation on every frame.
+**Action:** Use `ResizeObserver` to cache dimensions and `e.nativeEvent.offsetX/Y` (ensured by `pointer-events-none` on children) to avoid synchronous layout reads during interactions.
