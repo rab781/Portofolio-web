@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, memo, useEffect, useRef } from "react";
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -182,10 +182,19 @@ function Contact() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-[#111111] text-white px-8 py-4 rounded-lg font-bold hover:bg-black transition-all flex items-center justify-center group"
+              className={`w-full bg-[#111111] text-white px-8 py-4 rounded-lg font-bold hover:bg-black transition-all flex items-center justify-center group ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
-              {isSubmitting ? "Sending..." : "Send Message"}
-              {!isSubmitting && <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  Send Message
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </button>
 
             {submitStatus === 'success' && (
