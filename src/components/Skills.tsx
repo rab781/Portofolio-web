@@ -169,9 +169,9 @@ function Skills() {
       </div>
 
       <div className="space-y-2 relative z-10">
-        <MarqueeRow skills={row1} direction="left" speed={10} />
-        <MarqueeRow skills={row2} direction="right" speed={10} />
-        <MarqueeRow skills={row3} direction="left" speed={10} />
+        <MarqueeRow skills={row1} direction="left" speed={100} />
+        <MarqueeRow skills={row2} direction="right" speed={100} />
+        <MarqueeRow skills={row3} direction="left" speed={100} />
       </div>
 
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
