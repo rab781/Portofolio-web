@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import About from "@/components/About";
@@ -18,57 +18,82 @@ import GeometricShards from "@/components/GeometricShards";
 
 
 export default function Home() {
-  const [scrollY, setScrollY] = useState(0);
+  const { scrollY } = useScroll();
   const [isLoading, setIsLoading] = useState(true);
   const imageRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
 
+  // ⚡ Bolt: Store layout params in ref to avoid re-renders
+  const layoutParams = useRef({
+    aboutOffset: 1000,
+    vh: 900,
+    stickyTargetY: 0,
+    triggerScroll: 1
+  });
+
+  // ⚡ Bolt: Trigger motion value to force transform updates on resize
+  const layoutTrigger = useMotionValue(0);
+
   useEffect(() => {
-    let ticking = false;
-    let animationFrameId: number;
+    const handleResize = () => {
+      const vh = typeof window !== 'undefined' ? window.innerHeight : 900;
+      const aboutOffset = aboutRef.current?.offsetTop || 1000;
 
-    const handleScroll = () => {
-      if (!ticking) {
-        animationFrameId = window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
+      // The exact Y position (relative to document) where we want the image CENTER to land
+      const stickyTargetY = aboutOffset + (vh * 0.65);
+
+      // The scroll position where stickyTargetY exactly hits the middle of the viewport
+      const triggerScroll = stickyTargetY - (vh / 2);
+
+      layoutParams.current = {
+        aboutOffset,
+        vh,
+        stickyTargetY,
+        triggerScroll
+      };
+
+      layoutTrigger.set(Date.now());
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (animationFrameId) {
-        window.cancelAnimationFrame(animationFrameId);
-      }
-    };
-  }, []);
+    // Initial measure
+    handleResize();
 
-  // Calculate if image should stick to About section
-  const aboutOffset = aboutRef.current?.offsetTop || 1000;
-  const vh = typeof window !== 'undefined' ? window.innerHeight : 900;
-
-  // The exact Y position (relative to document) where we want the image CENTER to land
-  const stickyTargetY = aboutOffset + (vh * 0.65);
-
-  // The scroll position where stickyTargetY exactly hits the middle of the viewport
-  const triggerScroll = stickyTargetY - (vh / 2);
-
-  const shouldStick = scrollY >= triggerScroll;
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [layoutTrigger, isLoading]); // Re-measure when loading finishes too
 
   // ANIMATION LOGIC:
   const startY = 280;
-  const parallaxY = startY * (1 - (scrollY / (triggerScroll || 1)));
-  const stickyY = stickyTargetY - (scrollY + (vh / 2));
+
+  // ⚡ Bolt: Calculate Y position using motion values to avoid React render loop
+  const yVal = useTransform([scrollY, layoutTrigger], ([y]) => {
+      // Need to cast y to number because useTransform array input might be mixed types if not typed strictly
+      const currentScroll = typeof y === 'number' ? y : 0;
+      const { triggerScroll, stickyTargetY, vh } = layoutParams.current;
+      const trigger = triggerScroll || 1;
+
+      if (currentScroll >= trigger) {
+          return stickyTargetY - (currentScroll + (vh / 2));
+      } else {
+          return startY * (1 - (currentScroll / trigger));
+      }
+  });
+
+  const transformStyle = useMotionTemplate`translate(-50%, -50%) translateY(${yVal}px)`;
 
   const maxScroll = 500;
-  const scrollProgress = Math.min(scrollY / maxScroll, 1);
-  const bgDarkness = scrollProgress * 0.1;
-  const backgroundColor = `rgba(140, 228, 255, ${1 - bgDarkness})`;
-  const overlayOpacity = scrollProgress * 0.6;
-  const fontScale = 1 - (scrollProgress * 0.1);
+  const clampedScrollProgress = useTransform(scrollY, [0, maxScroll], [0, 1], { clamp: true });
+
+  const bgDarkness = useTransform(clampedScrollProgress, [0, 1], [0, 0.1]);
+  const backgroundColor = useTransform(bgDarkness, d => `rgba(140, 228, 255, ${1 - d})`);
+
+  const overlayOpacity = useTransform(clampedScrollProgress, [0, 1], [0, 0.6]);
+  const fontScale = useTransform(clampedScrollProgress, [0, 1], [1, 0.9]);
+
+  const scrollIndicatorOpacity = useTransform(clampedScrollProgress, [0, 1], [1, 0]);
+  // Use a simplified animation toggle or just always bounce but fade out
+  // Switching animation string via motion value works but let's keep it simple:
+  // If opacity is 0, animation doesn't matter much.
 
   // Hero Animation Variants
   const heroVariants = {
@@ -102,7 +127,7 @@ export default function Home() {
           <main id="main-content" className="relative">
 
             {/* HERO SECTION - Fixed in center, will be covered by sections below */}
-            <section
+            <motion.section
               id="home"
               className="fixed top-0 left-0 w-full h-screen flex items-center justify-center px-6 transition-colors duration-300"
               style={{
@@ -112,7 +137,7 @@ export default function Home() {
               <HeroBackground />
 
               {/* Dark overlay that appears on scroll */}
-              <div
+              <motion.div
                 className="absolute inset-0 bg-gradient-to-b from-gray-900/0 via-gray-900/50 to-gray-900/70 pointer-events-none transition-opacity duration-300"
                 style={{
                   opacity: overlayOpacity
@@ -122,7 +147,7 @@ export default function Home() {
               <motion.div
                 className="text-center max-w-6xl mx-auto transition-all duration-300 relative z-10 -mt-[15vh] pt-20"
                 style={{
-                  transform: `scale(${fontScale})`
+                  scale: fontScale
                 }}
                 initial="hidden"
                 animate="visible"
@@ -159,21 +184,21 @@ export default function Home() {
                 animate={{ opacity: 1, transition: { delay: 1.5, duration: 1 } }}
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 transition-opacity duration-300 z-10"
                 style={{
-                  opacity: 1 - scrollProgress,
-                  animation: scrollProgress < 0.5 ? 'bounce 2s infinite' : 'none'
+                  opacity: scrollIndicatorOpacity
                 }}
               >
+                {/* Added visual content for scroll indicator as previously it seemed empty but styled */}
               </motion.div>
-            </section>
+            </motion.section>
 
             {/* Animated Profile Image */}
-            <div
+            <motion.div
               ref={imageRef}
               className="fixed z-40 left-1/2 pointer-events-none will-change-transform"
               style={{
                 top: '50%',
-                transform: `translate(-50%, -50%) translateY(${shouldStick ? stickyY : parallaxY
-                  }px)`,
+                // ⚡ Bolt: Use motion template for performant transform
+                transform: transformStyle,
                 opacity: 1,
               }}
             >
@@ -233,7 +258,7 @@ export default function Home() {
                   </motion.div>
                 </motion.div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Spacer */}
             <div className="h-screen" />
@@ -249,7 +274,7 @@ export default function Home() {
                 {/* Decorative Gradient Blob */}
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FEEE91] rounded-full filter blur-3xl opacity-30 -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
-                <About hideImage={true} triggerAnimation={shouldStick} />
+                <About hideImage={true} />
               </div>
 
               <div id="experience" className="section-padding bg-white bg-dot-pattern relative border-t border-gray-100">

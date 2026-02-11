@@ -13,3 +13,7 @@
 ## 2025-02-23 - [Layout Thrashing in Mouse Handlers]
 **Learning:** The `MagneticPortrait` component was calling `getBoundingClientRect` on every `mousemove` event. This forces synchronous layout recalculation on every frame of mouse movement, which is a performance bottleneck.
 **Action:** Cache the element's bounding rect on `mouseenter` (or first move) and invalidate on `resize`. Use `e.pageX/Y` (document relative) minus cached document position to calculate offsets, avoiding layout reads during animation loops.
+
+## 2025-02-23 - [React Render Loop Blocking Scroll Animations]
+**Learning:** The `Home` component was using `useState` and a `scroll` event listener to drive layout animations (`translateY`, `opacity`). This forced the entire component tree (including `HeroBackground`) to re-render on every scroll frame, causing jank and main thread contention.
+**Action:** Replace `useState`-driven scroll animations with `framer-motion`'s `useScroll` and `useTransform`. Use a `ref` for layout constants (like `vh`, offsets) and a `useMotionValue` trigger to update transforms on resize without re-rendering the component.
