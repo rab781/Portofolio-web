@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, memo, useEffect, useRef } from "react";
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Loader2, Copy, Check } from "lucide-react";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>(null);
   const isMounted = useRef(false);
 
@@ -31,6 +32,12 @@ function Contact() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText("raihanrabani199@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -83,9 +90,20 @@ function Contact() {
               <Mail className="w-6 h-6 text-white mt-1 mr-4" />
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Email</div>
-                <a href="mailto:raihanrabani199@gmail.com" className="text-xl font-medium text-white hover:text-gray-300 transition-colors">
-                  raihanrabani199@gmail.com
-                </a>
+                <div className="flex items-center gap-3">
+                  <a href="mailto:raihanrabani199@gmail.com" className="text-xl font-medium text-white hover:text-gray-300 transition-colors">
+                    raihanrabani199@gmail.com
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleCopy}
+                    aria-label={copied ? "Email copied to clipboard" : "Copy email address"}
+                    className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-white/10"
+                    title="Copy to clipboard"
+                  >
+                    {copied ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -123,6 +141,7 @@ function Contact() {
                   type="text"
                   id="name"
                   name="name"
+                  autoComplete="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -138,6 +157,7 @@ function Contact() {
                   type="email"
                   id="email"
                   name="email"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
