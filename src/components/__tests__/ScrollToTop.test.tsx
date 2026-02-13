@@ -4,12 +4,14 @@ import ScrollToTop from '../ScrollToTop';
 // Mock Framer Motion to render immediately
 jest.mock('framer-motion', () => ({
   motion: {
-    button: ({ children, onClick, className, 'aria-label': ariaLabel, ...props }: any) => (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    button: ({ children, onClick, className, 'aria-label': ariaLabel }: any) => (
       <button onClick={onClick} className={className} aria-label={ariaLabel}>
         {children}
       </button>
     ),
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   AnimatePresence: ({ children }: any) => <>{children}</>,
 }));
 
