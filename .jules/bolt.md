@@ -1,3 +1,3 @@
-## 2024-05-22 - Layout Thrashing in Drag Handlers
-**Learning:** Reading layout properties like `offsetLeft` or `offsetTop` inside high-frequency event handlers (like `mousemove` or `touchmove`) forces the browser to synchronously calculate layout (reflow), which can cause significant performance degradation, especially on mobile devices.
-**Action:** When calculating deltas for drag interactions, use absolute coordinates (like `pageX`/`pageY`) instead of relative coordinates that require DOM reads. The math `(current - offset) - (start - offset)` simplifies to `current - start`, eliminating the need for the offset entirely.
+## 2025-02-23 - optimize-mouse-interaction
+**Learning:** High-frequency events like `mousemove` trigger expensive re-renders when using `useState`. Using `framer-motion`'s `useMotionValue` and `useTransform` allows updating animations completely outside the React render loop.
+**Action:** For interactive animations dependent on pointer events, prefer `useMotionValue` over React state and decompose complex components so only affected children update via `useMotionValueEvent` or direct binding.
