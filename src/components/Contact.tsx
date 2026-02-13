@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, memo, useEffect, useRef } from "react";
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Loader2, Copy, Check } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Loader2, Copy, Check, AlertCircle } from "lucide-react";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -49,27 +49,43 @@ function Contact() {
       clearTimeout(timeoutRef.current);
     }
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (!isMounted.current) return;
+      if (!isMounted.current) return;
 
-    console.log("Form submitted:", formData);
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
-    setIsSubmitting(false);
-    setSubmitStatus('success');
-
-    // Reset status after 5 seconds
-    timeoutRef.current = setTimeout(() => {
-      if (isMounted.current) {
-        setSubmitStatus('idle');
+      if (response.ok) {
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+        setSubmitStatus('success');
+      } else {
+        setSubmitStatus('error');
       }
-    }, 5000);
+    } catch (error) {
+      if (!isMounted.current) return;
+      console.error("Error submitting form:", error);
+      setSubmitStatus('error');
+    } finally {
+      if (isMounted.current) {
+        setIsSubmitting(false);
+        // Reset status after 5 seconds
+        timeoutRef.current = setTimeout(() => {
+          if (isMounted.current) {
+            setSubmitStatus('idle');
+          }
+        }, 5000);
+      }
+    }
   };
 
   return (
@@ -225,6 +241,17 @@ function Contact() {
               >
                 <CheckCircle className="w-5 h-5 mr-2 shrink-0" />
                 <span>Message sent successfully! I&apos;ll get back to you soon.</span>
+              </div>
+            )}
+
+            {submitStatus === 'error' && (
+              <div
+                role="alert"
+                aria-live="assertive"
+                className="mt-4 p-4 bg-red-50 text-red-800 rounded-lg flex items-center animate-in fade-in slide-in-from-bottom-2 border border-red-100"
+              >
+                <AlertCircle className="w-5 h-5 mr-2 shrink-0" />
+                <span>Something went wrong. Please try again later.</span>
               </div>
             )}
           </form>
