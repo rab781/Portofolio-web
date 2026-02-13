@@ -4,13 +4,13 @@ import ScrollToTop from '../ScrollToTop';
 // Mock Framer Motion to render immediately
 jest.mock('framer-motion', () => ({
   motion: {
-    button: ({ children, onClick, className, 'aria-label': ariaLabel, ...props }: any) => (
+    button: ({ children, onClick, className, 'aria-label': ariaLabel }: { children: React.ReactNode; onClick: () => void; className: string; 'aria-label': string }) => (
       <button onClick={onClick} className={className} aria-label={ariaLabel}>
         {children}
       </button>
     ),
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
 // Mock Lucide React
