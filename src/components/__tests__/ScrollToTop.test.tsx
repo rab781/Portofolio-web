@@ -1,16 +1,27 @@
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import ScrollToTop from '../ScrollToTop';
 
+type MotionButtonProps = {
+  children: React.ReactNode;
+  onClick: () => void;
+  className: string;
+  'aria-label': string;
+};
+
+type AnimatePresenceProps = {
+  children: React.ReactNode;
+};
+
 // Mock Framer Motion to render immediately
 jest.mock('framer-motion', () => ({
   motion: {
-    button: ({ children, onClick, className, 'aria-label': ariaLabel, ...props }: any) => (
+    button: ({ children, onClick, className, 'aria-label': ariaLabel }: MotionButtonProps) => (
       <button onClick={onClick} className={className} aria-label={ariaLabel}>
         {children}
       </button>
     ),
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: AnimatePresenceProps) => <>{children}</>,
 }));
 
 // Mock Lucide React
