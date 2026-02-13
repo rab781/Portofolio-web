@@ -36,6 +36,20 @@ function Navigation() {
   }, []);
 
   useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      const handleEsc = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setIsOpen(false);
+      };
+      window.addEventListener("keydown", handleEsc);
+      return () => {
+        document.body.style.overflow = "";
+        window.removeEventListener("keydown", handleEsc);
+      };
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
     // ⚡ Bolt: IntersectionObserver for active section detection
     // Removes O(N) getBoundingClientRect calls during scroll
     const observer = new IntersectionObserver(
@@ -102,6 +116,8 @@ function Navigation() {
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-gray-900 p-2 hover:bg-gray-100 rounded-full transition-colors"
                 aria-label="Toggle menu"
+                aria-expanded={isOpen}
+                aria-controls="mobile-menu"
               >
                 {isOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -111,7 +127,7 @@ function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden border-t border-gray-100 mt-2">
+          <div id="mobile-menu" className="md:hidden border-t border-gray-100 mt-2">
             <div className="px-6 py-4 space-y-2">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href.substring(1);
