@@ -1,30 +1,89 @@
 "use client";
 
-import { useEffect, useState, useMemo, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useMemo } from "react";
+import { motion, useMotionValue, useTransform, MotionValue } from "framer-motion";
+
+interface CellData {
+    id: number;
+    row: number;
+    col: number;
+    duration: number;
+    delay: number;
+}
+
+interface CellProps {
+    cell: CellData;
+    mouseX: MotionValue<number>;
+    mouseY: MotionValue<number>;
+    gridSize: number;
+}
+
+function Cell({ cell, mouseX, mouseY, gridSize }: CellProps) {
+    const x = cell.col * gridSize;
+    const y = cell.row * gridSize;
+    const [isNear, setIsNear] = useState(false);
+
+    // ⚡ Bolt: Calculate distance using motion values to avoid React render loop
+    const distance = useTransform([mouseX, mouseY], ([mx, my]) => {
+        const dx = (mx as number) - x;
+        const dy = (my as number) - y;
+        return Math.sqrt(dx * dx + dy * dy);
+    });
+
+    useEffect(() => {
+        const unsubscribe = distance.on("change", (d) => {
+            const near = d < 250;
+            // Only trigger re-render if state actually changes
+            setIsNear(prev => {
+                if (prev !== near) return near;
+                return prev;
+            });
+        });
+        return unsubscribe;
+    }, [distance]);
+
+    return (
+        <motion.div
+            className="absolute bg-accent-blue/20"
+            style={{
+                width: gridSize - 1,
+                height: gridSize - 1,
+                top: y + 1,
+                left: x + 1,
+            }}
+            animate={{
+                opacity: isNear ? 0.6 : [0, 0.4, 0],
+                scale: isNear ? 1.1 : 1,
+                backgroundColor: isNear ? "#2563EB" : "rgba(0, 0, 0, 0.1)"
+            }}
+            transition={{
+                duration: isNear ? 0.3 : cell.duration,
+                repeat: isNear ? 0 : Infinity,
+                delay: isNear ? 0 : cell.delay,
+                ease: "easeInOut",
+            }}
+        />
+    );
+}
 
 export default function HeroBackground() {
     const [mounted, setMounted] = useState(false);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const requestRef = useRef<number>(0);
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
 
     useEffect(() => {
         setMounted(true);
-        // ⚡ Bolt: Throttled mouse move handler using requestAnimationFrame
-        // Reduces main thread work by syncing updates with screen refresh
+
+        // ⚡ Bolt: Direct motion value update
+        // Removes React re-renders completely on mouse move
         const handleMouseMove = (e: MouseEvent) => {
-            if (requestRef.current) return;
-            requestRef.current = requestAnimationFrame(() => {
-                setMousePosition({ x: e.clientX, y: e.clientY });
-                requestRef.current = 0;
-            });
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
         };
+
         window.addEventListener("mousemove", handleMouseMove);
-        return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-            if (requestRef.current) cancelAnimationFrame(requestRef.current);
-        };
-    }, []);
+        return () => window.removeEventListener("mousemove", handleMouseMove);
+    }, [mouseX, mouseY]);
 
     // Grid configuration
     const gridSize = 40;
@@ -32,7 +91,7 @@ export default function HeroBackground() {
     const numCols = 30;
 
     // Generate random blinking cells
-    // ⚡ Bolt: Memoized to prevent regenerating 40 objects on every render/mouse move
+    // ⚡ Bolt: Memoized to prevent regenerating 40 objects on every render
     const blinkingCells = useMemo(() => Array.from({ length: 40 }).map((_, i) => ({
         id: i,
         row: Math.floor(Math.random() * numRows),
@@ -56,38 +115,15 @@ export default function HeroBackground() {
             />
 
             {/* Blinking & Interactive Data Points */}
-            {blinkingCells.map((cell) => {
-                const x = cell.col * gridSize;
-                const y = cell.row * gridSize;
-                const dx = mousePosition.x - x;
-                const dy = mousePosition.y - y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                const isNear = distance < 250;
-
-                return (
-                    <motion.div
-                        key={cell.id}
-                        className="absolute bg-accent-blue/20"
-                        style={{
-                            width: gridSize - 1,
-                            height: gridSize - 1,
-                            top: y + 1,
-                            left: x + 1,
-                        }}
-                        animate={{
-                            opacity: isNear ? 0.6 : [0, 0.4, 0],
-                            scale: isNear ? 1.1 : 1,
-                            backgroundColor: isNear ? "#2563EB" : "rgba(0, 0, 0, 0.1)"
-                        }}
-                        transition={{
-                            duration: isNear ? 0.3 : cell.duration,
-                            repeat: isNear ? 0 : Infinity,
-                            delay: isNear ? 0 : cell.delay,
-                            ease: "easeInOut",
-                        }}
-                    />
-                );
-            })}
+            {blinkingCells.map((cell) => (
+                <Cell
+                    key={cell.id}
+                    cell={cell}
+                    mouseX={mouseX}
+                    mouseY={mouseY}
+                    gridSize={gridSize}
+                />
+            ))}
 
             {/* Radial Fade Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#8CE4FF] via-transparent to-transparent opacity-80" />
