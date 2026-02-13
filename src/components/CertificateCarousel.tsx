@@ -21,7 +21,8 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
 
     const handleMouseDown = (e: React.MouseEvent) => {
         setIsDragging(true);
-        setStartX(e.pageX - (carouselRef.current?.offsetLeft || 0));
+        // ⚡ Bolt: Store initial pageX directly to avoid offsetLeft calculation in move handler
+        setStartX(e.pageX);
         setScrollLeft(carouselRef.current?.scrollLeft || 0);
     };
 
@@ -32,8 +33,8 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!isDragging) return;
         e.preventDefault();
-        const x = e.pageX - (carouselRef.current?.offsetLeft || 0);
-        const walk = (x - startX) * 2;
+        // ⚡ Bolt: Calculate delta from initial pageX to avoid layout thrashing (offsetLeft)
+        const walk = (e.pageX - startX) * 2;
         if (carouselRef.current) {
             carouselRef.current.scrollLeft = scrollLeft - walk;
         }
@@ -41,14 +42,15 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
 
     const handleTouchStart = (e: React.TouchEvent) => {
         setIsDragging(true);
-        setStartX(e.touches[0].pageX - (carouselRef.current?.offsetLeft || 0));
+        // ⚡ Bolt: Store initial pageX directly to avoid offsetLeft calculation in move handler
+        setStartX(e.touches[0].pageX);
         setScrollLeft(carouselRef.current?.scrollLeft || 0);
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
         if (!isDragging) return;
-        const x = e.touches[0].pageX - (carouselRef.current?.offsetLeft || 0);
-        const walk = (x - startX) * 2;
+        // ⚡ Bolt: Calculate delta from initial pageX to avoid layout thrashing (offsetLeft)
+        const walk = (e.touches[0].pageX - startX) * 2;
         if (carouselRef.current) {
             carouselRef.current.scrollLeft = scrollLeft - walk;
         }
