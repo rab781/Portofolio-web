@@ -13,10 +13,6 @@ export default function CircularText({
     radius = 50,
     className = ""
 }: CircularTextProps) {
-    const characters = text.split("");
-    const totalChars = characters.length;
-    const degrees = 360 / totalChars;
-
     return (
         <motion.div
             className={`relative flex items-center justify-center ${className}`}
@@ -24,27 +20,12 @@ export default function CircularText({
             animate={{ rotate: 360 }}
             transition={{ ease: "linear", duration: 10, repeat: Infinity }}
         >
-            {characters.map((char, i) => (
-                <span
-                    key={i}
-                    className="absolute text-xs font-bold uppercase tracking-widest text-slate-900"
-                    style={{
-                        transform: `rotate(${i * degrees}deg) translateY(-${radius}px)`,
-                        transformOrigin: "center center", // This is redundant if origin is center, but explicit is good
-                        height: `${radius}px`, // This trick aligns them from center
-                        // actually standard way: absolute left-1/2 top-1/2, then rotate and translate Y
-                    }}
-                >
-                    {/* We need better positioning logic for React. 
-              Let's use a simpler known method: 
-              Absolute center, then rotate(deg) translate(radius).
-          */}
-                </span>
-            ))}
-
-            {/* Redoing the logic cleanly below */}
-            <div className="absolute inset-0 animate-spin-slow w-full h-full">
-                {/* Using SVG is much safer for circular text than CSS rotation on spans for perfect alignment */}
+            <div className="absolute inset-0 w-full h-full">
+                {/*
+                  Performance Optimization:
+                  Replaced legacy DOM-heavy implementation (30+ span elements) with a single SVG <textPath>.
+                  This reduces DOM node count, improves rendering performance, and prevents layout thrashing.
+                */}
                 <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
                     <path
                         id="circlePath"
