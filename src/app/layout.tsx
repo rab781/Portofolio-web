@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Barlow_Condensed } from "next/font/google";
+import BackToTop from "@/components/BackToTop";
 import CustomCursor from "@/components/CustomCursor";
 import GradientMesh from "@/components/GradientMesh";
 import SkipLink from "@/components/SkipLink";
@@ -45,6 +46,7 @@ export default function RootLayout({
         <CustomCursor />
         <GradientMesh />
         {children}
+        <BackToTop />
       </body>
     </html>
   );
