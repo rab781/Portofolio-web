@@ -3,6 +3,7 @@ import { DM_Sans, Barlow_Condensed } from "next/font/google";
 import CustomCursor from "@/components/CustomCursor";
 import GradientMesh from "@/components/GradientMesh";
 import SkipLink from "@/components/SkipLink";
+import BackToTop from "@/components/BackToTop";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -42,6 +43,7 @@ export default function RootLayout({
         className={`${dmSans.variable} ${barlowCondensed.variable} antialiased`}
       >
         <SkipLink />
+        <BackToTop />
         <CustomCursor />
         <GradientMesh />
         {children}
