@@ -1,16 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
-    const [isHovered, setIsHovered] = useState(false);
+    // ⚡ Bolt: Use motion values for scale to avoid React re-renders on hover
     const cursorX = useMotionValue(-100);
     const cursorY = useMotionValue(-100);
+    const scale = useMotionValue(1);
 
     const springConfig = { damping: 25, stiffness: 700 };
     const cursorXSpring = useSpring(cursorX, springConfig);
     const cursorYSpring = useSpring(cursorY, springConfig);
+    const scaleSpring = useSpring(scale, springConfig);
 
     useEffect(() => {
         const moveCursor = (e: MouseEvent) => {
@@ -19,10 +21,11 @@ export default function CustomCursor() {
         };
 
         const handleMouseOver = (e: MouseEvent) => {
-            if ((e.target as HTMLElement).tagName === "A" || (e.target as HTMLElement).tagName === "BUTTON" || (e.target as HTMLElement).closest(".hover-mark")) {
-                setIsHovered(true);
+            const target = e.target as HTMLElement;
+            if (target.tagName === "A" || target.tagName === "BUTTON" || target.closest(".hover-mark")) {
+                scale.set(2.5);
             } else {
-                setIsHovered(false);
+                scale.set(1);
             }
         };
 
@@ -33,7 +36,7 @@ export default function CustomCursor() {
             window.removeEventListener("mousemove", moveCursor);
             window.removeEventListener("mouseover", handleMouseOver);
         };
-    }, [cursorX, cursorY]);
+    }, [cursorX, cursorY, scale]);
 
     return (
         <motion.div
@@ -41,7 +44,7 @@ export default function CustomCursor() {
             style={{
                 x: cursorXSpring,
                 y: cursorYSpring,
-                scale: isHovered ? 2.5 : 1,
+                scale: scaleSpring,
             }}
         />
     );
