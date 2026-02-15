@@ -9,3 +9,7 @@
 ## 2024-05-30 - Mobile Navigation Accessibility
 **Learning:** Mobile overlays need explicit state management for accessibility (ARIA attributes) and UX (scroll locking). Simply toggling visibility is insufficient.
 **Action:** Always implement `aria-expanded`, `aria-controls`, and body scroll locking for any mobile menu or modal overlay.
+
+## 2024-06-03 - Scroll-Driven Component Verification
+**Learning:** When testing scroll-dependent visibility (e.g., Back To Top button) in Playwright, initial load animations or layout shifts can delay the scroll event processing. Simple `scrollTo` calls may complete before the listener is active.
+**Action:** Implement explicit waits for visibility state changes or use retry logic when verifying scroll-triggered UI elements.
