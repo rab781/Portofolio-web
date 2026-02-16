@@ -66,13 +66,15 @@ function Cell({ cell, mouseX, mouseY, gridSize }: CellProps) {
     );
 }
 
-export default function HeroBackground() {
+export default function HeroBackground({ paused = false }: { paused?: boolean }) {
     const [mounted, setMounted] = useState(false);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
     useEffect(() => {
         setMounted(true);
+
+        if (paused) return;
 
         // ⚡ Bolt: Direct motion value update
         // Removes React re-renders completely on mouse move
@@ -83,7 +85,7 @@ export default function HeroBackground() {
 
         window.addEventListener("mousemove", handleMouseMove);
         return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [mouseX, mouseY]);
+    }, [mouseX, mouseY, paused]);
 
     // Grid configuration
     const gridSize = 40;
@@ -115,7 +117,7 @@ export default function HeroBackground() {
             />
 
             {/* Blinking & Interactive Data Points */}
-            {blinkingCells.map((cell) => (
+            {!paused && blinkingCells.map((cell) => (
                 <Cell
                     key={cell.id}
                     cell={cell}

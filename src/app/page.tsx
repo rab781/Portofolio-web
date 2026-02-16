@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate, useMotionValue, useMotionValueEvent } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import About from "@/components/About";
@@ -33,6 +33,18 @@ export default function Home() {
 
   // ⚡ Bolt: Trigger motion value to force transform updates on resize
   const layoutTrigger = useMotionValue(0);
+
+  // ⚡ Bolt: Performance optimization - pause hero animations when covered
+  const [isHeroPaused, setIsHeroPaused] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const vh = layoutParams.current.vh || 900;
+    if (latest > vh && !isHeroPaused) {
+      setIsHeroPaused(true);
+    } else if (latest <= vh && isHeroPaused) {
+      setIsHeroPaused(false);
+    }
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -134,7 +146,7 @@ export default function Home() {
                 backgroundColor: backgroundColor,
               }}
             >
-              <HeroBackground />
+              <HeroBackground paused={isHeroPaused} />
 
               {/* Dark overlay that appears on scroll */}
               <motion.div
