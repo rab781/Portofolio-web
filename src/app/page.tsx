@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Mouse, ChevronsDown } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
@@ -182,12 +182,29 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 1.5, duration: 1 } }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 transition-opacity duration-300 z-10"
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 transition-opacity duration-300 z-10 flex flex-col items-center gap-2 cursor-pointer"
                 style={{
                   opacity: scrollIndicatorOpacity
                 }}
+                aria-label="Scroll down"
+                onClick={() => {
+                  const aboutSection = document.getElementById('about');
+                  if (aboutSection) {
+                    aboutSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
               >
-                {/* Added visual content for scroll indicator as previously it seemed empty but styled */}
+                <Mouse size={28} className="text-gray-800" aria-hidden="true" />
+                <motion.div
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <ChevronsDown size={24} className="text-gray-600" aria-hidden="true" />
+                </motion.div>
               </motion.div>
             </motion.section>
 

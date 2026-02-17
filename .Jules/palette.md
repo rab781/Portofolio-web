@@ -9,3 +9,7 @@
 ## 2024-05-30 - Mobile Navigation Accessibility
 **Learning:** Mobile overlays need explicit state management for accessibility (ARIA attributes) and UX (scroll locking). Simply toggling visibility is insufficient.
 **Action:** Always implement `aria-expanded`, `aria-controls`, and body scroll locking for any mobile menu or modal overlay.
+
+## 2024-05-31 - Animated Scroll Indicator Pattern
+**Learning:** Empty `motion.div` placeholders for scroll indicators are easily missed. A bouncing chevron with a mouse icon provides clear affordance for long landing pages.
+**Action:** Always verify scroll indicators are populated and animated to guide users below the fold.
