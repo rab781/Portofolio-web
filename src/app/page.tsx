@@ -4,15 +4,28 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import dynamic from 'next/dynamic';
 import Navigation from "@/components/Navigation";
 import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Projects from "@/components/Projects";
-import Contact from "@/components/Contact";
 import Preloader from "@/components/Preloader";
-import Experience from "@/components/Experience";
-import Certificates from "@/components/Certificates";
 import HeroBackground from "@/components/HeroBackground";
+
+// ⚡ Bolt: Lazy load below-the-fold components to reduce initial bundle size
+const Skills = dynamic(() => import("@/components/Skills"), {
+  loading: () => <div className="min-h-[400px]" />
+});
+const Projects = dynamic(() => import("@/components/Projects"), {
+  loading: () => <div className="min-h-[800px]" />
+});
+const Contact = dynamic(() => import("@/components/Contact"), {
+  loading: () => <div className="min-h-[600px]" />
+});
+const Experience = dynamic(() => import("@/components/Experience"), {
+  loading: () => <div className="min-h-[600px]" />
+});
+const Certificates = dynamic(() => import("@/components/Certificates"), {
+  loading: () => <div className="min-h-[400px]" />
+});
 import MaskedReveal from "@/components/MaskedReveal";
 import GeometricShards from "@/components/GeometricShards";
 
