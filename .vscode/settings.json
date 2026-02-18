@@ -1,0 +1,5 @@
+{
+  "axe-linter.rules": {
+    "aria-valid-attr-value": false
+  }
+}

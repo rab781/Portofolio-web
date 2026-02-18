@@ -3,7 +3,6 @@ import { DM_Sans, Barlow_Condensed } from "next/font/google";
 import CustomCursor from "@/components/CustomCursor";
 import GradientMesh from "@/components/GradientMesh";
 import SkipLink from "@/components/SkipLink";
-import ScrollToTop from "@/components/ScrollToTop";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -43,9 +42,9 @@ export default function RootLayout({
         className={`${dmSans.variable} ${barlowCondensed.variable} antialiased`}
       >
         <SkipLink />
-        <ScrollToTop />
         <CustomCursor />
         <GradientMesh />
+        {/* ScrollToTop is rendered inside HeroClient — loads with client bundle only */}
         {children}
       </body>
     </html>

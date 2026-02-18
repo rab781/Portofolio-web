@@ -2,8 +2,12 @@
 
 import { memo, useEffect, useRef } from "react";
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import dynamic from "next/dynamic";
 import CircularBadge from "./CircularBadge";
-import MagneticPortrait from "./MagneticPortrait";
+
+// Dynamically import MagneticPortrait — only needed when hideImage=false
+// Avoids bundling portrait logic when About is rendered without the image (main page)
+const MagneticPortrait = dynamic(() => import("./MagneticPortrait"), { ssr: false });
 
 interface AboutProps {
   hideImage?: boolean;
@@ -91,7 +95,7 @@ function About({ hideImage = false, triggerAnimation = false }: AboutProps) {
           </motion.div>
 
           {/* Spacer for Floating Image (Only when image column is hidden) */}
-          {hideImage && <div className="h-[550px] w-full" aria-hidden="true" />}
+          {hideImage && <div className="h-[45vh] md:h-[60vh] w-full" aria-hidden="true" />}
 
           {/* Description Paragraphs - Multi-column feel */}
           <motion.div variants={itemVariants} className="grid md:grid-cols-[1fr] gap-8 text-xl text-gray-600 leading-relaxed font-light">

@@ -4,7 +4,6 @@ import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Code, Zap, Sparkles } from "lucide-react";
-import GeometricShards from "./GeometricShards";
 
 export default function MagneticPortrait() {
     const ref = useRef<HTMLDivElement>(null);
@@ -106,7 +105,7 @@ export default function MagneticPortrait() {
                 >
                     <div className="absolute -inset-10 bg-gradient-to-tr from-blue-100/50 to-orange-100/50 rounded-full blur-3xl opacity-0 group-hover:opacity-70 transition-opacity duration-700" />
                     <motion.div style={{ x: bgX, y: bgY }} className="absolute inset-0">
-                        <GeometricShards />
+                        {/* GeometricShards removed for performance - already in hero */}
                     </motion.div>
                 </div>
 

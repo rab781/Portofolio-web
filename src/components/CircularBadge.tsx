@@ -1,6 +1,7 @@
 'use client';
 
-import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 
 interface CircularTextProps {
     text: string;
@@ -13,12 +14,14 @@ export default function CircularText({
     radius = 50,
     className = ""
 }: CircularTextProps) {
+    const ref = useRef<HTMLDivElement>(null);
+    const isInView = useInView(ref, { margin: "0px 0px -50px 0px" });
+
     return (
-        <motion.div
-            className={`relative flex items-center justify-center ${className}`}
+        <div
+            ref={ref}
+            className={`relative flex items-center justify-center ${isInView ? 'circular-spin' : ''} ${className}`}
             style={{ width: radius * 2, height: radius * 2 }}
-            animate={{ rotate: 360 }}
-            transition={{ ease: "linear", duration: 10, repeat: Infinity }}
         >
             <div className="absolute inset-0 w-full h-full">
                 {/*
@@ -39,6 +42,6 @@ export default function CircularText({
                     </text>
                 </svg>
             </div>
-        </motion.div>
+        </div>
     );
 }

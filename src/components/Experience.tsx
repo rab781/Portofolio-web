@@ -101,12 +101,12 @@ export default function Experience() {
 
                                 {/* Content Card */}
                                 <motion.div
-                                    initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-                                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                                    initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
                                     viewport={{ margin: "-100px" }}
                                     transition={{ duration: 0.8, delay: idx * 0.1 }}
                                     className={`
-                                        w-full md:w-[45%] pl-14 md:pl-0
+                                        w-full md:w-[45%] pl-12 md:pl-0
                                         ${idx % 2 === 0 ? "md:text-left" : "md:text-right"}
                                     `}
                                 >

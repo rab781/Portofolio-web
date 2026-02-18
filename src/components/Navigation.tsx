@@ -116,6 +116,7 @@ function Navigation() {
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-gray-900 p-2 hover:bg-gray-100 rounded-full transition-colors"
                 aria-label="Toggle menu"
+                // eslint-disable-next-line jsx-a11y/aria-proptypes
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
               >

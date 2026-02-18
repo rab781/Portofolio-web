@@ -57,64 +57,42 @@ const getSkillsFromCategory = (indices: number[]): MarqueeSkill[] => {
 const MarqueeRow = ({
   skills,
   direction = "left",
-  speed = 1.2
+  speed = 40 // seconds for full loop
 }: {
   skills: MarqueeSkill[],
   direction?: "left" | "right",
   speed?: number
 }) => {
-
-  // Duplicate list to create seamless loop
-  const duplicatedSkills = [...skills, ...skills, ...skills, ...skills];
+  // Double list is sufficient for any screen width before the loop resets
+  const duplicatedSkills = [...skills, ...skills];
 
   return (
-    <div className="flex overflow-hidden relative w-full py-6 group">
+    <div className="flex overflow-hidden relative w-full py-6 group select-none">
       {/* Soft Gradient Masks */}
       <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#F9FAFB] to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#F9FAFB] to-transparent z-10 pointer-events-none" />
 
-      <motion.div
-        className="flex gap-4 sm:gap-6 whitespace-nowrap pl-4"
-        animate={{
-          x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"]
-        }}
-        transition={{
-          ease: "linear",
-          duration: speed,
-          repeat: Infinity,
+      {/* 
+        ⚡ Bolt: CSS-only infinite scroll 
+        More performant than Framer Motion as it runs on compositor thread
+        No React render loop, no JS overhead
+      */}
+      <div
+        className="flex gap-4 sm:gap-6 whitespace-nowrap pl-4 w-max hover:[animation-play-state:paused]"
+        style={{
+          animation: `marquee-${direction} ${speed}s linear infinite`
         }}
       >
         {duplicatedSkills.map((skill, idx) => (
           <div
             key={`${skill.name}-${idx}`}
-            className="
-              relative group/card
-              flex flex-col items-center justify-center
-              w-[160px] h-[160px] sm:w-[180px] sm:h-[180px]
-              rounded-2xl
-              bg-[#D4D4D4] backdrop-blur-md
-              border border-gray-200/60
-              shadow-sm
-              hover:shadow-lg
-              hover:bg-white
-              hover:border-gray-200
-              hover:scale-105
-              transition-all duration-500 ease-out
-              cursor-default
-              overflow-hidden
-            "
+            className="relative group/card flex flex-col items-center justify-center w-[160px] h-[160px] sm:w-[180px] sm:h-[180px] rounded-2xl bg-[#D4D4D4] backdrop-blur-md border border-gray-200/60 shadow-sm hover:shadow-lg hover:bg-white hover:border-gray-200 hover:scale-105 transition-all duration-500 ease-out cursor-default overflow-hidden"
           >
             {/* Subtle Gradient Spot */}
             <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/[0.02] opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
 
             {/* Icon Container */}
-            <div className="
-              mb-4 p-4 rounded-2xl
-              bg-white/90
-              shadow-sm
-              group-hover/card:scale-110 group-hover/card:shadow-md
-              transition-all duration-500
-            ">
+            <div className="mb-4 p-4 rounded-2xl bg-white/90 shadow-sm group-hover/card:scale-110 group-hover/card:shadow-md transition-all duration-500">
               <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center">
                 {getSkillIcon(skill.name, skill.icon)}
               </div>
@@ -133,9 +111,22 @@ const MarqueeRow = ({
               </div>
             </div>
           </div>
-        ))}
-      </motion.div>
-    </div>
+        ))
+        }
+      </div >
+
+      {/* Inject Keyframes */}
+      < style jsx > {`
+        @keyframes marquee-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-33.33%); }
+        }
+        @keyframes marquee-right {
+          0% { transform: translateX(-33.33%); }
+          100% { transform: translateX(0); }
+        }
+      `}</style >
+    </div >
   );
 };
 
@@ -169,9 +160,9 @@ function Skills() {
       </div>
 
       <div className="space-y-2 relative z-10">
-        <MarqueeRow skills={row1} direction="left" speed={100} />
-        <MarqueeRow skills={row2} direction="right" speed={100} />
-        <MarqueeRow skills={row3} direction="left" speed={100} />
+        <MarqueeRow skills={row1} direction="left" speed={45} />
+        <MarqueeRow skills={row2} direction="right" speed={50} />
+        <MarqueeRow skills={row3} direction="left" speed={40} />
       </div>
 
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />

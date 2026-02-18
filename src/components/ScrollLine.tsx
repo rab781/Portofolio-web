@@ -15,6 +15,9 @@ export default function ScrollLine() {
 
     const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 });
 
+    // Hoist useTransform calls to top level — Rules of Hooks requirement
+    const dotTop = useTransform(pathLength, [0, 1], ["0%", "100%"]);
+
     useEffect(() => {
         if (containerRef.current) {
             setSvgHeight(containerRef.current.offsetHeight);
@@ -57,7 +60,7 @@ export default function ScrollLine() {
             <motion.div
                 className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#FFA239] rounded-full shadow-lg shadow-orange-400/50"
                 style={{
-                    top: useTransform(pathLength, [0, 1], ["0%", "100%"]),
+                    top: dotTop,
                     zIndex: 10
                 }}
             />

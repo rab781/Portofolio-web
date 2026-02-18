@@ -32,8 +32,9 @@ describe('HeroBackground Performance', () => {
       </Profiler>
     );
 
-    // Initial render (includes mount effect)
-    expect(onRender).toHaveBeenCalledTimes(2);
+    // Initial render only — useEffect mutates CSS variables directly (no setState),
+    // so there is exactly 1 render, not 2.
+    expect(onRender).toHaveBeenCalledTimes(1);
 
     // Simulate mouse move
     act(() => {
@@ -42,13 +43,13 @@ describe('HeroBackground Performance', () => {
     });
 
     // Should NOT re-render due to state update (Optimized behavior)
-    expect(onRender).toHaveBeenCalledTimes(2);
+    expect(onRender).toHaveBeenCalledTimes(1);
 
     act(() => {
       fireEvent.mouseMove(window, { clientX: 200, clientY: 200 });
       jest.runAllTimers();
     });
 
-    expect(onRender).toHaveBeenCalledTimes(2);
+    expect(onRender).toHaveBeenCalledTimes(1);
   });
 });

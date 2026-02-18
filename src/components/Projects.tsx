@@ -23,7 +23,7 @@ function Projects() {
             key={project.id}
             className="sticky top-24 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col md:flex-row h-auto md:h-[500px] transition-all duration-300"
             style={{
-              top: `${8 + (index * 2)}rem`, // Stacking offset
+              top: `${6 + (index * 1.5)}rem`, // Stacking offset
               zIndex: index + 1
             }}
           >
