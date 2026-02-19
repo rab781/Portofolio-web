@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, useRef } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -16,6 +16,7 @@ function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // ⚡ Bolt: Throttled scroll handler for navbar background
@@ -41,10 +42,35 @@ function Navigation() {
       const handleEsc = (e: KeyboardEvent) => {
         if (e.key === "Escape") setIsOpen(false);
       };
+
+      const handleTab = (e: KeyboardEvent) => {
+        if (e.key !== "Tab" || !menuRef.current) return;
+
+        const toggleBtn = document.getElementById("mobile-menu-toggle");
+        const focusableElements = menuRef.current.querySelectorAll(
+          'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
+        );
+        const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+        if (e.shiftKey) {
+          if (document.activeElement === toggleBtn) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            toggleBtn?.focus();
+          }
+        }
+      };
+
       window.addEventListener("keydown", handleEsc);
+      window.addEventListener("keydown", handleTab);
       return () => {
         document.body.style.overflow = "";
         window.removeEventListener("keydown", handleEsc);
+        window.removeEventListener("keydown", handleTab);
       };
     }
   }, [isOpen]);
@@ -99,6 +125,7 @@ function Navigation() {
                   <a
                     key={link.href}
                     href={link.href}
+                    aria-current={isActive ? "true" : undefined}
                     className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${isActive
                       ? "bg-[#111111] text-white shadow-md transform scale-105"
                       : "text-gray-600 hover:text-[#FFA239] hover:bg-gray-50"
@@ -113,10 +140,10 @@ function Navigation() {
             {/* Mobile menu button */}
             <div className="md:hidden">
               <button
+                id="mobile-menu-toggle"
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-gray-900 p-2 hover:bg-gray-100 rounded-full transition-colors"
-                aria-label="Toggle menu"
-                // eslint-disable-next-line jsx-a11y/aria-proptypes
+                aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
               >
@@ -128,7 +155,7 @@ function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div id="mobile-menu" className="md:hidden border-t border-gray-100 mt-2">
+          <div id="mobile-menu" ref={menuRef} className="md:hidden border-t border-gray-100 mt-2">
             <div className="px-6 py-4 space-y-2">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href.substring(1);
@@ -136,6 +163,7 @@ function Navigation() {
                   <a
                     key={link.href}
                     href={link.href}
+                    aria-current={isActive ? "true" : undefined}
                     className={`block px-4 py-3 rounded-xl text-base font-semibold transition-colors ${isActive
                       ? "bg-[#FEEE91] text-[#111111]" // Active mobile style (Pop Yellow)
                       : "text-gray-600 hover:text-[#FFA239] hover:bg-gray-50"

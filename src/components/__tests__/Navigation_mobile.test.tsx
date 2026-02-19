@@ -22,41 +22,48 @@ describe('Navigation Mobile Accessibility', () => {
   it('toggles mobile menu and sets accessibility attributes', () => {
     const { container } = render(<Navigation />);
 
-    const toggleButton = screen.getByLabelText(/toggle menu/i);
+    const openButton = screen.getByLabelText(/open menu/i);
 
     // Initial state: menu closed
-    expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
+    expect(openButton).toHaveAttribute('aria-expanded', 'false');
     expect(container.querySelector('#mobile-menu')).not.toBeInTheDocument();
     expect(document.body.style.overflow).toBe('');
 
     // Open menu
-    fireEvent.click(toggleButton);
+    fireEvent.click(openButton);
 
     // State: menu open
-    expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
+    const closeButton = screen.getByLabelText(/close menu/i);
+    expect(closeButton).toHaveAttribute('aria-expanded', 'true');
     expect(document.body.style.overflow).toBe('hidden');
-    expect(toggleButton).toHaveAttribute('aria-controls', 'mobile-menu');
+    expect(closeButton).toHaveAttribute('aria-controls', 'mobile-menu');
 
     const menu = container.querySelector('#mobile-menu');
     expect(menu).toBeInTheDocument();
 
     // Close menu
-    fireEvent.click(toggleButton);
-    expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
+    fireEvent.click(closeButton);
+
+    // Back to initial state
+    const openButtonAgain = screen.getByLabelText(/open menu/i);
+    expect(openButtonAgain).toHaveAttribute('aria-expanded', 'false');
     expect(document.body.style.overflow).toBe('');
     expect(container.querySelector('#mobile-menu')).not.toBeInTheDocument();
   });
 
   it('closes on Escape key', () => {
     render(<Navigation />);
-    const toggleButton = screen.getByLabelText(/toggle menu/i);
+    const openButton = screen.getByLabelText(/open menu/i);
 
-    fireEvent.click(toggleButton);
-    expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
+    fireEvent.click(openButton);
+
+    const closeButton = screen.getByLabelText(/close menu/i);
+    expect(closeButton).toHaveAttribute('aria-expanded', 'true');
 
     fireEvent.keyDown(window, { key: 'Escape' });
 
-    expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
+    const openButtonAgain = screen.getByLabelText(/open menu/i);
+    expect(openButtonAgain).toHaveAttribute('aria-expanded', 'false');
     expect(document.body.style.overflow).toBe('');
   });
 });

@@ -9,3 +9,7 @@
 ## 2024-05-30 - Mobile Navigation Accessibility
 **Learning:** Mobile overlays need explicit state management for accessibility (ARIA attributes) and UX (scroll locking). Simply toggling visibility is insufficient.
 **Action:** Always implement `aria-expanded`, `aria-controls`, and body scroll locking for any mobile menu or modal overlay.
+
+## 2025-02-20 - Mobile Menu Focus Management
+**Learning:** Standard focus traps inside a menu container can isolate keyboard users if the close button is external.
+**Action:** Ensure the focus cycle includes the external toggle/close button to prevent keyboard traps.
