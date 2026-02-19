@@ -2,12 +2,7 @@
 
 import { useRef } from "react";
 import dynamic from "next/dynamic";
-import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Projects from "@/components/Projects";
-import Contact from "@/components/Contact";
-import Experience from "@/components/Experience";
-import Certificates from "@/components/Certificates";
+// Removed static imports for performance - Bolt optimization
 
 // Only HeroClient (scroll logic, framer-motion, preloader) is a client boundary.
 // All content sections are rendered server-side and passed as children.
@@ -17,6 +12,15 @@ const HeroClient = dynamic(() => import("@/components/HeroClient"), {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-white" />
   ),
 });
+
+// ⚡ Bolt: Lazy load heavy sections to reduce initial bundle size
+// These chunks will be loaded only when needed (after preloader)
+const About = dynamic(() => import("@/components/About"));
+const Skills = dynamic(() => import("@/components/Skills"));
+const Projects = dynamic(() => import("@/components/Projects"));
+const Contact = dynamic(() => import("@/components/Contact"));
+const Experience = dynamic(() => import("@/components/Experience"));
+const Certificates = dynamic(() => import("@/components/Certificates"));
 
 export default function PageShell() {
   const aboutRef = useRef<HTMLDivElement>(null);
