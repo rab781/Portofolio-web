@@ -58,10 +58,13 @@ describe('Navigation', () => {
     // Check if 'about' link is active
     const aboutLink = screen.getByRole('link', { name: /About/i });
     expect(aboutLink).toHaveClass('bg-[#111111]');
+    expect(aboutLink).toHaveAttribute('aria-current', 'page');
 
     // Check if 'home' link is inactive
-    const homeLink = screen.getByRole('link', { name: /Home/i });
+    // Use getByText because aria-label on logo creates duplicate "Home" name
+    const homeLink = screen.getByText('Home').closest('a');
     expect(homeLink).not.toHaveClass('bg-[#111111]');
+    expect(homeLink).not.toHaveAttribute('aria-current');
   });
 
   it('updates scrolled state on scroll', () => {
