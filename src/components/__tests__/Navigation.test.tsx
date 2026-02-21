@@ -88,4 +88,22 @@ describe('Navigation', () => {
 
     expect(nav).toHaveClass('py-4');
   });
+
+  it('renders navigation elements with accessibility focus styles', () => {
+    render(<Navigation />);
+
+    // Check links (Logo + Nav links)
+    const links = screen.getAllByRole('link');
+    links.forEach((link) => {
+      expect(link).toHaveClass('focus-visible:outline-none');
+      expect(link).toHaveClass('focus-visible:ring-2');
+      expect(link).toHaveClass('focus-visible:ring-[#FFA239]');
+    });
+
+    // Check mobile menu button
+    const toggleButton = screen.getByLabelText(/toggle menu/i);
+    expect(toggleButton).toHaveClass('focus-visible:outline-none');
+    expect(toggleButton).toHaveClass('focus-visible:ring-2');
+    expect(toggleButton).toHaveClass('focus-visible:ring-[#FFA239]');
+  });
 });
