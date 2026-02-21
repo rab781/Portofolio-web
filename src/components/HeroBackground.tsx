@@ -9,19 +9,44 @@ export default function HeroBackground() {
         const container = containerRef.current;
         if (!container) return;
 
-        // Use CSS variables for high-performance mouse tracking
-        // No React re-renders, no batched updates, just direct DOM manipulation
-        const handleMouseMove = (e: MouseEvent) => {
-            const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+        // ⚡ Bolt: Cache layout measurements and throttle updates to prevent layout thrashing
+        let rect = container.getBoundingClientRect();
+        let mouseX = 0;
+        let mouseY = 0;
+        let ticking = false;
+
+        const updatePosition = () => {
+            // Calculate relative to the cached rect
+            // Since HeroBackground is fixed/absolute in a non-scrolling context, this is performant.
+            const x = mouseX - rect.left;
+            const y = mouseY - rect.top;
 
             container.style.setProperty("--mouse-x", `${x}px`);
             container.style.setProperty("--mouse-y", `${y}px`);
+            ticking = false;
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            if (!ticking) {
+                window.requestAnimationFrame(updatePosition);
+                ticking = true;
+            }
+        };
+
+        const handleResize = () => {
+            rect = container.getBoundingClientRect();
         };
 
         window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("resize", handleResize);
+        };
     }, []);
 
     // Grid configuration
