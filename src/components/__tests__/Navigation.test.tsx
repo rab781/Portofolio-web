@@ -60,7 +60,9 @@ describe('Navigation', () => {
     expect(aboutLink).toHaveClass('bg-[#111111]');
 
     // Check if 'home' link is inactive
-    const homeLink = screen.getByRole('link', { name: /Home/i });
+    // Note: There are two links with name "Home" (logo and nav link). We want the nav link.
+    const homeLinks = screen.getAllByRole('link', { name: /Home/i });
+    const homeLink = homeLinks.find(link => link.textContent === 'Home');
     expect(homeLink).not.toHaveClass('bg-[#111111]');
   });
 
