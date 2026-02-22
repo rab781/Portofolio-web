@@ -9,3 +9,7 @@
 ## 2024-05-30 - Mobile Navigation Accessibility
 **Learning:** Mobile overlays need explicit state management for accessibility (ARIA attributes) and UX (scroll locking). Simply toggling visibility is insufficient.
 **Action:** Always implement `aria-expanded`, `aria-controls`, and body scroll locking for any mobile menu or modal overlay.
+
+## 2025-05-25 - Active Navigation State
+**Learning:** Visual indicators for active navigation links (like color changes) are insufficient for screen reader users who need semantic confirmation of their current location.
+**Action:** Always add `aria-current="page"` (or "location") to the active link component in navigation menus.
