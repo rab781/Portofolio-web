@@ -4,13 +4,17 @@ import { useRef } from "react";
 import dynamic from "next/dynamic";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
-import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Experience from "@/components/Experience";
 import Certificates from "@/components/Certificates";
 
-// Only HeroClient (scroll logic, framer-motion, preloader) is a client boundary.
-// All content sections are rendered server-side and passed as children.
+// Optimizing Projects section (heavy images) by lazy loading
+const Projects = dynamic(() => import("@/components/Projects"), {
+  ssr: false,
+  loading: () => <div className="h-[500px] w-full" />,
+});
+
+// HeroClient handles scroll logic, framer-motion, and the preloader.
 const HeroClient = dynamic(() => import("@/components/HeroClient"), {
   ssr: false,
   loading: () => (
