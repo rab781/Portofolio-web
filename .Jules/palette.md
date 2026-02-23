@@ -9,3 +9,7 @@
 ## 2024-05-30 - Mobile Navigation Accessibility
 **Learning:** Mobile overlays need explicit state management for accessibility (ARIA attributes) and UX (scroll locking). Simply toggling visibility is insufficient.
 **Action:** Always implement `aria-expanded`, `aria-controls`, and body scroll locking for any mobile menu or modal overlay.
+
+## 2025-02-18 - Single Page Navigation Accessibility
+**Learning:** For single-page applications where navigation scrolls to sections, using `aria-current="page"` on the active link provides critical context to screen readers, just like multi-page sites.
+**Action:** Always implement `aria-current="page"` logic based on the active section state, not just visual styling.
