@@ -57,10 +57,12 @@ describe('Navigation', () => {
 
     // Check if 'about' link is active
     const aboutLink = screen.getByRole('link', { name: /About/i });
+    expect(aboutLink).toHaveAttribute('aria-current', 'page');
     expect(aboutLink).toHaveClass('bg-[#111111]');
 
     // Check if 'home' link is inactive
     const homeLink = screen.getByRole('link', { name: /Home/i });
+    expect(homeLink).not.toHaveAttribute('aria-current');
     expect(homeLink).not.toHaveClass('bg-[#111111]');
   });
 

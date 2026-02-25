@@ -9,3 +9,6 @@
 ## 2024-05-30 - Mobile Navigation Accessibility
 **Learning:** Mobile overlays need explicit state management for accessibility (ARIA attributes) and UX (scroll locking). Simply toggling visibility is insufficient.
 **Action:** Always implement `aria-expanded`, `aria-controls`, and body scroll locking for any mobile menu or modal overlay.
+## 2026-10-25 - Robust Testing of Active Navigation States
+**Learning:** Testing active navigation states by asserting on specific CSS classes (e.g., `toHaveClass('bg-[#111111]')`) is brittle and implementation-dependent. The `aria-current='page'` attribute provides a semantic contract that is both accessible and stable for testing.
+**Action:** Always implement `aria-current='page'` for active navigation links and use `expect(link).toHaveAttribute('aria-current', 'page')` in tests instead of checking class names.
