@@ -31,4 +31,27 @@ describe('Projects Component', () => {
       expect(link.getAttribute('href')).toMatch(/^https:\/\/github\.com\//);
     });
   });
+
+  it('renders project images as clickable links', () => {
+    render(<Projects />);
+
+    // Query for links that might be hidden from accessibility tree
+    // We look for links with href starting with /projects/
+    // Since aria-hidden="true" is used, we need hidden: true option
+    const links = screen.getAllByRole('link', { hidden: true });
+
+    // Filter for the project detail links that are likely our image wrappers (they have tabIndex -1)
+    const imageLinks = links.filter(link =>
+      link.getAttribute('href')?.startsWith('/projects/') &&
+      link.getAttribute('tabIndex') === '-1' &&
+      link.getAttribute('aria-hidden') === 'true'
+    );
+
+    expect(imageLinks.length).toBeGreaterThan(0);
+    imageLinks.forEach(link => {
+       expect(link).toHaveClass('group/image');
+       // Verify it contains an image (our mock renders an img tag)
+       expect(link.querySelector('img')).toBeInTheDocument();
+    });
+  });
 });
