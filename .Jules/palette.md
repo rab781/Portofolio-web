@@ -9,3 +9,7 @@
 ## 2024-05-30 - Mobile Navigation Accessibility
 **Learning:** Mobile overlays need explicit state management for accessibility (ARIA attributes) and UX (scroll locking). Simply toggling visibility is insufficient.
 **Action:** Always implement `aria-expanded`, `aria-controls`, and body scroll locking for any mobile menu or modal overlay.
+
+## 2025-02-19 - Clickable Project Cards
+**Learning:** Users expect large visual elements (like project thumbnails) to be clickable links.
+**Action:** Wrap project images in anchor tags with `aria-hidden="true"` and `tabIndex={-1}` to improve usability for mouse users without creating redundant links for keyboard/screen reader users.

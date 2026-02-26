@@ -80,7 +80,12 @@ function Projects() {
             </div>
 
             {/* Image Right */}
-            <div className="flex-1 bg-gray-100 relative order-1 md:order-2 h-64 md:h-auto">
+            <Link
+              href={`/projects/${project.id}`}
+              className="flex-1 bg-gray-100 relative order-1 md:order-2 h-64 md:h-auto block group/image cursor-pointer"
+              aria-hidden="true"
+              tabIndex={-1}
+            >
               <Image
                 src={project.image}
                 alt={project.title}
@@ -89,7 +94,7 @@ function Projects() {
                 className="object-cover transition-transform duration-700 hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/5 hover:bg-transparent transition-colors duration-300"></div>
-            </div>
+            </Link>
           </div>
         ))}
       </div>
