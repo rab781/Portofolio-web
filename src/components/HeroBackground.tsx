@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 
 export default function HeroBackground() {
     const containerRef = useRef<HTMLDivElement>(null);
+    const rafRef = useRef<number | null>(null);
+    const mousePosRef = useRef<{ x: number; y: number } | null>(null);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -12,16 +14,40 @@ export default function HeroBackground() {
         // Use CSS variables for high-performance mouse tracking
         // No React re-renders, no batched updates, just direct DOM manipulation
         const handleMouseMove = (e: MouseEvent) => {
-            const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            // Store the latest mouse coordinates (trailing edge)
+            mousePosRef.current = { x: e.clientX, y: e.clientY };
 
-            container.style.setProperty("--mouse-x", `${x}px`);
-            container.style.setProperty("--mouse-y", `${y}px`);
+            // If a frame is already scheduled, we don't need to do anything
+            if (rafRef.current) return;
+
+            rafRef.current = requestAnimationFrame(() => {
+                if (!mousePosRef.current) return;
+
+                // Read the latest mouse position
+                const { x: clientX, y: clientY } = mousePosRef.current;
+
+                // Get the bounding rect relative to the viewport at the moment of the paint
+                // This ensures we account for scroll position correctly
+                const rect = container.getBoundingClientRect();
+
+                const x = clientX - rect.left;
+                const y = clientY - rect.top;
+
+                container.style.setProperty("--mouse-x", `${x}px`);
+                container.style.setProperty("--mouse-y", `${y}px`);
+
+                rafRef.current = null;
+            });
         };
 
         window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            if (rafRef.current) {
+                cancelAnimationFrame(rafRef.current);
+            }
+        };
     }, []);
 
     // Grid configuration
