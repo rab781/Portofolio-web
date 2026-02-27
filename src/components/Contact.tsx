@@ -13,7 +13,7 @@ function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [copied, setCopied] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout>(null);
   const isMounted = useRef(false);
 
@@ -34,10 +34,14 @@ function Contact() {
     });
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText("raihanrabani199@gmail.com");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopy = (text: string, field: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(field);
+    setTimeout(() => {
+      if (isMounted.current) {
+        setCopiedField(null);
+      }
+    }, 2000);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -112,12 +116,12 @@ function Contact() {
                   </a>
                   <button
                     type="button"
-                    onClick={handleCopy}
-                    aria-label={copied ? "Email copied to clipboard" : "Copy email address"}
+                    onClick={() => handleCopy("raihanrabani199@gmail.com", "email")}
+                    aria-label={copiedField === "email" ? "Email copied to clipboard" : "Copy email address"}
                     className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-white/10"
                     title="Copy to clipboard"
                   >
-                    {copied ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
+                    {copiedField === "email" ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
                   </button>
                 </div>
               </div>
@@ -127,9 +131,20 @@ function Contact() {
               <Phone className="w-6 h-6 text-white mt-1 mr-4" />
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Phone</div>
-                <a href="tel:+6285824665623" className="text-xl font-medium text-white hover:text-gray-300 transition-colors">
-                  +62 858-2466-5623
-                </a>
+                <div className="flex items-center gap-3">
+                  <a href="tel:+6285824665623" className="text-xl font-medium text-white hover:text-gray-300 transition-colors">
+                    +62 858-2466-5623
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy("+6285824665623", "phone")}
+                    aria-label={copiedField === "phone" ? "Phone number copied to clipboard" : "Copy phone number"}
+                    className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-white/10"
+                    title="Copy to clipboard"
+                  >
+                    {copiedField === "phone" ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
+                  </button>
+                </div>
               </div>
             </div>
 
