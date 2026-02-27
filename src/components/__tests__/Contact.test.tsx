@@ -106,4 +106,28 @@ describe('Contact Component', () => {
         expect(screen.getByLabelText(/Email copied to clipboard/i)).toBeInTheDocument();
     });
   });
+
+  it('copies phone number to clipboard when copy button is clicked', async () => {
+    // Mock navigator.clipboard
+    const writeTextMock = jest.fn().mockImplementation(() => Promise.resolve());
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: writeTextMock,
+      },
+    });
+
+    render(<Contact />);
+
+    const copyButton = screen.getByLabelText(/Copy phone number/i);
+    expect(copyButton).toBeInTheDocument();
+
+    fireEvent.click(copyButton);
+
+    expect(writeTextMock).toHaveBeenCalledWith('+6285824665623');
+
+    // Check if the label changes
+    await waitFor(() => {
+        expect(screen.getByLabelText(/Phone number copied to clipboard/i)).toBeInTheDocument();
+    });
+  });
 });
