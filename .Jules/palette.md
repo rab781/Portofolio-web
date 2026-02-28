@@ -9,3 +9,7 @@
 ## 2024-05-30 - Mobile Navigation Accessibility
 **Learning:** Mobile overlays need explicit state management for accessibility (ARIA attributes) and UX (scroll locking). Simply toggling visibility is insufficient.
 **Action:** Always implement `aria-expanded`, `aria-controls`, and body scroll locking for any mobile menu or modal overlay.
+
+## 2025-02-27 - Active Navigation Accessibility & Keyboard Focus
+**Learning:** In a single-page scrolling portfolio, navigation links often rely solely on visual styling (like `bg-[#111111]`) to indicate the active section. This leaves screen reader users without context of their current location within the page. Additionally, custom styled links frequently lack explicit keyboard focus indicators (`focus-visible`), making keyboard navigation difficult.
+**Action:** Always apply `aria-current="true"` (for scrolling sections) or `aria-current="page"` (for separate pages) to the active navigation link based on scroll position state. Pair this with a clear, high-contrast `focus-visible:ring-2` utility to ensure keyboard users can track their focus path.
