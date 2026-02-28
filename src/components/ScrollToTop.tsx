@@ -1,35 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const { scrollY } = useScroll();
 
-  useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          if (window.scrollY > 500) {
-            setIsVisible(true);
-          } else {
-            setIsVisible(false);
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  // ⚡ Bolt: Use Framer Motion's optimized scroll listener instead of manual passive event listeners
+  // This shares the global animation frame loop with other Framer Motion components
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsVisible(latest > 500);
+  });
 
   const scrollToTop = () => {
     window.scrollTo({
