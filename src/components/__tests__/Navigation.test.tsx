@@ -17,6 +17,16 @@ const mockIntersectionObserver = jest.fn((cb) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 window.IntersectionObserver = mockIntersectionObserver as any;
 
+let motionValueCallback: ((val: number) => void) | null = null;
+
+jest.mock('framer-motion', () => ({
+  ...jest.requireActual('framer-motion'),
+  useScroll: jest.fn(() => ({ scrollY: { get: () => 0 } })),
+  useMotionValueEvent: jest.fn((val, evt, cb) => {
+    motionValueCallback = cb;
+  })
+}));
+
 describe('Navigation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -68,13 +78,17 @@ describe('Navigation', () => {
     render(<Navigation />);
 
     const nav = screen.getByRole('navigation');
+
     // Initial state: py-4
     expect(nav).toHaveClass('py-4');
 
-    // Scroll down
+    // Scroll down - simulate what Framer Motion's useScroll would receive
     act(() => {
-        window.scrollY = 50;
-        fireEvent.scroll(window);
+        // Trigger the registered useMotionValueEvent callback manually
+        // We know from the mock above that it's registered
+        if (motionValueCallback) {
+            motionValueCallback(50);
+        }
     });
 
     // Scrolled state: py-3
@@ -82,8 +96,9 @@ describe('Navigation', () => {
 
     // Scroll up
     act(() => {
-        window.scrollY = 0;
-        fireEvent.scroll(window);
+        if (motionValueCallback) {
+            motionValueCallback(0);
+        }
     });
 
     expect(nav).toHaveClass('py-4');
