@@ -99,6 +99,7 @@ function Navigation() {
                   <a
                     key={link.href}
                     href={link.href}
+                    aria-current={isActive ? "true" : undefined}
                     className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${isActive
                       ? "bg-[#111111] text-white shadow-md transform scale-105"
                       : "text-gray-600 hover:text-[#FFA239] hover:bg-gray-50"
@@ -116,7 +117,6 @@ function Navigation() {
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-gray-900 p-2 hover:bg-gray-100 rounded-full transition-colors"
                 aria-label="Toggle menu"
-                // eslint-disable-next-line jsx-a11y/aria-proptypes
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
               >
@@ -136,6 +136,7 @@ function Navigation() {
                   <a
                     key={link.href}
                     href={link.href}
+                    aria-current={isActive ? "true" : undefined}
                     className={`block px-4 py-3 rounded-xl text-base font-semibold transition-colors ${isActive
                       ? "bg-[#FEEE91] text-[#111111]" // Active mobile style (Pop Yellow)
                       : "text-gray-600 hover:text-[#FFA239] hover:bg-gray-50"
