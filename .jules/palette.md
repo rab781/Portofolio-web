@@ -1,0 +1,3 @@
+## 2025-03-03 - [In-Page Navigation Active States]
+**Learning:** For components featuring scroll-spy or in-page navigation (like `Navigation.tsx`), active links often rely purely on visual styles (e.g. background colors or font weights). Adding `aria-current="true"` improves accessibility by semantically communicating the active state to screen reader users, without adding significant complexity.
+**Action:** When adding active link states to navigation menus, apply `aria-current="true"` conditionally based on the active state in addition to visual indicators. Tests should assert against this ARIA attribute rather than CSS classes.
