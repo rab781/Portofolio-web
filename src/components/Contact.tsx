@@ -4,18 +4,12 @@ import { useState, memo, useEffect, useRef } from "react";
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Loader2, Copy, Check, AlertCircle } from "lucide-react";
 
 function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>(null);
   const isMounted = useRef(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     isMounted.current = true;
@@ -27,20 +21,13 @@ function Contact() {
     };
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleCopy = () => {
     navigator.clipboard.writeText("raihanrabani199@gmail.com");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
@@ -49,24 +36,28 @@ function Contact() {
       clearTimeout(timeoutRef.current);
     }
 
+    // ⚡ Bolt: Use native FormData instead of controlled state to prevent re-renders on every keystroke
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      subject: formData.get("subject"),
+      message: formData.get("message"),
+    };
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       if (!isMounted.current) return;
 
       if (response.ok) {
-        setFormData({
-          name: "",
-          email: "",
-          subject: "",
-          message: "",
-        });
+        formRef.current?.reset();
         setSubmitStatus('success');
       } else {
         setSubmitStatus('error');
@@ -147,7 +138,7 @@ function Contact() {
 
         {/* Clean Form */}
         <div className="bg-white rounded-2xl p-8 md:p-12 text-[#111111]">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-bold text-gray-700 mb-2">
@@ -158,8 +149,6 @@ function Contact() {
                   id="name"
                   name="name"
                   autoComplete="name"
-                  value={formData.name}
-                  onChange={handleChange}
                   required
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                   placeholder="John Doe"
@@ -174,8 +163,6 @@ function Contact() {
                   id="email"
                   name="email"
                   autoComplete="email"
-                  value={formData.email}
-                  onChange={handleChange}
                   required
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                   placeholder="john@example.com"
@@ -191,8 +178,6 @@ function Contact() {
                 type="text"
                 id="subject"
                 name="subject"
-                value={formData.subject}
-                onChange={handleChange}
                 required
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                 placeholder="Project Inquiry"
@@ -206,8 +191,6 @@ function Contact() {
               <textarea
                 id="message"
                 name="message"
-                value={formData.message}
-                onChange={handleChange}
                 required
                 rows={4}
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all resize-none"
