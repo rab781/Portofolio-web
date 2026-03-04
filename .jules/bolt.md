@@ -5,3 +5,6 @@
 ## 2025-03-03 - optimize-form-state
 **Learning:** Using `useState` attached to form input `onChange` handlers causes excessive re-renders on every single keystroke. In simple forms without complex real-time validation, this is an unnecessary performance penalty.
 **Action:** Prefer uncontrolled components utilizing `useRef` for the form element and native `new FormData(e.currentTarget)` on submission. This completely bypasses the React render lifecycle during user input.
+## 2026-03-04 - optimize-scroll-to-top
+**Learning:** Attaching React state to high-frequency scroll events via `window.addEventListener('scroll')` triggers unnecessary re-renders.
+**Action:** Replace React state with Framer Motion's `useScroll` and `useTransform` to bind scroll position directly to DOM styles, completely bypassing the React render cycle during scrolling.
