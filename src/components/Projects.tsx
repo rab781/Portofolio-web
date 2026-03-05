@@ -80,15 +80,22 @@ function Projects() {
             </div>
 
             {/* Image Right */}
-            <div className="flex-1 bg-gray-100 relative order-1 md:order-2 h-64 md:h-auto">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                sizes="(max-width: 767px) 100vw, 50vw"
-                className="object-cover transition-transform duration-700 hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/5 hover:bg-transparent transition-colors duration-300"></div>
+            <div className="flex-1 bg-gray-100 relative order-1 md:order-2 h-64 md:h-auto overflow-hidden">
+              <Link
+                href={`/projects/${project.id}`}
+                aria-hidden="true"
+                tabIndex={-1}
+                className="block w-full h-full relative group"
+              >
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 767px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-300"></div>
+              </Link>
             </div>
           </div>
         ))}
