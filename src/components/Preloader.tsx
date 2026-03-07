@@ -33,7 +33,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             <div className="relative z-10 flex flex-col items-center justify-center">
                 <DecryptedText
                     text="Hello World !"
-                    speed={30}
+                    speed={100}
                     maxIterations={10}
                     sequential={true}
                     revealDirection="start"

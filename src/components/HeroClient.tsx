@@ -120,7 +120,7 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
               />
 
               <motion.div
-                className="text-center w-full max-w-6xl mx-auto relative z-10 pt-[10vh]"
+                className="text-center w-full max-w-6xl mx-auto relative z-10"
                 style={{ scale: fontScale }}
                 initial="hidden"
                 animate="visible"
