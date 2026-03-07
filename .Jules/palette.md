@@ -9,3 +9,7 @@
 ## 2024-05-30 - Mobile Navigation Accessibility
 **Learning:** Mobile overlays need explicit state management for accessibility (ARIA attributes) and UX (scroll locking). Simply toggling visibility is insufficient.
 **Action:** Always implement `aria-expanded`, `aria-controls`, and body scroll locking for any mobile menu or modal overlay.
+
+## 2024-10-24 - Focus-visible for Navigation Accessibility
+**Learning:** Found interactive elements lacking clear keyboard focus indicators. The `focus-visible` utility class is highly effective for accessibility, providing visual feedback for keyboard users without affecting mouse users' experience.
+**Action:** Consistently apply `focus-visible:ring-2 focus-visible:ring-[#FFA239] focus-visible:outline-none` (using the project's brand pop orange) to all interactive UI components like buttons and links to ensure basic a11y compliance.
