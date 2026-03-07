@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const styles = {
@@ -49,6 +49,7 @@ export default function DecryptedText({
 }: DecryptedTextProps) {
     const [displayText, setDisplayText] = useState(animateOn === 'auto' ? '' : text);
     const [isHovering, setIsHovering] = useState(animateOn === 'auto');
+    const textArray = useMemo(() => text.split(''), [text]);
     const [isScrambling, setIsScrambling] = useState(false);
     const [revealedIndices, setRevealedIndices] = useState(new Set<number>());
     const [hasAnimated, setHasAnimated] = useState(false);
@@ -85,12 +86,12 @@ export default function DecryptedText({
         };
 
         const availableChars = useOriginalCharsOnly
-            ? Array.from(new Set(text.split(''))).filter(char => char !== ' ')
+            ? Array.from(new Set(textArray)).filter(char => char !== ' ')
             : characters.split('');
 
         const shuffleText = (originalText: string, currentRevealed: Set<number>) => {
             if (useOriginalCharsOnly) {
-                const positions = originalText.split('').map((char, i) => ({
+                const positions = textArray.map((char, i) => ({
                     char,
                     isSpace: char === ' ',
                     index: i,
@@ -115,11 +116,10 @@ export default function DecryptedText({
                     })
                     .join('');
             } else {
-                return originalText
-                    .split('')
+                return textArray
                     .map((char, i) => {
                         if (char === ' ') return ' ';
-                        if (currentRevealed.has(i)) return originalText[i];
+                        if (currentRevealed.has(i)) return textArray[i];
                         return availableChars[Math.floor(Math.random() * availableChars.length)];
                     })
                     .join('');
@@ -163,7 +163,7 @@ export default function DecryptedText({
         return () => {
             if (interval) clearInterval(interval);
         };
-    }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly]);
+    }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly, textArray]);
 
 
 
@@ -206,6 +206,9 @@ export default function DecryptedText({
             }
             : {};
 
+    // ⚡ Bolt: Split only once here instead of multiple times
+    const displayChars = useMemo(() => displayText.split(''), [displayText]);
+
     return (
         <motion.span
             className={parentClassName}
@@ -217,7 +220,7 @@ export default function DecryptedText({
             <span style={styles.srOnly} aria-hidden="true">{displayText}</span>
 
             <span aria-hidden="true">
-                {displayText.split('').map((char, index) => {
+                {displayChars.map((char, index) => {
                     const isRevealedOrDone = revealedIndices.has(index) || !isScrambling || !isHovering;
 
                     return (
