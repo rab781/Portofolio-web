@@ -85,7 +85,7 @@ function Navigation() {
         <div className="relative px-6 lg:px-8">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <a href="#home" className="flex items-center space-x-2 group z-10">
+            <a href="#home" className="flex items-center space-x-2 group z-10 focus-visible:ring-2 focus-visible:ring-[#FFA239] focus-visible:outline-none rounded-sm">
               <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 group-hover:to-[#FFA239] transition-all">
                 RAB.
               </span>
@@ -100,7 +100,7 @@ function Navigation() {
                     key={link.href}
                     href={link.href}
                     aria-current={isActive ? "true" : undefined}
-                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${isActive
+                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#FFA239] focus-visible:outline-none ${isActive
                       ? "bg-[#111111] text-white shadow-md transform scale-105"
                       : "text-gray-600 hover:text-[#FFA239] hover:bg-gray-50"
                       }`}
@@ -115,7 +115,7 @@ function Navigation() {
             <div className="md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-gray-900 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="text-gray-900 p-2 hover:bg-gray-100 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-[#FFA239] focus-visible:outline-none"
                 aria-label="Toggle menu"
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
@@ -137,7 +137,7 @@ function Navigation() {
                     key={link.href}
                     href={link.href}
                     aria-current={isActive ? "true" : undefined}
-                    className={`block px-4 py-3 rounded-xl text-base font-semibold transition-colors ${isActive
+                    className={`block px-4 py-3 rounded-xl text-base font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[#FFA239] focus-visible:outline-none ${isActive
                       ? "bg-[#FEEE91] text-[#111111]" // Active mobile style (Pop Yellow)
                       : "text-gray-600 hover:text-[#FFA239] hover:bg-gray-50"
                       }`}
