@@ -1,15 +1,3 @@
-## 2024-05-22 - Replaced Alert with Inline Feedback
-**Learning:** Found `alert()` used for form submission. This interrupts user flow and looks unprofessional.
-**Action:** Always check form handlers for `alert()` and replace with inline status messages using `aria-live` regions.
-
-## 2024-05-24 - Clipboard Feedback Pattern
-**Learning:** Users need immediate confirmation when copying text. Using state to toggle between 'Copy' and 'Check' icons provides clear, accessible feedback without layout shifts.
-**Action:** Use this pattern for any copy-able text (e.g. API keys, IDs).
-
-## 2024-05-30 - Mobile Navigation Accessibility
-**Learning:** Mobile overlays need explicit state management for accessibility (ARIA attributes) and UX (scroll locking). Simply toggling visibility is insufficient.
-**Action:** Always implement `aria-expanded`, `aria-controls`, and body scroll locking for any mobile menu or modal overlay.
-
-## 2024-10-24 - Focus-visible for Navigation Accessibility
-**Learning:** Found interactive elements lacking clear keyboard focus indicators. The `focus-visible` utility class is highly effective for accessibility, providing visual feedback for keyboard users without affecting mouse users' experience.
-**Action:** Consistently apply `focus-visible:ring-2 focus-visible:ring-[#FFA239] focus-visible:outline-none` (using the project's brand pop orange) to all interactive UI components like buttons and links to ensure basic a11y compliance.
+## 2025-03-03 - [In-Page Navigation Active States]
+**Learning:** For components featuring scroll-spy or in-page navigation (like `Navigation.tsx`), active links often rely purely on visual styles (e.g. background colors or font weights). Adding `aria-current="true"` improves accessibility by semantically communicating the active state to screen reader users, without adding significant complexity.
+**Action:** When adding active link states to navigation menus, apply `aria-current="true"` conditionally based on the active state in addition to visual indicators. Tests should assert against this ARIA attribute rather than CSS classes.
