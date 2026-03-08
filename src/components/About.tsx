@@ -129,7 +129,7 @@ function About({ hideImage = false, triggerAnimation = false }: AboutProps) {
           {/* CTA Link - Magnetic Button Style */}
           <motion.div variants={itemVariants} className="pt-8">
             <a
-              href="/resume.pdf"
+              href="/CV - Mohammad Raihan Rabbani.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-3 text-[#111111] font-bold text-lg hover:text-[#FFA239] transition-all"

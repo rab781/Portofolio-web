@@ -6,7 +6,7 @@ export const projects: Project[] = [
     title: "Road Damage Detection",
     subtitle: "Automated road damage detection system using YOLOv8 with 91% accuracy.",
     category: "Deep Learning",
-    image: "/projects/optimized/restoration.webp", // Using restoration image as conceptually similar
+    image: "/projects/restoration.jpg", // Using restoration image as conceptually similar
     technologies: ["Python", "YOLOv8", "Deep Learning", "Computer Vision", "RDD Dataset"],
     githubUrl: "https://github.com/rab781", // Linking to profile as specific repo wasn't in OCR, or can use placeholder
 
@@ -60,7 +60,7 @@ export const projects: Project[] = [
     title: "RabTradeBot",
     subtitle: "Real-time crypto trading assistant integrated with Binance API.",
     category: "Personal Project",
-    image: "/projects/optimized/dashboard.webp", // Using dashboard image as relevant for trading
+    image: "/projects/fraud.jpg", // Using dashboard image as relevant for trading
     technologies: ["Python", "Binance API", "Telegram API", "Mobile Responsive", "Bot Architecture"],
     githubUrl: "https://github.com/rab781",
 
@@ -87,7 +87,7 @@ export const projects: Project[] = [
     title: "MyAnemone System",
     subtitle: "Full-stack laundry management system with comprehensive admin features.",
     category: "Full Stack Dev",
-    image: "/projects/optimized/ecommerce.webp", // Using ecommerce/business image
+    image: "/projects/ecommerce.png", // Using ecommerce/business image
     technologies: ["SQL", "Web Framework", "ERD Design", "Database Management", "Full Stack"],
     githubUrl: "https://github.com/rab781",
 
