@@ -84,22 +84,16 @@ export default function DecryptedText({
             }
         };
 
+        // ⚡ Bolt: Pre-calculate split strings and available chars to avoid recreating on every tick
+        const textChars = text.split('');
         const availableChars = useOriginalCharsOnly
-            ? Array.from(new Set(text.split(''))).filter(char => char !== ' ')
+            ? Array.from(new Set(textChars)).filter(char => char !== ' ')
             : characters.split('');
 
-        const shuffleText = (originalText: string, currentRevealed: Set<number>) => {
+        const shuffleText = (currentRevealed: Set<number>) => {
             if (useOriginalCharsOnly) {
-                const positions = originalText.split('').map((char, i) => ({
-                    char,
-                    isSpace: char === ' ',
-                    index: i,
-                    isRevealed: currentRevealed.has(i)
-                }));
-
-                const nonSpaceChars = positions
-                    .filter(p => !p.isSpace && !p.isRevealed)
-                    .map(p => p.char);
+                // Collect unrevealed, non-space characters
+                const nonSpaceChars = textChars.filter((char, i) => char !== ' ' && !currentRevealed.has(i));
 
                 for (let i = nonSpaceChars.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -107,20 +101,19 @@ export default function DecryptedText({
                 }
 
                 let charIndex = 0;
-                return positions
-                    .map(p => {
-                        if (p.isSpace) return ' ';
-                        if (p.isRevealed) return originalText[p.index];
+                return textChars
+                    .map((char, i) => {
+                        if (char === ' ') return ' ';
+                        if (currentRevealed.has(i)) return char;
                         return nonSpaceChars[charIndex++];
                     })
                     .join('');
             } else {
-                return originalText
-                    .split('')
+                return textChars
                     .map((char, i) => {
                         if (char === ' ') return ' ';
-                        if (currentRevealed.has(i)) return originalText[i];
-                        return availableChars[Math.floor(Math.random() * availableChars.length)];
+                        if (currentRevealed.has(i)) return char;
+                        return availableChars.length > 0 ? availableChars[Math.floor(Math.random() * availableChars.length)] : char;
                     })
                     .join('');
             }
@@ -135,7 +128,7 @@ export default function DecryptedText({
                             const nextIndex = getNextIndex(prevRevealed);
                             const newRevealed = new Set(prevRevealed);
                             newRevealed.add(nextIndex);
-                            setDisplayText(shuffleText(text, newRevealed));
+                            setDisplayText(shuffleText(newRevealed));
                             return newRevealed;
                         } else {
                             clearInterval(interval);
@@ -143,7 +136,7 @@ export default function DecryptedText({
                             return prevRevealed;
                         }
                     } else {
-                        setDisplayText(shuffleText(text, prevRevealed));
+                        setDisplayText(shuffleText(prevRevealed));
                         currentIteration++;
                         if (currentIteration >= maxIterations) {
                             clearInterval(interval);
