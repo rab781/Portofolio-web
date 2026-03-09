@@ -84,22 +84,21 @@ export default function DecryptedText({
             }
         };
 
+        // ⚡ Bolt: Pre-calculate arrays to avoid allocating objects and splitting strings on every animation tick
+        const originalChars = text.split('');
+        const isSpace = originalChars.map(char => char === ' ');
         const availableChars = useOriginalCharsOnly
-            ? Array.from(new Set(text.split(''))).filter(char => char !== ' ')
+            ? Array.from(new Set(originalChars)).filter(char => char !== ' ')
             : characters.split('');
 
-        const shuffleText = (originalText: string, currentRevealed: Set<number>) => {
+        const shuffleText = (currentRevealed: Set<number>) => {
             if (useOriginalCharsOnly) {
-                const positions = originalText.split('').map((char, i) => ({
-                    char,
-                    isSpace: char === ' ',
-                    index: i,
-                    isRevealed: currentRevealed.has(i)
-                }));
-
-                const nonSpaceChars = positions
-                    .filter(p => !p.isSpace && !p.isRevealed)
-                    .map(p => p.char);
+                const nonSpaceChars = [];
+                for (let i = 0; i < originalChars.length; i++) {
+                    if (!isSpace[i] && !currentRevealed.has(i)) {
+                        nonSpaceChars.push(originalChars[i]);
+                    }
+                }
 
                 for (let i = nonSpaceChars.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -107,22 +106,29 @@ export default function DecryptedText({
                 }
 
                 let charIndex = 0;
-                return positions
-                    .map(p => {
-                        if (p.isSpace) return ' ';
-                        if (p.isRevealed) return originalText[p.index];
-                        return nonSpaceChars[charIndex++];
-                    })
-                    .join('');
+                let result = '';
+                for (let i = 0; i < originalChars.length; i++) {
+                    if (isSpace[i]) {
+                        result += ' ';
+                    } else if (currentRevealed.has(i)) {
+                        result += originalChars[i];
+                    } else {
+                        result += nonSpaceChars[charIndex++];
+                    }
+                }
+                return result;
             } else {
-                return originalText
-                    .split('')
-                    .map((char, i) => {
-                        if (char === ' ') return ' ';
-                        if (currentRevealed.has(i)) return originalText[i];
-                        return availableChars[Math.floor(Math.random() * availableChars.length)];
-                    })
-                    .join('');
+                let result = '';
+                for (let i = 0; i < originalChars.length; i++) {
+                    if (isSpace[i]) {
+                        result += ' ';
+                    } else if (currentRevealed.has(i)) {
+                        result += originalChars[i];
+                    } else {
+                        result += availableChars[Math.floor(Math.random() * availableChars.length)];
+                    }
+                }
+                return result;
             }
         };
 
@@ -135,7 +141,7 @@ export default function DecryptedText({
                             const nextIndex = getNextIndex(prevRevealed);
                             const newRevealed = new Set(prevRevealed);
                             newRevealed.add(nextIndex);
-                            setDisplayText(shuffleText(text, newRevealed));
+                            setDisplayText(shuffleText(newRevealed));
                             return newRevealed;
                         } else {
                             clearInterval(interval);
@@ -143,7 +149,7 @@ export default function DecryptedText({
                             return prevRevealed;
                         }
                     } else {
-                        setDisplayText(shuffleText(text, prevRevealed));
+                        setDisplayText(shuffleText(prevRevealed));
                         currentIteration++;
                         if (currentIteration >= maxIterations) {
                             clearInterval(interval);
