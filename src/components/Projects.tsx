@@ -58,7 +58,7 @@ function Projects() {
               <div className="flex items-center gap-6 mt-12">
                 <Link
                   href={`/projects/${project.id}`}
-                  className="inline-flex items-center text-lg font-bold text-[#111111] hover:text-[#EA580C] transition-colors group"
+                  className="inline-flex items-center text-lg font-bold text-[#111111] hover:text-[#EA580C] transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg"
                 >
                   View Case Study
                   <ArrowUpRight className="ml-2 w-5 h-5 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
@@ -69,7 +69,7 @@ function Projects() {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-[#111111]"
+                    className="text-gray-400 hover:text-[#111111] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg"
                     aria-label="View source code on GitHub"
                     title="View source code on GitHub"
                   >

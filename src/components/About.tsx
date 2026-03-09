@@ -132,7 +132,7 @@ function About({ hideImage = false, triggerAnimation = false }: AboutProps) {
               href="/CV - Mohammad Raihan Rabbani.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 text-[#111111] font-bold text-lg hover:text-[#FFA239] transition-all"
+              className="group inline-flex items-center gap-3 text-[#111111] font-bold text-lg hover:text-[#FFA239] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg p-1 -m-1"
             >
               <span className="border-b-2 border-[#111111] group-hover:border-[#FFA239] pb-0.5">Download Curriculum Vitae</span>
               <svg className="w-5 h-5 transform group-hover:-translate-y-1 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">

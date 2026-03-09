@@ -1,3 +1,6 @@
 ## 2025-03-03 - [In-Page Navigation Active States]
 **Learning:** For components featuring scroll-spy or in-page navigation (like `Navigation.tsx`), active links often rely purely on visual styles (e.g. background colors or font weights). Adding `aria-current="true"` improves accessibility by semantically communicating the active state to screen reader users, without adding significant complexity.
 **Action:** When adding active link states to navigation menus, apply `aria-current="true"` conditionally based on the active state in addition to visual indicators. Tests should assert against this ARIA attribute rather than CSS classes.
+## 2024-05-18 - Missing Focus Rings on Interactive Elements
+**Learning:** In projects transitioning to modern Tailwind/utility setups, focus states (`focus-visible:ring-*`) are often omitted or incompletely applied to non-primary buttons like generic `<a>` tags and inline interactive elements (e.g. CV download links, social icons). This is an easy-to-miss accessibility blindspot when global CSS doesn't enforce standard focus styling.
+**Action:** Audit all interactive elements (`<button>`, `<a>`) for `focus-visible` utility classes and ensure consistent ring color (like the primary brand color) across the application.

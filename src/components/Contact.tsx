@@ -98,14 +98,14 @@ function Contact() {
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Email</div>
                 <div className="flex items-center gap-3">
-                  <a href="mailto:raihanrabani199@gmail.com" className="text-xl font-medium text-white hover:text-gray-300 transition-colors">
+                  <a href="mailto:raihanrabani199@gmail.com" className="text-xl font-medium text-white hover:text-gray-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg px-1 -mx-1">
                     raihanrabani199@gmail.com
                   </a>
                   <button
                     type="button"
                     onClick={handleCopy}
                     aria-label={copied ? "Email copied to clipboard" : "Copy email address"}
-                    className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-white/10"
+                    className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                     title="Copy to clipboard"
                   >
                     {copied ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
@@ -118,7 +118,7 @@ function Contact() {
               <Phone className="w-6 h-6 text-white mt-1 mr-4" />
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Phone</div>
-                <a href="tel:+6285824665623" className="text-xl font-medium text-white hover:text-gray-300 transition-colors">
+                <a href="tel:+6285824665623" className="text-xl font-medium text-white hover:text-gray-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg px-1 -mx-1">
                   +62 858-2466-5623
                 </a>
               </div>
@@ -245,9 +245,9 @@ function Contact() {
       <div className="pt-20 mt-8 border-t border-gray-800 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
         <p>© 2026 Raihan Rabbani. All rights reserved.</p>
         <div className="flex space-x-6 mt-4 md:mt-0">
-          <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-          <a href="#" className="hover:text-white transition-colors">GitHub</a>
-          <a href="#" className="hover:text-white transition-colors">Twitter</a>
+          <a href="#" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded px-1 -mx-1">LinkedIn</a>
+          <a href="#" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded px-1 -mx-1">GitHub</a>
+          <a href="#" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded px-1 -mx-1">Twitter</a>
         </div>
       </div>
     </div>
