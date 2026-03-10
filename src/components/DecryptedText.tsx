@@ -84,45 +84,51 @@ export default function DecryptedText({
             }
         };
 
+        // ⚡ Bolt: Pre-calculate to avoid allocations on every animation tick
         const availableChars = useOriginalCharsOnly
             ? Array.from(new Set(text.split(''))).filter(char => char !== ' ')
             : characters.split('');
 
         const shuffleText = (originalText: string, currentRevealed: Set<number>) => {
             if (useOriginalCharsOnly) {
-                const positions = originalText.split('').map((char, i) => ({
-                    char,
-                    isSpace: char === ' ',
-                    index: i,
-                    isRevealed: currentRevealed.has(i)
-                }));
+                const nonSpaceChars: string[] = [];
+                // Collect unrevealed characters
+                for (let i = 0; i < originalText.length; i++) {
+                    if (originalText[i] !== ' ' && !currentRevealed.has(i)) {
+                        nonSpaceChars.push(originalText[i]);
+                    }
+                }
 
-                const nonSpaceChars = positions
-                    .filter(p => !p.isSpace && !p.isRevealed)
-                    .map(p => p.char);
-
+                // Shuffle unrevealed characters
                 for (let i = nonSpaceChars.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [nonSpaceChars[i], nonSpaceChars[j]] = [nonSpaceChars[j], nonSpaceChars[i]];
                 }
 
                 let charIndex = 0;
-                return positions
-                    .map(p => {
-                        if (p.isSpace) return ' ';
-                        if (p.isRevealed) return originalText[p.index];
-                        return nonSpaceChars[charIndex++];
-                    })
-                    .join('');
+                let result = '';
+                for (let i = 0; i < originalText.length; i++) {
+                    if (originalText[i] === ' ') {
+                        result += ' ';
+                    } else if (currentRevealed.has(i)) {
+                        result += originalText[i];
+                    } else {
+                        result += nonSpaceChars[charIndex++];
+                    }
+                }
+                return result;
             } else {
-                return originalText
-                    .split('')
-                    .map((char, i) => {
-                        if (char === ' ') return ' ';
-                        if (currentRevealed.has(i)) return originalText[i];
-                        return availableChars[Math.floor(Math.random() * availableChars.length)];
-                    })
-                    .join('');
+                let result = '';
+                for (let i = 0; i < originalText.length; i++) {
+                    if (originalText[i] === ' ') {
+                        result += ' ';
+                    } else if (currentRevealed.has(i)) {
+                        result += originalText[i];
+                    } else {
+                        result += availableChars[Math.floor(Math.random() * availableChars.length)];
+                    }
+                }
+                return result;
             }
         };
 
