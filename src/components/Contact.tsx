@@ -245,9 +245,9 @@ function Contact() {
       <div className="pt-20 mt-8 border-t border-gray-800 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
         <p>© 2026 Raihan Rabbani. All rights reserved.</p>
         <div className="flex space-x-6 mt-4 md:mt-0">
-          <a href="https://linkedin.com/in/mohammad-raihan-rabbani" target="_blank" rel="noopener noreferrer" aria-label="Visit my LinkedIn profile (opens in a new tab)" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded">LinkedIn</a>
-          <a href="https://github.com/raihanrabani199" target="_blank" rel="noopener noreferrer" aria-label="Visit my GitHub profile (opens in a new tab)" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded">GitHub</a>
-          <a href="https://twitter.com/raihanrabani199" target="_blank" rel="noopener noreferrer" aria-label="Visit my Twitter profile (opens in a new tab)" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded">Twitter</a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Visit my LinkedIn profile" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-sm px-1 -mx-1">LinkedIn</a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Visit my GitHub profile" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-sm px-1 -mx-1">GitHub</a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Visit my Twitter profile" className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-sm px-1 -mx-1">Twitter</a>
         </div>
       </div>
     </div>
