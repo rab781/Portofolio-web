@@ -84,42 +84,42 @@ export default function DecryptedText({
             }
         };
 
+        // ⚡ Bolt: Pre-calculate arrays outside the interval loop to prevent re-allocating on every tick
+        const originalTextArray = text.split('');
         const availableChars = useOriginalCharsOnly
-            ? Array.from(new Set(text.split(''))).filter(char => char !== ' ')
+            ? Array.from(new Set(originalTextArray)).filter(char => char !== ' ')
             : characters.split('');
 
-        const shuffleText = (originalText: string, currentRevealed: Set<number>) => {
+        const shuffleText = (currentRevealed: Set<number>) => {
             if (useOriginalCharsOnly) {
-                const positions = originalText.split('').map((char, i) => ({
-                    char,
-                    isSpace: char === ' ',
-                    index: i,
-                    isRevealed: currentRevealed.has(i)
-                }));
+                // ⚡ Bolt: Collect unrevealed, non-space characters without mapping full positions array
+                const nonSpaceChars: string[] = [];
+                for (let i = 0; i < originalTextArray.length; i++) {
+                    const char = originalTextArray[i];
+                    if (char !== ' ' && !currentRevealed.has(i)) {
+                        nonSpaceChars.push(char);
+                    }
+                }
 
-                const nonSpaceChars = positions
-                    .filter(p => !p.isSpace && !p.isRevealed)
-                    .map(p => p.char);
-
+                // Fisher-Yates shuffle
                 for (let i = nonSpaceChars.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [nonSpaceChars[i], nonSpaceChars[j]] = [nonSpaceChars[j], nonSpaceChars[i]];
                 }
 
                 let charIndex = 0;
-                return positions
-                    .map(p => {
-                        if (p.isSpace) return ' ';
-                        if (p.isRevealed) return originalText[p.index];
+                return originalTextArray
+                    .map((char, i) => {
+                        if (char === ' ') return ' ';
+                        if (currentRevealed.has(i)) return char;
                         return nonSpaceChars[charIndex++];
                     })
                     .join('');
             } else {
-                return originalText
-                    .split('')
+                return originalTextArray
                     .map((char, i) => {
                         if (char === ' ') return ' ';
-                        if (currentRevealed.has(i)) return originalText[i];
+                        if (currentRevealed.has(i)) return char;
                         return availableChars[Math.floor(Math.random() * availableChars.length)];
                     })
                     .join('');
@@ -135,7 +135,7 @@ export default function DecryptedText({
                             const nextIndex = getNextIndex(prevRevealed);
                             const newRevealed = new Set(prevRevealed);
                             newRevealed.add(nextIndex);
-                            setDisplayText(shuffleText(text, newRevealed));
+                            setDisplayText(shuffleText(newRevealed));
                             return newRevealed;
                         } else {
                             clearInterval(interval);
@@ -143,7 +143,7 @@ export default function DecryptedText({
                             return prevRevealed;
                         }
                     } else {
-                        setDisplayText(shuffleText(text, prevRevealed));
+                        setDisplayText(shuffleText(prevRevealed));
                         currentIteration++;
                         if (currentIteration >= maxIterations) {
                             clearInterval(interval);

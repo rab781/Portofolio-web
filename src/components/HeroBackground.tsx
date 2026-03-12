@@ -11,13 +11,27 @@ export default function HeroBackground() {
 
         // Use CSS variables for high-performance mouse tracking
         // No React re-renders, no batched updates, just direct DOM manipulation
-        const handleMouseMove = (e: MouseEvent) => {
-            const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+        let ticking = false;
 
-            container.style.setProperty("--mouse-x", `${x}px`);
-            container.style.setProperty("--mouse-y", `${y}px`);
+        const handleMouseMove = (e: MouseEvent) => {
+            if (!ticking) {
+                const clientX = e.clientX;
+                const clientY = e.clientY;
+
+                window.requestAnimationFrame(() => {
+                    // ⚡ Bolt: Throttled with rAF to avoid main-thread blocking.
+                    // getBoundingClientRect is evaluated inside the callback to prevent layout thrashing
+                    // while ensuring measurements stay accurate if the page is scrolled between frames.
+                    const rect = container.getBoundingClientRect();
+                    const x = clientX - rect.left;
+                    const y = clientY - rect.top;
+
+                    container.style.setProperty("--mouse-x", `${x}px`);
+                    container.style.setProperty("--mouse-y", `${y}px`);
+                    ticking = false;
+                });
+                ticking = true;
+            }
         };
 
         window.addEventListener("mousemove", handleMouseMove);
