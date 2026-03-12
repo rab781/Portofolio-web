@@ -98,14 +98,14 @@ function Contact() {
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Email</div>
                 <div className="flex items-center gap-3">
-                  <a href="mailto:raihanrabani199@gmail.com" className="text-xl font-medium text-white hover:text-gray-300 transition-colors">
+                  <a href="mailto:raihanrabani199@gmail.com" className="text-xl font-medium text-white hover:text-gray-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg px-1 -mx-1">
                     raihanrabani199@gmail.com
                   </a>
                   <button
                     type="button"
                     onClick={handleCopy}
                     aria-label={copied ? "Email copied to clipboard" : "Copy email address"}
-                    className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-white/10"
+                    className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                     title="Copy to clipboard"
                   >
                     {copied ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
@@ -118,7 +118,7 @@ function Contact() {
               <Phone className="w-6 h-6 text-white mt-1 mr-4" />
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Phone</div>
-                <a href="tel:+6285824665623" className="text-xl font-medium text-white hover:text-gray-300 transition-colors">
+                <a href="tel:+6285824665623" className="text-xl font-medium text-white hover:text-gray-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg px-1 -mx-1">
                   +62 858-2466-5623
                 </a>
               </div>
