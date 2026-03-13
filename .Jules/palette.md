@@ -4,3 +4,7 @@
 ## 2024-05-18 - Missing Focus Rings on Interactive Elements
 **Learning:** In projects transitioning to modern Tailwind/utility setups, focus states (`focus-visible:ring-*`) are often omitted or incompletely applied to non-primary buttons like generic `<a>` tags and inline interactive elements (e.g. CV download links, social icons). This is an easy-to-miss accessibility blindspot when global CSS doesn't enforce standard focus styling.
 **Action:** Audit all interactive elements (`<button>`, `<a>`) for `focus-visible` utility classes and ensure consistent ring color (like the primary brand color) across the application.
+
+## 2025-03-13 - [Focus States on Hero Call-to-Actions]
+**Learning:** High-level overview, Hero sections containing critical CTA buttons ("View Selected Work", "Get in Touch") often lack keyboard navigation focus indicators, as focus styles may not carry over from general generic link components, violating WCAG keyboard accessibility standards.
+**Action:** Always ensure that explicit `focus-visible` styling (e.g., `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]`) is applied to major hero CTA components to provide semantic state information and visual indicators to screen readers.
