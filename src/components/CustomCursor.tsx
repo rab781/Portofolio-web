@@ -15,9 +15,25 @@ export default function CustomCursor() {
     const scaleSpring = useSpring(scale, springConfig);
 
     useEffect(() => {
+        let ticking = false;
+        let lastClientX = 0;
+        let lastClientY = 0;
+
         const moveCursor = (e: MouseEvent) => {
-            cursorX.set(e.clientX - 16);
-            cursorY.set(e.clientY - 16);
+            lastClientX = e.clientX;
+            lastClientY = e.clientY;
+
+            if (!ticking) {
+                // ⚡ Bolt: Throttling high-frequency mousemove events with requestAnimationFrame.
+                // This prevents updating the motion values more than once per frame,
+                // significantly reducing main-thread CPU usage during fast mouse movements.
+                window.requestAnimationFrame(() => {
+                    cursorX.set(lastClientX - 16);
+                    cursorY.set(lastClientY - 16);
+                    ticking = false;
+                });
+                ticking = true;
+            }
         };
 
         const handleMouseOver = (e: MouseEvent) => {
