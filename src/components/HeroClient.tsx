@@ -23,6 +23,22 @@ interface HeroClientProps {
   children: React.ReactNode;
 }
 
+// ⚡ Bolt: Extract static framer-motion variants outside component to prevent re-allocation on every render
+const heroVariants = {
+  hidden: { y: 100, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+const containerVariants = {
+  visible: {
+    transition: { staggerChildren: 0.1, delayChildren: 0.5 },
+  },
+};
+
 export default function HeroClient({ aboutRef, children }: HeroClientProps) {
   const { scrollY } = useScroll();
   const [isLoading, setIsLoading] = useState(true);
@@ -78,21 +94,6 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
   const overlayOpacity = useTransform(clampedScrollProgress, [0, 1], [0, 0.6]);
   const fontScale = useTransform(clampedScrollProgress, [0, 1], [1, 0.9]);
   const scrollIndicatorOpacity = useTransform(clampedScrollProgress, [0, 1], [1, 0]);
-
-  const heroVariants = {
-    hidden: { y: 100, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const },
-    },
-  };
-
-  const containerVariants = {
-    visible: {
-      transition: { staggerChildren: 0.1, delayChildren: 0.5 },
-    },
-  };
 
   return (
     <div className="relative min-h-screen bg-[#8CE4FF] text-[#18181B] selection:bg-blue-100 selection:text-blue-900 bg-noise">

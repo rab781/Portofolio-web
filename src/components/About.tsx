@@ -38,28 +38,29 @@ function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string
   return <span ref={ref} className="tabular-nums" />;
 }
 
+// ⚡ Bolt: Extract static framer-motion variants outside component to prevent re-allocation on every render
+// Variants for staggered animations
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const } // Custom bezier for "premium" smoothness
+  },
+};
+
 function About({ hideImage = false, triggerAnimation = false }: AboutProps) {
-
-  // Variants for staggered animations
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const } // Custom bezier for "premium" smoothness
-    },
-  };
 
   return (
     <motion.div
