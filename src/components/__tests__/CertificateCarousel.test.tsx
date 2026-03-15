@@ -54,6 +54,13 @@ describe('CertificateCarousel', () => {
     // We pass clientX/Y as well, though pageX should work.
     fireEvent.mouseDown(carouselContainer, { clientX: 100, pageX: 100 });
 
+    // Mock requestAnimationFrame for tests
+    const originalRaf = window.requestAnimationFrame;
+    window.requestAnimationFrame = (callback: FrameRequestCallback) => {
+      callback(0);
+      return 1;
+    };
+
     // Mouse Move (drag)
     // 100 - 50 = 50 delta. walk = 100. new scrollLeft = -100 (0 - 100).
     // Correct logic:
@@ -67,6 +74,8 @@ describe('CertificateCarousel', () => {
 
     // Mouse Up
     fireEvent.mouseUp(carouselContainer);
+
+    window.requestAnimationFrame = originalRaf;
   });
 
   it('handles touch drag interaction', () => {
@@ -81,6 +90,13 @@ describe('CertificateCarousel', () => {
       writable: true,
     });
 
+    // Mock requestAnimationFrame for tests
+    const originalRaf = window.requestAnimationFrame;
+    window.requestAnimationFrame = (callback: FrameRequestCallback) => {
+      callback(0);
+      return 1;
+    };
+
     // Touch Start
     fireEvent.touchStart(carouselContainer, { touches: [{ pageX: 200, clientX: 200 }] });
 
@@ -92,5 +108,7 @@ describe('CertificateCarousel', () => {
     fireEvent.touchMove(carouselContainer, { touches: [{ pageX: 220, clientX: 220 }] });
 
     expect(carouselContainer.scrollLeft).toBe(60);
+
+    window.requestAnimationFrame = originalRaf;
   });
 });
