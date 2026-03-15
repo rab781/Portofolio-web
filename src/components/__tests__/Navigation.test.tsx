@@ -60,7 +60,8 @@ describe('Navigation', () => {
     expect(aboutLink).toHaveAttribute('aria-current', 'true');
 
     // Check if 'home' link is inactive
-    const homeLink = screen.getByRole('link', { name: /Home/i });
+    // Use getByText to specifically target the text link "Home" and not the logo link which also has aria-label="Home"
+    const homeLink = screen.getByText('Home');
     expect(homeLink).not.toHaveAttribute('aria-current');
   });
 
