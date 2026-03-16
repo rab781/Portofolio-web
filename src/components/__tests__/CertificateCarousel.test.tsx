@@ -30,6 +30,10 @@ const mockItems = [
   { image: '/cert2.jpg', text: 'Cert 2' },
 ];
 
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
 describe('CertificateCarousel', () => {
   it('renders correctly', () => {
     render(<CertificateCarousel items={mockItems} />);
@@ -55,11 +59,12 @@ describe('CertificateCarousel', () => {
     fireEvent.mouseDown(carouselContainer, { clientX: 100, pageX: 100 });
 
     // Mock requestAnimationFrame for tests
-    const originalRaf = window.requestAnimationFrame;
-    window.requestAnimationFrame = (callback: FrameRequestCallback) => {
-      callback(0);
-      return 1;
-    };
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(
+      (callback: FrameRequestCallback): number => {
+        callback(0);
+        return 1;
+      }
+    );
 
     // Mouse Move (drag)
     // 100 - 50 = 50 delta. walk = 100. new scrollLeft = -100 (0 - 100).
@@ -74,8 +79,6 @@ describe('CertificateCarousel', () => {
 
     // Mouse Up
     fireEvent.mouseUp(carouselContainer);
-
-    window.requestAnimationFrame = originalRaf;
   });
 
   it('handles touch drag interaction', () => {
@@ -91,11 +94,12 @@ describe('CertificateCarousel', () => {
     });
 
     // Mock requestAnimationFrame for tests
-    const originalRaf = window.requestAnimationFrame;
-    window.requestAnimationFrame = (callback: FrameRequestCallback) => {
-      callback(0);
-      return 1;
-    };
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(
+      (callback: FrameRequestCallback): number => {
+        callback(0);
+        return 1;
+      }
+    );
 
     // Touch Start
     fireEvent.touchStart(carouselContainer, { touches: [{ pageX: 200, clientX: 200 }] });
@@ -108,7 +112,5 @@ describe('CertificateCarousel', () => {
     fireEvent.touchMove(carouselContainer, { touches: [{ pageX: 220, clientX: 220 }] });
 
     expect(carouselContainer.scrollLeft).toBe(60);
-
-    window.requestAnimationFrame = originalRaf;
   });
 });
