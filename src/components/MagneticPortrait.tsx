@@ -8,6 +8,8 @@ import { Code, Zap, Sparkles } from "lucide-react";
 export default function MagneticPortrait() {
     const ref = useRef<HTMLDivElement>(null);
     const rectRef = useRef<{ width: number; height: number; left: number; top: number } | null>(null);
+    const rafIdRef = useRef<number | null>(null);
+    const hoveringRef = useRef(false);
 
     // Motion values for mouse position
     const x = useMotionValue(0);
@@ -67,10 +69,18 @@ export default function MagneticPortrait() {
             // ⚡ Bolt: Throttle high-frequency React events with requestAnimationFrame
             // Reduces main-thread blocking by batching updates to the next frame cycle
             // Evaluates the latest coordinates rather than stale ones from the start of the frame
-            window.requestAnimationFrame(() => {
+            const id = window.requestAnimationFrame(() => {
                 // Ensure rect wasn't cleared by resize during the frame delay
                 if (!rectRef.current) {
                     ticking.current = false;
+                    rafIdRef.current = null;
+                    return;
+                }
+
+                // If we're no longer hovering, do not apply any tilt
+                if (!hoveringRef.current) {
+                    ticking.current = false;
+                    rafIdRef.current = null;
                     return;
                 }
 
@@ -88,15 +98,24 @@ export default function MagneticPortrait() {
                 x.set(xPct);
                 y.set(yPct);
                 ticking.current = false;
+                rafIdRef.current = null;
             });
+            rafIdRef.current = id;
         }
     };
 
     const handleMouseEnter = () => {
+        hoveringRef.current = true;
         updateRect();
     };
 
     const handleMouseLeave = () => {
+        hoveringRef.current = false;
+        if (rafIdRef.current !== null) {
+            cancelAnimationFrame(rafIdRef.current);
+            rafIdRef.current = null;
+        }
+        ticking.current = false;
         x.set(0);
         y.set(0);
     };
