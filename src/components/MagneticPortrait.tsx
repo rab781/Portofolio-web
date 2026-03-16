@@ -57,8 +57,9 @@ export default function MagneticPortrait() {
 
         if (!rectRef.current) return;
 
-        // ⚡ Bolt: Store latest coordinates synchronously
-        mousePos.current = { pageX: e.pageX, pageY: e.pageY };
+        // ⚡ Bolt: Store latest coordinates synchronously without reallocating the ref object
+        mousePos.current.pageX = e.pageX;
+        mousePos.current.pageY = e.pageY;
 
         if (!ticking.current) {
             ticking.current = true;
