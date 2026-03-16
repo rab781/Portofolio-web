@@ -4,6 +4,6 @@
 ## 2024-05-18 - Missing Focus Rings on Interactive Elements
 **Learning:** In projects transitioning to modern Tailwind/utility setups, focus states (`focus-visible:ring-*`) are often omitted or incompletely applied to non-primary buttons like generic `<a>` tags and inline interactive elements (e.g. CV download links, social icons). This is an easy-to-miss accessibility blindspot when global CSS doesn't enforce standard focus styling.
 **Action:** Audit all interactive elements (`<button>`, `<a>`) for `focus-visible` utility classes and ensure consistent ring color (like the primary brand color) across the application.
-## $(date +%Y-%m-%d) - [Disambiguating Home Links in Tests]
+## 2025-03-10 - [Disambiguating Home Links in Tests]
 **Learning:** Adding `aria-label="Home"` to a site logo (to improve screen reader experience since visual text like "RAB." isn't explicitly descriptive) can break existing accessibility tests that query for a single "Home" link via `getByRole('link', { name: /Home/i })`, as both the logo and the main navigation link now share the same accessible name.
 **Action:** When adding accessible names to logos that duplicate text links, ensure tests are updated to distinguish between them, for instance by using `getByText('Home')` for the text link or more specific selectors/test IDs, while keeping the semantic ARIA improvements.
