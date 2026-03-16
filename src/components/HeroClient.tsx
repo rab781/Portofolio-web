@@ -143,13 +143,13 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
                 >
                   <a
                     href="#projects"
-                    className="px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base bg-[#18181B] text-white font-medium rounded-full hover:bg-black transition-all hover:scale-105 shadow-lg hover:shadow-xl"
+                    className="px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base bg-[#18181B] text-white font-medium rounded-full hover:bg-black transition-all hover:scale-105 shadow-lg hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                   >
                     View Selected Work
                   </a>
                   <a
                     href="#contact"
-                    className="px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base border-2 border-gray-800 text-[#18181B] font-medium rounded-full hover:bg-gray-50 transition-all hover:scale-105"
+                    className="px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base border-2 border-gray-800 text-[#18181B] font-medium rounded-full hover:bg-gray-50 transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                   >
                     Get in Touch
                   </a>
