@@ -26,6 +26,10 @@ export default function MagneticPortrait() {
     const bgX = useSpring(useTransform(x, [-0.5, 0.5], [20, -20]), springConfig);
     const bgY = useSpring(useTransform(y, [-0.5, 0.5], [20, -20]), springConfig);
 
+    // ⚡ Bolt: Use a ref to track whether a requestAnimationFrame is queued and store latest coords
+    const ticking = useRef(false);
+    const mousePos = useRef({ pageX: 0, pageY: 0 });
+
     // ⚡ Bolt: Invalidates cached rect on resize to ensure accuracy
     useEffect(() => {
         const handleResize = () => {
@@ -54,20 +58,38 @@ export default function MagneticPortrait() {
         const rect = rectRef.current;
         if (!rect) return;
 
-        const width = rect.width;
-        const height = rect.height;
+        // ⚡ Bolt: Store latest coordinates synchronously
+        mousePos.current = { pageX: e.pageX, pageY: e.pageY };
 
-        // Normalized coordinates (-0.5 to 0.5)
-        // 0,0 is center
-        // ⚡ Bolt: Use pageX/Y and cached rect to avoid getBoundingClientRect thrashing
-        const mouseX = e.pageX - rect.left;
-        const mouseY = e.pageY - rect.top;
+        if (!ticking.current) {
+            ticking.current = true;
 
-        const xPct = (mouseX / width) - 0.5;
-        const yPct = (mouseY / height) - 0.5;
+            // ⚡ Bolt: Throttle high-frequency React events with requestAnimationFrame
+            // Reduces main-thread blocking by batching updates to the next frame cycle
+            // Evaluates the latest coordinates rather than stale ones from the start of the frame
+            window.requestAnimationFrame(() => {
+                // Ensure rect wasn't cleared by resize during the frame delay
+                if (!rectRef.current) {
+                    ticking.current = false;
+                    return;
+                }
 
-        x.set(xPct);
-        y.set(yPct);
+                const width = rectRef.current.width;
+                const height = rectRef.current.height;
+
+                // Normalized coordinates (-0.5 to 0.5)
+                // 0,0 is center
+                const mouseX = mousePos.current.pageX - rectRef.current.left;
+                const mouseY = mousePos.current.pageY - rectRef.current.top;
+
+                const xPct = (mouseX / width) - 0.5;
+                const yPct = (mouseY / height) - 0.5;
+
+                x.set(xPct);
+                y.set(yPct);
+                ticking.current = false;
+            });
+        }
     };
 
     const handleMouseEnter = () => {
