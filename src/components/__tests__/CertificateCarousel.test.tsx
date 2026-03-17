@@ -30,6 +30,10 @@ const mockItems = [
   { image: '/cert2.jpg', text: 'Cert 2' },
 ];
 
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
 describe('CertificateCarousel', () => {
   it('renders correctly', () => {
     render(<CertificateCarousel items={mockItems} />);
@@ -53,6 +57,14 @@ describe('CertificateCarousel', () => {
     // Mouse Down
     // We pass clientX/Y as well, though pageX should work.
     fireEvent.mouseDown(carouselContainer, { clientX: 100, pageX: 100 });
+
+    // Mock requestAnimationFrame for tests
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(
+      (callback: FrameRequestCallback): number => {
+        callback(0);
+        return 1;
+      }
+    );
 
     // Mouse Move (drag)
     // 100 - 50 = 50 delta. walk = 100. new scrollLeft = -100 (0 - 100).
@@ -80,6 +92,14 @@ describe('CertificateCarousel', () => {
       value: 100,
       writable: true,
     });
+
+    // Mock requestAnimationFrame for tests
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(
+      (callback: FrameRequestCallback): number => {
+        callback(0);
+        return 1;
+      }
+    );
 
     // Touch Start
     fireEvent.touchStart(carouselContainer, { touches: [{ pageX: 200, clientX: 200 }] });

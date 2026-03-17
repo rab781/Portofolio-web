@@ -19,6 +19,10 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
 
+    // Refs for rAF throttling
+    const frameId = useRef<number | null>(null);
+    const lastPageX = useRef<number>(0);
+
     const handleMouseDown = (e: React.MouseEvent) => {
         setIsDragging(true);
         // ⚡ Bolt: Store initial pageX directly to avoid offsetLeft calculation in move handler
@@ -28,15 +32,28 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
 
     const handleMouseUp = () => {
         setIsDragging(false);
+        if (frameId.current !== null) {
+            window.cancelAnimationFrame(frameId.current);
+            frameId.current = null;
+        }
     };
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!isDragging) return;
         e.preventDefault();
-        // ⚡ Bolt: Calculate delta from initial pageX to avoid layout thrashing (offsetLeft)
-        const walk = (e.pageX - startX) * 2;
-        if (carouselRef.current) {
-            carouselRef.current.scrollLeft = scrollLeft - walk;
+
+        // ⚡ Bolt: Synchronously store event coordinate before rAF
+        lastPageX.current = e.pageX;
+
+        // ⚡ Bolt: Throttle DOM writes with requestAnimationFrame
+        if (frameId.current === null) {
+            frameId.current = window.requestAnimationFrame(() => {
+                if (carouselRef.current) {
+                    const walk = (lastPageX.current - startX) * 2;
+                    carouselRef.current.scrollLeft = scrollLeft - walk;
+                }
+                frameId.current = null;
+            });
         }
     };
 
@@ -49,10 +66,19 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
 
     const handleTouchMove = (e: React.TouchEvent) => {
         if (!isDragging) return;
-        // ⚡ Bolt: Calculate delta from initial pageX to avoid layout thrashing (offsetLeft)
-        const walk = (e.touches[0].pageX - startX) * 2;
-        if (carouselRef.current) {
-            carouselRef.current.scrollLeft = scrollLeft - walk;
+
+        // ⚡ Bolt: Synchronously store event coordinate before rAF
+        lastPageX.current = e.touches[0].pageX;
+
+        // ⚡ Bolt: Throttle DOM writes with requestAnimationFrame
+        if (frameId.current === null) {
+            frameId.current = requestAnimationFrame(() => {
+                if (carouselRef.current) {
+                    const walk = (lastPageX.current - startX) * 2;
+                    carouselRef.current.scrollLeft = scrollLeft - walk;
+                }
+                frameId.current = null;
+            });
         }
     };
 

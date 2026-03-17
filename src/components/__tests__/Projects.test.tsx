@@ -17,7 +17,7 @@ describe('Projects Component', () => {
     render(<Projects />);
 
     // Find all links that have the accessible label
-    const githubLinks = screen.getAllByRole('link', { name: /View source code on GitHub/i });
+    const githubLinks = screen.getAllByRole('link', { name: /View source code for .* on GitHub/i });
 
     // There are 4 projects in the mock data, all have githubUrl.
     // verifying we have at least one ensures the loop runs
@@ -27,7 +27,7 @@ describe('Projects Component', () => {
       expect(link).toBeInTheDocument();
       expect(link).toHaveAttribute('target', '_blank');
       expect(link).toHaveAttribute('rel', 'noopener noreferrer');
-      expect(link).toHaveAttribute('title', 'View source code on GitHub');
+      expect(link.getAttribute('title')).toMatch(/^View source code for .* on GitHub$/);
       expect(link.getAttribute('href')).toMatch(/^https:\/\/github\.com\//);
     });
   });

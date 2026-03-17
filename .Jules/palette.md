@@ -8,3 +8,6 @@
 ## 2025-03-13 - [Focus States on Hero Call-to-Actions]
 **Learning:** High-level overview, Hero sections containing critical CTA buttons ("View Selected Work", "Get in Touch") often lack keyboard navigation focus indicators, as focus styles may not carry over from general generic link components, violating WCAG keyboard accessibility standards.
 **Action:** Always ensure that explicit `focus-visible` styling (e.g., `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]`) is applied to major hero CTA components to provide semantic state information and visual indicators to screen readers.
+## 2025-03-10 - [Disambiguating Home Links in Tests]
+**Learning:** Adding `aria-label="Home"` to a site logo (to improve screen reader experience since visual text like "RAB." isn't explicitly descriptive) can break existing accessibility tests that query for a single "Home" link via `getByRole('link', { name: /Home/i })`, as both the logo and the main navigation link now share the same accessible name.
+**Action:** When adding accessible names to logos that duplicate text links, ensure tests are updated to distinguish between them, for instance by using `getByText('Home')` for the text link or more specific selectors/test IDs, while keeping the semantic ARIA improvements.
