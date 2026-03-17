@@ -55,7 +55,7 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
   const layoutTrigger = useMotionValue(0);
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined = undefined;
 
     const calculateLayout = () => {
       const vh = typeof window !== "undefined" ? window.innerHeight : 900;
@@ -68,7 +68,9 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
     };
 
     const handleResize = () => {
-      clearTimeout(timeoutId);
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
       // ⚡ Bolt: Debounce resize event to avoid synchronous reflows (offsetTop) during window resize
       timeoutId = setTimeout(calculateLayout, 150);
     };
@@ -79,7 +81,9 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
-      clearTimeout(timeoutId);
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
     };
   }, [layoutTrigger, isLoading, aboutRef]);
 
