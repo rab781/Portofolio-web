@@ -245,17 +245,44 @@ function Contact() {
       <div className="pt-20 mt-8 border-t border-gray-800 text-center md:text-left flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
         <p>© 2026 Raihan Rabbani. All rights reserved.</p>
         <div className="flex space-x-6 mt-4 md:mt-0">
-          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Visit my LinkedIn profile" className="inline-flex items-center gap-1 group hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-sm px-1 -mx-1">
+          <a
+            href="https://www.linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit my LinkedIn profile (opens in a new tab)"
+            className="inline-flex items-center gap-1 group hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-sm px-1 -mx-1"
+          >
             <span>LinkedIn</span>
-            <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" aria-hidden="true" />
+            <ArrowUpRight
+              className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+              aria-hidden="true"
+            />
           </a>
-          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Visit my GitHub profile" className="inline-flex items-center gap-1 group hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-sm px-1 -mx-1">
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit my GitHub profile (opens in a new tab)"
+            className="inline-flex items-center gap-1 group hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-sm px-1 -mx-1"
+          >
             <span>GitHub</span>
-            <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" aria-hidden="true" />
+            <ArrowUpRight
+              className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+              aria-hidden="true"
+            />
           </a>
-          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Visit my Twitter profile" className="inline-flex items-center gap-1 group hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-sm px-1 -mx-1">
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit my Twitter profile (opens in a new tab)"
+            className="inline-flex items-center gap-1 group hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-sm px-1 -mx-1"
+          >
             <span>Twitter</span>
-            <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" aria-hidden="true" />
+            <ArrowUpRight
+              className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+              aria-hidden="true"
+            />
           </a>
         </div>
       </div>
