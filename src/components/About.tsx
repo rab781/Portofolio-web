@@ -134,9 +134,10 @@ function About({ hideImage = false, triggerAnimation = false }: AboutProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-3 text-[#111111] font-bold text-lg hover:text-[#FFA239] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg p-1 -m-1"
+              aria-label="Download Curriculum Vitae (opens in a new tab)"
             >
               <span className="border-b-2 border-[#111111] group-hover:border-[#FFA239] pb-0.5">Download Curriculum Vitae</span>
-              <svg className="w-5 h-5 transform group-hover:-translate-y-1 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 transform group-hover:-translate-y-1 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
