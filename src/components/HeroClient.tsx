@@ -55,7 +55,10 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
   const layoutTrigger = useMotionValue(0);
 
   useEffect(() => {
-    const handleResize = () => {
+    // ⚡ Bolt: Debounce layout calculations to prevent layout thrashing and main-thread blocking during high-frequency window resize events
+    let resizeTimeout: NodeJS.Timeout;
+
+    const performLayout = () => {
       const vh = typeof window !== "undefined" ? window.innerHeight : 900;
       const aboutOffset = aboutRef.current?.offsetTop || 1000;
       const stickyTargetY = aboutOffset + vh * 0.65;
@@ -65,9 +68,17 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
       layoutTrigger.set(Date.now());
     };
 
-    handleResize();
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(performLayout, 150);
+    };
+
+    performLayout();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimeout);
+    };
   }, [layoutTrigger, isLoading, aboutRef]);
 
   const yVal = useTransform([scrollY, layoutTrigger], ([y]) => {
