@@ -10,6 +10,9 @@
 **Learning:** Static `framer-motion` animation variants should be defined outside the component function scope to ensure referential stability and prevent unnecessary object re-allocations on every render.
 **Action:** Extract `containerVariants`, `itemVariants`, `heroVariants` etc. outside of components like `About.tsx` and `HeroClient.tsx`.
 
+## $(date +%Y-%m-%d) - Debouncing synchronous layout reads on window resize
+**Learning:** Attaching a window resize event listener that synchronously reads layout properties (like `offsetTop` or `getBoundingClientRect()`) forces the browser into a continuous cycle of synchronous layout calculations (reflow). During a fast window resize, this severely blocks the main thread.
+**Action:** When handling `window.addEventListener('resize', ...)`, wrap synchronous layout reads in a debounce function (e.g., using `setTimeout` of 100-150ms) to ensure the expensive calculation only happens after the resize operation pauses or finishes.
 ## 2025-03-05 - Debouncing Resize Event Handlers
 **Learning:** Performing expensive layout measurements (e.g., `offsetTop`, `innerHeight`) synchronously inside high-frequency `resize` event listeners can cause severe layout thrashing and block the main thread, degrading page responsiveness.
 **Action:** Always debounce layout calculations in `resize` handlers using `setTimeout` (or `requestAnimationFrame` depending on the requirement) to batch these calculations and only run them after the user has finished or paused resizing the window.
