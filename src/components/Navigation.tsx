@@ -2,6 +2,7 @@
 
 import { useState, useEffect, memo } from "react";
 import { Menu, X } from "lucide-react";
+import { useScroll, useMotionValueEvent } from "framer-motion";
 
 const navLinks = [
   { href: "#home", label: "Home" },
@@ -17,23 +18,12 @@ function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
-  useEffect(() => {
-    // ⚡ Bolt: Throttled scroll handler for navbar background
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 20);
-          ticking = false;
-        });
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // ⚡ Bolt: Highly optimized scroll tracking utilizing framer-motion's
+  // projection loop instead of manual event listeners and rAF boilerplate.
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 20);
+  });
 
   useEffect(() => {
     if (isOpen) {

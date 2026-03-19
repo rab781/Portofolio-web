@@ -1,5 +1,12 @@
-import { render, fireEvent, act, screen } from '@testing-library/react';
+import { render, act, screen } from '@testing-library/react';
 import Navigation from '../Navigation';
+
+// Mock framer-motion hooks used by Navigation
+jest.mock('framer-motion', () => ({
+  ...jest.requireActual('framer-motion'),
+  useScroll: () => ({ scrollY: 0 }),
+  useMotionValueEvent: jest.fn(),
+}));
 
 // Mock IntersectionObserver
 let observerCallback: (entries: Partial<IntersectionObserverEntry>[]) => void;
@@ -65,26 +72,32 @@ describe('Navigation', () => {
     expect(homeLink).not.toHaveAttribute('aria-current');
   });
 
-  it('updates scrolled state on scroll', () => {
+  it('updates scrolled state on scroll via useMotionValueEvent', () => {
+    // We need to capture the useMotionValueEvent callback provided by framer-motion
+    let motionValueCallback: (latest: number) => void;
+    jest.requireMock('framer-motion').useMotionValueEvent = jest.fn((val, evt, cb) => {
+      motionValueCallback = cb;
+    });
+
     render(<Navigation />);
 
     const nav = screen.getByRole('navigation');
-    // Initial state: py-4
     expect(nav).toHaveClass('py-4');
 
-    // Scroll down
+    // Simulate scrolling down past 20px via the framer-motion hook
     act(() => {
-        window.scrollY = 50;
-        fireEvent.scroll(window);
+      if (motionValueCallback) {
+        motionValueCallback(50);
+      }
     });
 
-    // Scrolled state: py-3
     expect(nav).toHaveClass('py-3');
 
-    // Scroll up
+    // Simulate scrolling up
     act(() => {
-        window.scrollY = 0;
-        fireEvent.scroll(window);
+      if (motionValueCallback) {
+        motionValueCallback(0);
+      }
     });
 
     expect(nav).toHaveClass('py-4');
