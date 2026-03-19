@@ -11,3 +11,7 @@
 ## 2025-03-10 - [Disambiguating Home Links in Tests]
 **Learning:** Adding `aria-label="Home"` to a site logo (to improve screen reader experience since visual text like "RAB." isn't explicitly descriptive) can break existing accessibility tests that query for a single "Home" link via `getByRole('link', { name: /Home/i })`, as both the logo and the main navigation link now share the same accessible name.
 **Action:** When adding accessible names to logos that duplicate text links, ensure tests are updated to distinguish between them, for instance by using `getByText('Home')` for the text link or more specific selectors/test IDs, while keeping the semantic ARIA improvements.
+
+## 2026-03-19 - Accessible Form Submission Keyboard Shortcuts
+**Learning:** Adding a keyboard shortcut (like Cmd/Ctrl + Enter) to submit a form improves UX for power users, but it must be properly announced to screen readers. Relying solely on a visual hint inside the button is insufficient for a11y. The standard `title` attribute acts as a fallback, but the proper semantic approach for custom shortcuts in modern web apps is to provide an `aria-keyshortcuts` attribute on the actionable element.
+**Action:** When implementing custom keyboard shortcuts for forms or buttons, always dynamically detect the OS to show the correct modifier key (⌘ vs Ctrl) visually, and use `aria-keyshortcuts` (e.g., `aria-keyshortcuts="Meta+Enter"`) so screen readers can announce the available shortcut. Ensure the visual hint has `aria-hidden="true"` to prevent redundant/confusing announcements.

@@ -7,12 +7,20 @@ function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [copied, setCopied] = useState(false);
+  const [modifierKey, setModifierKey] = useState('Ctrl');
   const timeoutRef = useRef<NodeJS.Timeout>(null);
   const isMounted = useRef(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     isMounted.current = true;
+
+    // Detect OS for keyboard shortcut hint
+    if (typeof navigator !== 'undefined') {
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      setModifierKey(isMac ? '⌘' : 'Ctrl');
+    }
+
     return () => {
       isMounted.current = false;
       if (timeoutRef.current) {
@@ -79,6 +87,13 @@ function Contact() {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      e.preventDefault();
+      formRef.current?.requestSubmit();
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-6 sm:px-12 py-20">
       <div className="grid lg:grid-cols-2 gap-16">
@@ -138,7 +153,7 @@ function Contact() {
 
         {/* Clean Form */}
         <div className="bg-white rounded-2xl p-8 md:p-12 text-[#111111]">
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+          <form ref={formRef} onSubmit={handleSubmit} onKeyDown={handleKeyDown} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-bold text-gray-700 mb-2">
@@ -201,19 +216,29 @@ function Contact() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full bg-[#111111] text-white px-8 py-4 rounded-lg font-bold hover:bg-black transition-all flex items-center justify-center group ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+              aria-keyshortcuts={`${modifierKey === '⌘' ? 'Meta' : 'Control'}+Enter`}
+              className={`w-full bg-[#111111] text-white px-8 py-4 rounded-lg font-bold hover:bg-black transition-all flex items-center justify-center group relative overflow-hidden ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  Send Message
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </>
-              )}
+              <div className="flex items-center justify-center">
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" aria-hidden="true" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+
+                    {/* Keyboard Shortcut Hint */}
+                    <div className="hidden sm:flex items-center ml-3 px-2 py-0.5 rounded text-[10px] font-medium bg-white/10 text-white/80 border border-white/20 transition-opacity opacity-0 group-hover:opacity-100 absolute right-6" aria-hidden="true">
+                      <span>{modifierKey}</span>
+                      <span className="mx-0.5">+</span>
+                      <span>Enter</span>
+                    </div>
+                  </>
+                )}
+              </div>
             </button>
 
             {submitStatus === 'success' && (
