@@ -37,7 +37,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
   const { slug } = await params;
 
   // ⚡ Bolt: Replace O(n) linear array search with O(1) hash map lookup
-  const project = projectMap[slug];
+  const project = Object.hasOwn(projectMap, slug) ? projectMap[slug] : undefined;
 
   if (!project) {
     notFound();
