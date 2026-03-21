@@ -8,6 +8,7 @@ function Contact() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [copied, setCopied] = useState(false);
   const [modifierKey, setModifierKey] = useState('Ctrl');
+  const [isMac, setIsMac] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout>(null);
   const isMounted = useRef(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -15,11 +16,13 @@ function Contact() {
   useEffect(() => {
     isMounted.current = true;
 
-    // Detect OS for keyboard shortcut hint
+    // Detect OS for keyboard shortcut hint and behavior
+    let detectedIsMac = false;
     if (typeof navigator !== 'undefined') {
-      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      setModifierKey(isMac ? '⌘' : 'Ctrl');
+      detectedIsMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
     }
+    setIsMac(detectedIsMac);
+    setModifierKey(detectedIsMac ? '⌘' : 'Ctrl');
 
     return () => {
       isMounted.current = false;
@@ -88,7 +91,10 @@ function Contact() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    if (
+      e.key === 'Enter' &&
+      ((isMac && e.metaKey) || (!isMac && e.ctrlKey))
+    ) {
       e.preventDefault();
       formRef.current?.requestSubmit();
     }
