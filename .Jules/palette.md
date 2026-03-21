@@ -11,3 +11,7 @@
 ## 2025-03-10 - [Disambiguating Home Links in Tests]
 **Learning:** Adding `aria-label="Home"` to a site logo (to improve screen reader experience since visual text like "RAB." isn't explicitly descriptive) can break existing accessibility tests that query for a single "Home" link via `getByRole('link', { name: /Home/i })`, as both the logo and the main navigation link now share the same accessible name.
 **Action:** When adding accessible names to logos that duplicate text links, ensure tests are updated to distinguish between them, for instance by using `getByText('Home')` for the text link or more specific selectors/test IDs, while keeping the semantic ARIA improvements.
+
+## 2023-10-27 - Dynamically Updating aria-label vs aria-live
+**Learning:** When changing state on a button (like a "Copy to Clipboard" action), dynamically updating the `aria-label` attribute (e.g. from "Copy" to "Copied!") is often insufficient because screen readers do not consistently announce changes to an element's label if focus remains on it. The visual change in state leaves screen reader users without feedback.
+**Action:** For actionable state changes, keep the `aria-label` describing the *action* static (e.g., "Copy email address"). Use a visually hidden span with `aria-live="polite"` (or `role="status"`) to announce the *result* (e.g., "Email copied to clipboard") when the action succeeds. Also remember to add `aria-hidden="true"` to purely decorative icons within these buttons to reduce noise.
