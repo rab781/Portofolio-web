@@ -24,7 +24,7 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                 <Link
                     href="/#projects"
                     aria-label="Back to projects list"
-                    className="group inline-flex items-center gap-2 px-5 py-2.5 bg-white/50 backdrop-blur-md border border-white/40 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-white hover:border-[#FFA239] hover:text-[#FFA239] transition-all shadow-sm mb-12"
+                    className="group inline-flex items-center gap-2 px-5 py-2.5 bg-white/50 backdrop-blur-md border border-white/40 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-white hover:border-[#FFA239] hover:text-[#FFA239] transition-all shadow-sm mb-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                 >
                     <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                     Back to Works
@@ -176,7 +176,7 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                                     target="_blank"
                                     rel="noreferrer"
                                     aria-label={`View source code for ${project.title} on GitHub`}
-                                    className="flex items-center justify-center w-full py-5 px-6 bg-[#111111] text-white font-bold rounded-2xl hover:scale-[1.02] transition-transform shadow-lg group"
+                                    className="flex items-center justify-center w-full py-5 px-6 bg-[#111111] text-white font-bold rounded-2xl hover:scale-[1.02] transition-transform shadow-lg group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                                 >
                                     <Github size={20} className="mr-3 group-hover:rotate-12 transition-transform" />
                                     View Codebase
@@ -188,7 +188,7 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                                         target="_blank"
                                         rel="noreferrer"
                                         aria-label={`View live demo for ${project.title}`}
-                                        className="flex items-center justify-center w-full py-5 px-6 bg-[#2563EB] text-white font-bold rounded-2xl hover:bg-blue-600 hover:scale-[1.02] transition-all shadow-lg shadow-blue-200 group"
+                                        className="flex items-center justify-center w-full py-5 px-6 bg-[#2563EB] text-white font-bold rounded-2xl hover:bg-blue-600 hover:scale-[1.02] transition-all shadow-lg shadow-blue-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                                     >
                                         <ExternalLink size={20} className="mr-3 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
                                         Live Demo
