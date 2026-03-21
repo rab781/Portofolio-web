@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { projects } from "@/data/projects";
+import { projects, projectMap } from "@/data/projects";
 import ProjectClientWrapper from "@/components/ProjectClientWrapper";
 
 // Note: In a client component, we can't export async generateStaticParams directly in the same way if strictly strictly 'use client', 
@@ -35,7 +35,9 @@ export async function generateStaticParams() {
 
 export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = projects.find((p) => p.id === slug);
+
+  // ⚡ Bolt: Replace O(n) linear array search with O(1) hash map lookup
+  const project = Object.hasOwn(projectMap, slug) ? projectMap[slug] : undefined;
 
   if (!project) {
     notFound();
