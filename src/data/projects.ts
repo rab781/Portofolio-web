@@ -110,3 +110,9 @@ export const projects: Project[] = [
     ]
   }
 ];
+
+// ⚡ Bolt: Pre-calculate an index of projects by ID to allow O(1) lookups
+// in dynamic routes, replacing linear O(n) array searches.
+export const projectMap = Object.fromEntries(
+  projects.map(project => [project.id, project])
+);
