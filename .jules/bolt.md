@@ -16,3 +16,6 @@
 ## 2025-03-05 - Debouncing Resize Event Handlers
 **Learning:** Performing expensive layout measurements (e.g., `offsetTop`, `innerHeight`) synchronously inside high-frequency `resize` event listeners can cause severe layout thrashing and block the main thread, degrading page responsiveness.
 **Action:** Always debounce layout calculations in `resize` handlers using `setTimeout` (or `requestAnimationFrame` depending on the requirement) to batch these calculations and only run them after the user has finished or paused resizing the window.
+## 2025-03-05 - Replacing useState with useRef for internal drag state
+**Learning:** Using `useState` to track internal gesture state (like `isDragging`, `startX`, or `scrollLeft`) in UI components that do not render this state visually can trigger unnecessary and expensive React render cycles on high-frequency interaction events.
+**Action:** When tracking internal interaction or drag state that is purely used to calculate DOM updates (e.g., in a `requestAnimationFrame` callback), always use `useRef` to maintain mutable state without triggering component re-renders.

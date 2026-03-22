@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 interface CertificateItem {
     image: string;
@@ -15,23 +15,25 @@ interface CertificateCarouselProps {
 
 export default function CertificateCarousel({ items }: CertificateCarouselProps) {
     const carouselRef = useRef<HTMLDivElement>(null);
-    const [isDragging, setIsDragging] = useState(false);
-    const [startX, setStartX] = useState(0);
-    const [scrollLeft, setScrollLeft] = useState(0);
+
+    // ⚡ Bolt: Replace useState with useRef for internal interaction state to avoid unnecessary React re-renders on drag
+    const isDragging = useRef(false);
+    const startX = useRef(0);
+    const scrollLeft = useRef(0);
 
     // Refs for rAF throttling
     const frameId = useRef<number | null>(null);
     const lastPageX = useRef<number>(0);
 
     const handleMouseDown = (e: React.MouseEvent) => {
-        setIsDragging(true);
+        isDragging.current = true;
         // ⚡ Bolt: Store initial pageX directly to avoid offsetLeft calculation in move handler
-        setStartX(e.pageX);
-        setScrollLeft(carouselRef.current?.scrollLeft || 0);
+        startX.current = e.pageX;
+        scrollLeft.current = carouselRef.current?.scrollLeft || 0;
     };
 
     const handleMouseUp = () => {
-        setIsDragging(false);
+        isDragging.current = false;
         if (frameId.current !== null) {
             window.cancelAnimationFrame(frameId.current);
             frameId.current = null;
@@ -39,7 +41,7 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
     };
 
     const handleMouseMove = (e: React.MouseEvent) => {
-        if (!isDragging) return;
+        if (!isDragging.current) return;
         e.preventDefault();
 
         // ⚡ Bolt: Synchronously store event coordinate before rAF
@@ -49,8 +51,8 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
         if (frameId.current === null) {
             frameId.current = window.requestAnimationFrame(() => {
                 if (carouselRef.current) {
-                    const walk = (lastPageX.current - startX) * 2;
-                    carouselRef.current.scrollLeft = scrollLeft - walk;
+                    const walk = (lastPageX.current - startX.current) * 2;
+                    carouselRef.current.scrollLeft = scrollLeft.current - walk;
                 }
                 frameId.current = null;
             });
@@ -58,14 +60,14 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
     };
 
     const handleTouchStart = (e: React.TouchEvent) => {
-        setIsDragging(true);
+        isDragging.current = true;
         // ⚡ Bolt: Store initial pageX directly to avoid offsetLeft calculation in move handler
-        setStartX(e.touches[0].pageX);
-        setScrollLeft(carouselRef.current?.scrollLeft || 0);
+        startX.current = e.touches[0].pageX;
+        scrollLeft.current = carouselRef.current?.scrollLeft || 0;
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
-        if (!isDragging) return;
+        if (!isDragging.current) return;
 
         // ⚡ Bolt: Synchronously store event coordinate before rAF
         lastPageX.current = e.touches[0].pageX;
@@ -74,8 +76,8 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
         if (frameId.current === null) {
             frameId.current = requestAnimationFrame(() => {
                 if (carouselRef.current) {
-                    const walk = (lastPageX.current - startX) * 2;
-                    carouselRef.current.scrollLeft = scrollLeft - walk;
+                    const walk = (lastPageX.current - startX.current) * 2;
+                    carouselRef.current.scrollLeft = scrollLeft.current - walk;
                 }
                 frameId.current = null;
             });
