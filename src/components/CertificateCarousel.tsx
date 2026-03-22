@@ -74,7 +74,7 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
 
         // ⚡ Bolt: Throttle DOM writes with requestAnimationFrame
         if (frameId.current === null) {
-            frameId.current = requestAnimationFrame(() => {
+            frameId.current = window.requestAnimationFrame(() => {
                 if (carouselRef.current) {
                     const walk = (lastPageX.current - startX.current) * 2;
                     carouselRef.current.scrollLeft = scrollLeft.current - walk;
