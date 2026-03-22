@@ -163,7 +163,7 @@ function Contact() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-bold text-gray-700 mb-2">
-                  Name <span className="text-red-500">*</span>
+                  Name <span className="text-red-500" aria-hidden="true">*</span>
                 </label>
                 <input
                   type="text"
@@ -177,7 +177,7 @@ function Contact() {
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">
-                  Email <span className="text-red-500">*</span>
+                  Email <span className="text-red-500" aria-hidden="true">*</span>
                 </label>
                 <input
                   type="email"
@@ -193,7 +193,7 @@ function Contact() {
 
             <div>
               <label htmlFor="subject" className="block text-sm font-bold text-gray-700 mb-2">
-                Subject <span className="text-red-500">*</span>
+                Subject <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
                 type="text"
@@ -207,7 +207,7 @@ function Contact() {
 
             <div>
               <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2">
-                Message <span className="text-red-500">*</span>
+                Message <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <textarea
                 id="message"
