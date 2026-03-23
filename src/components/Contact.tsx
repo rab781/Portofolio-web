@@ -125,12 +125,15 @@ function Contact() {
                   <button
                     type="button"
                     onClick={handleCopy}
-                    aria-label={copied ? "Email copied to clipboard" : "Copy email address"}
+                    aria-label="Copy email address"
                     className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                     title="Copy to clipboard"
                   >
-                    {copied ? <Check className="w-5 h-5 text-green-400" /> : <Copy className="w-5 h-5" />}
+                    {copied ? <Check className="w-5 h-5 text-green-400" aria-hidden="true" /> : <Copy className="w-5 h-5" aria-hidden="true" />}
                   </button>
+                  <span className="sr-only" aria-live="polite">
+                    {copied ? "Email copied to clipboard" : ""}
+                  </span>
                 </div>
               </div>
             </div>
@@ -163,7 +166,7 @@ function Contact() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-bold text-gray-700 mb-2">
-                  Name <span className="text-red-500">*</span>
+                  Name <span className="text-red-500" aria-hidden="true">*</span>
                 </label>
                 <input
                   type="text"
@@ -177,7 +180,7 @@ function Contact() {
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">
-                  Email <span className="text-red-500">*</span>
+                  Email <span className="text-red-500" aria-hidden="true">*</span>
                 </label>
                 <input
                   type="email"
@@ -193,7 +196,7 @@ function Contact() {
 
             <div>
               <label htmlFor="subject" className="block text-sm font-bold text-gray-700 mb-2">
-                Subject <span className="text-red-500">*</span>
+                Subject <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <input
                 type="text"
@@ -207,7 +210,7 @@ function Contact() {
 
             <div>
               <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2">
-                Message <span className="text-red-500">*</span>
+                Message <span className="text-red-500" aria-hidden="true">*</span>
               </label>
               <textarea
                 id="message"
