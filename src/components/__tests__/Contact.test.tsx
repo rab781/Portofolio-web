@@ -103,7 +103,7 @@ describe('Contact Component', () => {
 
     // Check if the label changes
     await waitFor(() => {
-        expect(screen.getByLabelText(/Email copied to clipboard/i)).toBeInTheDocument();
+        expect(screen.getByText(/Email copied to clipboard/i)).toBeInTheDocument();
     });
   });
 });
