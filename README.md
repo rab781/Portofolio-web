@@ -52,7 +52,7 @@ pnpm dev
 
 You update your personal details by modifying the components in the `src/components/` directory.
 
-- **Hero Section** (`src/components/Hero.tsx`): Change your name, titles, social links, and the animated text array.
+- **Hero Section** (`src/components/HeroClient.tsx`): Change your name, titles, social links, and the animated text array.
 - **About Section** (`src/components/About.tsx`): Update your personal description, background, and avatar image.
 - **Skills Section** (`src/components/Skills.tsx`): Add your technical skills and progress levels.
 
