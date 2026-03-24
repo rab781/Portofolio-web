@@ -54,7 +54,9 @@ You update your personal details by modifying the components in the `src/compone
 
 - **Hero Section** (`src/components/HeroClient.tsx`): Change your name, titles, social links, and the animated text array.
 - **About Section** (`src/components/About.tsx`): Update your personal description, background, and avatar image.
-- **Skills Section** (`src/components/Skills.tsx`): Add your technical skills and progress levels.
+- **Skills Section**:
+  - Content: Edit your skill categories and items in `src/data/skills.ts` (see the `skillCategories` export).
+  - Layout/Animation: Customize how skills are displayed and animated in `src/components/Skills.tsx`.
 
 ### Adding Projects
 
