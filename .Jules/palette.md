@@ -18,3 +18,7 @@
 ## 2026-03-19 - Accessible Form Submission Keyboard Shortcuts
 **Learning:** Adding a keyboard shortcut (like Cmd/Ctrl + Enter) to submit a form improves UX for power users, but it must be properly announced to screen readers. Relying solely on a visual hint inside the button is insufficient for a11y. Instead of using the unreliable `title` attribute, pair clear visible help text (e.g. "Cmd ⌘ + Enter") with an `aria-keyshortcuts` attribute on the actionable element, and when needed reference that visible hint via `aria-describedby` so non-visual users get the same information.
 **Action:** When implementing custom keyboard shortcuts for forms or buttons, always dynamically detect the OS to show the correct modifier key (⌘ vs Ctrl) visually, and use `aria-keyshortcuts` (e.g., `aria-keyshortcuts="Meta+Enter"`) so screen readers can announce the available shortcut. Ensure the visual hint has `aria-hidden="true"` to prevent redundant/confusing announcements.
+
+## 2026-03-27 - [Decorative Required Asterisks in Forms]
+**Learning:** Visual-only text like asterisks ("*") used to indicate required form fields are announced by screen readers (e.g., "Name star"), adding noise and confusion. Since the `required` attribute on the input element already semantically handles the requirement for assistive technologies, the visual asterisk should be hidden from them.
+**Action:** Always add `aria-hidden="true"` to decorative elements or visual-only text inside form labels (like required asterisks) to ensure screen readers do not incorrectly announce them.
