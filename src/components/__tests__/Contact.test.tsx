@@ -101,7 +101,7 @@ describe('Contact Component', () => {
 
     expect(writeTextMock).toHaveBeenCalledWith('raihanrabani199@gmail.com');
 
-    // Check if the label changes
+    // Check if the aria-live region updates
     await waitFor(() => {
         expect(screen.getByText(/Email copied to clipboard/i)).toBeInTheDocument();
     });
