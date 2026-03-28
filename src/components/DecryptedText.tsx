@@ -47,7 +47,9 @@ export default function DecryptedText({
     animateOn = 'hover',
     ...props
 }: DecryptedTextProps) {
-    const [displayText, setDisplayText] = useState(animateOn === 'auto' ? '' : text);
+    // ⚡ Bolt: Store character arrays directly in state rather than strings.
+    // This eliminates redundant `.split('')` allocations on every React render tick during rapid animations.
+    const [displayText, setDisplayText] = useState<string[]>(animateOn === 'auto' ? [] : text.split(''));
     const [isHovering, setIsHovering] = useState(animateOn === 'auto');
     const [isScrambling, setIsScrambling] = useState(false);
     const [revealedIndices, setRevealedIndices] = useState(new Set<number>());
@@ -113,16 +115,14 @@ export default function DecryptedText({
                         if (char === ' ') return ' ';
                         if (currentRevealed.has(i)) return char;
                         return nonSpaceChars[charIndex++];
-                    })
-                    .join('');
+                    });
             } else {
                 return originalTextArray
                     .map((char, i) => {
                         if (char === ' ') return ' ';
                         if (currentRevealed.has(i)) return char;
                         return availableChars[Math.floor(Math.random() * availableChars.length)];
-                    })
-                    .join('');
+                    });
             }
         };
 
@@ -148,14 +148,14 @@ export default function DecryptedText({
                         if (currentIteration >= maxIterations) {
                             clearInterval(interval);
                             setIsScrambling(false);
-                            setDisplayText(text);
+                            setDisplayText(text.split(''));
                         }
                         return prevRevealed;
                     }
                 });
             }, speed);
         } else {
-            setDisplayText(text);
+            setDisplayText(text.split(''));
             setRevealedIndices(new Set());
             setIsScrambling(false);
         }
@@ -214,10 +214,10 @@ export default function DecryptedText({
             {...hoverProps}
             {...props}
         >
-            <span style={styles.srOnly} aria-hidden="true">{displayText}</span>
+            <span style={styles.srOnly} aria-hidden="true">{displayText.join('')}</span>
 
             <span aria-hidden="true">
-                {displayText.split('').map((char, index) => {
+                {displayText.map((char, index) => {
                     const isRevealedOrDone = revealedIndices.has(index) || !isScrambling || !isHovering;
 
                     return (

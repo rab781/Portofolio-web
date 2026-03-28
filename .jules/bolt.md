@@ -19,3 +19,7 @@
 ## 2025-03-05 - Replacing useState with useRef for internal drag state
 **Learning:** Using `useState` to track internal gesture state (like `isDragging`, `startX`, or `scrollLeft`) in UI components that do not render this state visually can trigger unnecessary and expensive React render cycles on high-frequency interaction events.
 **Action:** When tracking internal interaction or drag state that is purely used to calculate DOM updates (e.g., in a `requestAnimationFrame` callback), always use `useRef` to maintain mutable state without triggering component re-renders.
+
+## 2025-03-05 - Avoid Redundant Array Allocations in Animation Loops
+**Learning:** In high-frequency React animation loops (e.g., `setInterval` updating text via Framer Motion), mapping over a static string by calling `.split('')` inside the JSX render path creates a new array allocation on every tick, triggering unnecessary garbage collection and degrading performance.
+**Action:** Store statically-sized character sequences as arrays (`string[]`) in component state rather than strings, avoiding redundant `.split('')` calls during render. Only use `.join('')` when strictly necessary (e.g., for accessible `aria-hidden` screen reader text).
