@@ -1,6 +1,6 @@
 'use client';
 
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Code2, Brain, Globe, Wrench } from "lucide-react";
 import { skillCategories } from "@/data/skills";
@@ -54,7 +54,7 @@ const getSkillsFromCategory = (indices: number[]): MarqueeSkill[] => {
   });
 };
 
-const MarqueeRow = ({
+const MarqueeRow = memo(function MarqueeRow({
   skills,
   direction = "left",
   speed = 40 // seconds for full loop
@@ -62,9 +62,9 @@ const MarqueeRow = ({
   skills: MarqueeSkill[],
   direction?: "left" | "right",
   speed?: number
-}) => {
-  // Double list is sufficient for any screen width before the loop resets
-  const duplicatedSkills = [...skills, ...skills];
+}) {
+  // ⚡ Bolt: Memoize duplicated array to prevent re-allocation on re-renders
+  const duplicatedSkills = useMemo(() => [...skills, ...skills], [skills]);
 
   return (
     <div className="flex overflow-hidden relative w-full py-6 group select-none">
@@ -128,13 +128,15 @@ const MarqueeRow = ({
       `}</style >
     </div >
   );
-};
+});
+
+// ⚡ Bolt: Hoist static computations outside component to prevent
+// redundant mapping and allocation on every render tick.
+const row1 = getSkillsFromCategory([0]); // Languages
+const row2 = getSkillsFromCategory([1]); // Data Science
+const row3 = getSkillsFromCategory([2, 3]); // Web + Tools
 
 function Skills() {
-  const row1 = getSkillsFromCategory([0]); // Languages
-  const row2 = getSkillsFromCategory([1]); // Data Science
-  const row3 = getSkillsFromCategory([2, 3]); // Web + Tools
-
   return (
     <section className="relative py-32 overflow-hidden">
       {/* Background Elements */}
