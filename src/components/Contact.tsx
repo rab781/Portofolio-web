@@ -226,7 +226,7 @@ function Contact() {
               type="submit"
               disabled={isSubmitting}
               aria-keyshortcuts={`${modifierKey === '⌘' ? 'Meta' : 'Control'}+Enter`}
-              className={`w-full bg-[#111111] text-white px-8 py-4 rounded-lg font-bold hover:bg-black transition-all flex items-center justify-center group relative overflow-hidden ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+              className={`w-full bg-[#111111] text-white px-8 py-4 rounded-lg font-bold hover:bg-black transition-all flex items-center justify-center group relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] focus-visible:ring-offset-2 focus-visible:ring-offset-white ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
               <div className="flex items-center justify-center">
                 {isSubmitting ? (
