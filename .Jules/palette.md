@@ -22,3 +22,6 @@
 ## 2026-03-27 - [Decorative Required Asterisks in Forms]
 **Learning:** Visual-only text like asterisks ("*") used to indicate required form fields are announced by screen readers (e.g., "Name star"), adding noise and confusion. Since the `required` attribute on the input element already semantically handles the requirement for assistive technologies, the visual asterisk should be hidden from them.
 **Action:** Always add `aria-hidden="true"` to decorative elements or visual-only text inside form labels (like required asterisks) to ensure screen readers do not incorrectly announce them.
+## 2026-04-03 - [Hide Duplicated Marquee Items]
+**Learning:** When creating infinite scroll or marquee animations by duplicating DOM elements (e.g., repeating a list of skills), screen readers will redundantly announce the same content multiple times, causing a poor accessibility experience.
+**Action:** Always add `aria-hidden="true"` to the duplicated elements in a marquee to ensure screen readers only announce the original content once.
