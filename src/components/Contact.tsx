@@ -174,6 +174,7 @@ function Contact() {
                   name="name"
                   autoComplete="name"
                   required
+                  aria-required="true"
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                   placeholder="John Doe"
                 />
@@ -188,6 +189,7 @@ function Contact() {
                   name="email"
                   autoComplete="email"
                   required
+                  aria-required="true"
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                   placeholder="john@example.com"
                 />
@@ -203,6 +205,7 @@ function Contact() {
                 id="subject"
                 name="subject"
                 required
+                aria-required="true"
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                 placeholder="Project Inquiry"
               />
@@ -216,6 +219,7 @@ function Contact() {
                 id="message"
                 name="message"
                 required
+                aria-required="true"
                 rows={4}
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all resize-none"
                 placeholder="Tell me about your project..."
@@ -226,6 +230,7 @@ function Contact() {
               type="submit"
               disabled={isSubmitting}
               aria-keyshortcuts={`${modifierKey === '⌘' ? 'Meta' : 'Control'}+Enter`}
+              aria-describedby="shortcut-hint"
               className={`w-full bg-[#111111] text-white px-8 py-4 rounded-lg font-bold hover:bg-black transition-all flex items-center justify-center group relative overflow-hidden ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
               <div className="flex items-center justify-center">
@@ -240,7 +245,7 @@ function Contact() {
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
 
                     {/* Keyboard Shortcut Hint */}
-                    <div className="hidden sm:flex items-center ml-3 px-2 py-0.5 rounded text-[10px] font-medium bg-white/10 text-white/80 border border-white/20 transition-opacity opacity-0 group-hover:opacity-100 absolute right-6" aria-hidden="true">
+                    <div id="shortcut-hint" className="hidden sm:flex items-center ml-3 px-2 py-0.5 rounded text-[10px] font-medium bg-white/10 text-white/80 border border-white/20 transition-opacity opacity-0 group-hover:opacity-100 absolute right-6" aria-hidden="true">
                       <span>{modifierKey}</span>
                       <span className="mx-0.5">+</span>
                       <span>Enter</span>
