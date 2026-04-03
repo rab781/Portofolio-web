@@ -1,24 +1,3 @@
-## 2025-03-03 - [In-Page Navigation Active States]
-**Learning:** For components featuring scroll-spy or in-page navigation (like `Navigation.tsx`), active links often rely purely on visual styles (e.g. background colors or font weights). Adding `aria-current="true"` improves accessibility by semantically communicating the active state to screen reader users, without adding significant complexity.
-**Action:** When adding active link states to navigation menus, apply `aria-current="true"` conditionally based on the active state in addition to visual indicators. Tests should assert against this ARIA attribute rather than CSS classes.
-## 2024-05-18 - Missing Focus Rings on Interactive Elements
-**Learning:** In projects transitioning to modern Tailwind/utility setups, focus states (`focus-visible:ring-*`) are often omitted or incompletely applied to non-primary buttons like generic `<a>` tags and inline interactive elements (e.g. CV download links, social icons). This is an easy-to-miss accessibility blindspot when global CSS doesn't enforce standard focus styling.
-**Action:** Audit all interactive elements (`<button>`, `<a>`) for `focus-visible` utility classes and ensure consistent ring color (like the primary brand color) across the application.
-
-## 2025-03-13 - [Focus States on Hero Call-to-Actions]
-**Learning:** High-level overview, Hero sections containing critical CTA buttons ("View Selected Work", "Get in Touch") often lack keyboard navigation focus indicators, as focus styles may not carry over from general generic link components, violating WCAG keyboard accessibility standards.
-**Action:** Always ensure that explicit `focus-visible` styling (e.g., `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]`) is applied to major hero CTA components to provide semantic state information and visual indicators to screen readers.
-## 2025-03-10 - [Disambiguating Home Links in Tests]
-**Learning:** Adding `aria-label="Home"` to a site logo (to improve screen reader experience since visual text like "RAB." isn't explicitly descriptive) can break existing accessibility tests that query for a single "Home" link via `getByRole('link', { name: /Home/i })`, as both the logo and the main navigation link now share the same accessible name.
-**Action:** When adding accessible names to logos that duplicate text links, ensure tests are updated to distinguish between them, for instance by using `getByText('Home')` for the text link or more specific selectors/test IDs, while keeping the semantic ARIA improvements.
-
-## 2023-10-27 - Dynamically Updating aria-label vs aria-live
-**Learning:** When changing state on a button (like a "Copy to Clipboard" action), dynamically updating the `aria-label` attribute (e.g. from "Copy" to "Copied!") is often insufficient because screen readers do not consistently announce changes to an element's label if focus remains on it. The visual change in state leaves screen reader users without feedback.
-**Action:** For actionable state changes, keep the `aria-label` describing the *action* static (e.g., "Copy email address"). Use a visually hidden span with `aria-live="polite"` (or `role="status"`) to announce the *result* (e.g., "Email copied to clipboard") when the action succeeds. Also remember to add `aria-hidden="true"` to purely decorative icons within these buttons to reduce noise.
-## 2026-03-19 - Accessible Form Submission Keyboard Shortcuts
-**Learning:** Adding a keyboard shortcut (like Cmd/Ctrl + Enter) to submit a form improves UX for power users, but it must be properly announced to screen readers. Relying solely on a visual hint inside the button is insufficient for a11y. Instead of using the unreliable `title` attribute, pair clear visible help text (e.g. "Cmd ⌘ + Enter") with an `aria-keyshortcuts` attribute on the actionable element, and when needed reference that visible hint via `aria-describedby` so non-visual users get the same information.
-**Action:** When implementing custom keyboard shortcuts for forms or buttons, always dynamically detect the OS to show the correct modifier key (⌘ vs Ctrl) visually, and use `aria-keyshortcuts` (e.g., `aria-keyshortcuts="Meta+Enter"`) so screen readers can announce the available shortcut. Ensure the visual hint has `aria-hidden="true"` to prevent redundant/confusing announcements.
-
-## 2026-03-27 - [Decorative Required Asterisks in Forms]
-**Learning:** Visual-only text like asterisks ("*") used to indicate required form fields are announced by screen readers (e.g., "Name star"), adding noise and confusion. Since the `required` attribute on the input element already semantically handles the requirement for assistive technologies, the visual asterisk should be hidden from them.
-**Action:** Always add `aria-hidden="true"` to decorative elements or visual-only text inside form labels (like required asterisks) to ensure screen readers do not incorrectly announce them.
+## 2024-04-03 - Decorative Icon Accessibility
+**Learning:** Purely decorative icons, such as custom SVGs or third-party components like `lucide-react`, must explicitly be hidden from assistive technologies using `aria-hidden="true"`. Otherwise, screen readers may interpret them as generic images or read out meaningless geometric path data, causing auditory clutter for users.
+**Action:** When adding or auditing icons that provide no semantic meaning or are visually redundant to nearby text, ensure `aria-hidden="true"` is applied to the root `<svg>` element or passed to the wrapper component.
