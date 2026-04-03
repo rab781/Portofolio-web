@@ -24,7 +24,7 @@ export default function ScrollToTop() {
       initial={{ opacity: 0, display: 'none' }}
       style={{ opacity, scale, pointerEvents, display }}
       onClick={scrollToTop}
-      className="fixed bottom-8 right-8 z-40 p-3 bg-[var(--pop-orange)] text-brand-black rounded-full shadow-lg hover:bg-brand-black hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--pop-orange)] focus:ring-offset-2 flex items-center justify-center"
+      className="fixed bottom-8 right-8 z-40 p-3 bg-[var(--pop-orange)] text-brand-black rounded-full shadow-lg hover:bg-brand-black hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] focus-visible:ring-offset-2 flex items-center justify-center"
       aria-label="Scroll to top"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
