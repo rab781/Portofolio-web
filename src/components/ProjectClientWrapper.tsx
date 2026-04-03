@@ -174,11 +174,11 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                                 <a
                                     href={project.githubUrl}
                                     target="_blank"
-                                    rel="noreferrer"
-                                    aria-label={`View source code for ${project.title} on GitHub`}
+                                    rel="noopener noreferrer"
+                                    aria-label={`View source code for ${project.title} on GitHub (opens in a new tab)`}
                                     className="flex items-center justify-center w-full py-5 px-6 bg-[#111111] text-white font-bold rounded-2xl hover:scale-[1.02] transition-transform shadow-lg group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                                 >
-                                    <Github size={20} className="mr-3 group-hover:rotate-12 transition-transform" />
+                                    <Github size={20} className="mr-3 group-hover:rotate-12 transition-transform" aria-hidden="true" />
                                     View Codebase
                                 </a>
 
@@ -186,11 +186,11 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                                     <a
                                         href={project.demoUrl}
                                         target="_blank"
-                                        rel="noreferrer"
-                                        aria-label={`View live demo for ${project.title}`}
+                                        rel="noopener noreferrer"
+                                        aria-label={`View live demo for ${project.title} (opens in a new tab)`}
                                         className="flex items-center justify-center w-full py-5 px-6 bg-[#2563EB] text-white font-bold rounded-2xl hover:bg-blue-600 hover:scale-[1.02] transition-all shadow-lg shadow-blue-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                                     >
-                                        <ExternalLink size={20} className="mr-3 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+                                        <ExternalLink size={20} className="mr-3 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                                         Live Demo
                                     </a>
                                 )}

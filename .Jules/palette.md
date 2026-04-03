@@ -22,3 +22,7 @@
 ## 2026-03-27 - [Decorative Required Asterisks in Forms]
 **Learning:** Visual-only text like asterisks ("*") used to indicate required form fields are announced by screen readers (e.g., "Name star"), adding noise and confusion. Since the `required` attribute on the input element already semantically handles the requirement for assistive technologies, the visual asterisk should be hidden from them.
 **Action:** Always add `aria-hidden="true"` to decorative elements or visual-only text inside form labels (like required asterisks) to ensure screen readers do not incorrectly announce them.
+
+## 2026-03-30 - [Contextual External Links]
+**Learning:** Links that open in a new tab, whether they are documents (like PDFs) or external websites (like GitHub, live demos), require explicit screen reader context. Some links in the app (like the CV download) correctly had "(opens in a new tab)" in their `aria-label`, but others (like project repository links) did not, leading to an inconsistent and potentially confusing experience for non-visual users.
+**Action:** Always apply the "(opens in a new tab)" suffix to the `aria-label` of *any* link that has `target="_blank"`, regardless of whether it links to a document or an external site. Also, ensure `rel="noopener noreferrer"` is consistently applied to these links, and hide any accompanying decorative icons using `aria-hidden="true"`.

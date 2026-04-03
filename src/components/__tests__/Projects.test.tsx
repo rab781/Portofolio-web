@@ -27,7 +27,7 @@ describe('Projects Component', () => {
       expect(link).toBeInTheDocument();
       expect(link).toHaveAttribute('target', '_blank');
       expect(link).toHaveAttribute('rel', 'noopener noreferrer');
-      expect(link.getAttribute('title')).toMatch(/^View source code for .* on GitHub$/);
+      expect(link.getAttribute('title')).toMatch(/^View source code for .* on GitHub \(opens in a new tab\)$/);
       expect(link.getAttribute('href')).toMatch(/^https:\/\/github\.com\//);
     });
   });
