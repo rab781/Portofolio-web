@@ -174,6 +174,7 @@ function Contact() {
                   name="name"
                   autoComplete="name"
                   required
+                  aria-required="true"
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                   placeholder="John Doe"
                 />
@@ -188,6 +189,7 @@ function Contact() {
                   name="email"
                   autoComplete="email"
                   required
+                  aria-required="true"
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                   placeholder="john@example.com"
                 />
@@ -203,6 +205,7 @@ function Contact() {
                 id="subject"
                 name="subject"
                 required
+                aria-required="true"
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                 placeholder="Project Inquiry"
               />
@@ -216,6 +219,7 @@ function Contact() {
                 id="message"
                 name="message"
                 required
+                aria-required="true"
                 rows={4}
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all resize-none"
                 placeholder="Tell me about your project..."
