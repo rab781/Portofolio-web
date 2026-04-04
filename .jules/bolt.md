@@ -23,3 +23,6 @@
 ## 2025-03-05 - Avoid Redundant Array Allocations in Animation Loops
 **Learning:** In high-frequency React animation loops (e.g., `setInterval` updating text via Framer Motion), mapping over a static string by calling `.split('')` inside the JSX render path creates a new array allocation on every tick, triggering unnecessary garbage collection and degrading performance.
 **Action:** Store statically-sized character sequences as arrays (`string[]`) in component state rather than strings, avoiding redundant `.split('')` calls during render. Only use `.join('')` when strictly necessary (e.g., for accessible `aria-hidden` screen reader text).
+## 2025-03-05 - Optimize Set and string tracking in interval animation loops
+**Learning:** In high-frequency React animation loops (e.g., `setInterval` for text decrypting effects), using a `Set` to track revealed items and doing linear loops inside the interval tick creates significant O(N) allocation and garbage collection overhead.
+**Action:** Replace `Set`-based tracking with primitive numeric states (e.g. `revealedCount`) and use `useMemo` to pre-calculate mapping arrays (like `revealOrder`) that convert O(N) lookups inside the tick to O(1) array accesses, eliminating repetitive allocations and unneeded main-thread blocking during rapid animation ticks.

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const styles = {
@@ -52,53 +52,66 @@ export default function DecryptedText({
     const [displayText, setDisplayText] = useState<string[]>(animateOn === 'auto' ? [] : text.split(''));
     const [isHovering, setIsHovering] = useState(animateOn === 'auto');
     const [isScrambling, setIsScrambling] = useState(false);
-    const [revealedIndices, setRevealedIndices] = useState(new Set<number>());
+
+    // ⚡ Bolt: Replace Set-based index tracking with a numeric revealedCount state
+    // This eliminates O(N) Set allocations and garbage collection pressure on every render tick
+    const [revealedCount, setRevealedCount] = useState(0);
     const [hasAnimated, setHasAnimated] = useState(false);
     const containerRef = useRef<HTMLSpanElement>(null);
+
+    // ⚡ Bolt: Memoize original text array to eliminate redundant .split('') allocations
+    const originalTextArray = useMemo(() => text.split(''), [text]);
+
+    // ⚡ Bolt: Pre-calculate an Int32Array mapping indices to their reveal step
+    // This completely eliminates loop-based O(N) lookups in getNextIndex during animation ticks
+    const revealOrder = useMemo(() => {
+        const length = text.length;
+        const order = new Int32Array(length);
+        const revealedSet = new Set<number>();
+        for (let step = 0; step < length; step++) {
+            let nextIndex = step;
+            if (revealDirection === 'start') {
+                nextIndex = step;
+            } else if (revealDirection === 'end') {
+                nextIndex = length - 1 - step;
+            } else if (revealDirection === 'center') {
+                const middle = Math.floor(length / 2);
+                const offset = Math.floor(step / 2);
+                const candidate = step % 2 === 0 ? middle + offset : middle - offset - 1;
+                if (candidate >= 0 && candidate < length && !revealedSet.has(candidate)) {
+                    nextIndex = candidate;
+                } else {
+                    for (let i = 0; i < length; i++) {
+                        if (!revealedSet.has(i)) {
+                            nextIndex = i;
+                            break;
+                        }
+                    }
+                }
+            }
+            revealedSet.add(nextIndex);
+            order[nextIndex] = step;
+        }
+        return order;
+    }, [text.length, revealDirection]);
+
+    const availableChars = useMemo(() => {
+        return useOriginalCharsOnly
+            ? Array.from(new Set(originalTextArray)).filter(char => char !== ' ')
+            : characters.split('');
+    }, [useOriginalCharsOnly, originalTextArray, characters]);
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
         let currentIteration = 0;
 
-        const getNextIndex = (revealedSet: Set<number>) => {
-            const textLength = text.length;
-            switch (revealDirection) {
-                case 'start':
-                    return revealedSet.size;
-                case 'end':
-                    return textLength - 1 - revealedSet.size;
-                case 'center': {
-                    const middle = Math.floor(textLength / 2);
-                    const offset = Math.floor(revealedSet.size / 2);
-                    const nextIndex = revealedSet.size % 2 === 0 ? middle + offset : middle - offset - 1;
-
-                    if (nextIndex >= 0 && nextIndex < textLength && !revealedSet.has(nextIndex)) {
-                        return nextIndex;
-                    }
-
-                    for (let i = 0; i < textLength; i++) {
-                        if (!revealedSet.has(i)) return i;
-                    }
-                    return 0;
-                }
-                default:
-                    return revealedSet.size;
-            }
-        };
-
-        // ⚡ Bolt: Pre-calculate arrays outside the interval loop to prevent re-allocating on every tick
-        const originalTextArray = text.split('');
-        const availableChars = useOriginalCharsOnly
-            ? Array.from(new Set(originalTextArray)).filter(char => char !== ' ')
-            : characters.split('');
-
-        const shuffleText = (currentRevealed: Set<number>) => {
+        const shuffleText = (currentRevealedCount: number) => {
             if (useOriginalCharsOnly) {
                 // ⚡ Bolt: Collect unrevealed, non-space characters without mapping full positions array
                 const nonSpaceChars: string[] = [];
                 for (let i = 0; i < originalTextArray.length; i++) {
                     const char = originalTextArray[i];
-                    if (char !== ' ' && !currentRevealed.has(i)) {
+                    if (char !== ' ' && revealOrder[i] >= currentRevealedCount) {
                         nonSpaceChars.push(char);
                     }
                 }
@@ -110,60 +123,55 @@ export default function DecryptedText({
                 }
 
                 let charIndex = 0;
-                return originalTextArray
-                    .map((char, i) => {
-                        if (char === ' ') return ' ';
-                        if (currentRevealed.has(i)) return char;
-                        return nonSpaceChars[charIndex++];
-                    });
+                return originalTextArray.map((char, i) => {
+                    if (char === ' ') return ' ';
+                    if (revealOrder[i] < currentRevealedCount) return char;
+                    return nonSpaceChars[charIndex++];
+                });
             } else {
-                return originalTextArray
-                    .map((char, i) => {
-                        if (char === ' ') return ' ';
-                        if (currentRevealed.has(i)) return char;
-                        return availableChars[Math.floor(Math.random() * availableChars.length)];
-                    });
+                return originalTextArray.map((char, i) => {
+                    if (char === ' ') return ' ';
+                    if (revealOrder[i] < currentRevealedCount) return char;
+                    return availableChars[Math.floor(Math.random() * availableChars.length)];
+                });
             }
         };
 
         if (isHovering) {
             setIsScrambling(true);
             interval = setInterval(() => {
-                setRevealedIndices(prevRevealed => {
-                    if (sequential) {
-                        if (prevRevealed.size < text.length) {
-                            const nextIndex = getNextIndex(prevRevealed);
-                            const newRevealed = new Set(prevRevealed);
-                            newRevealed.add(nextIndex);
-                            setDisplayText(shuffleText(newRevealed));
-                            return newRevealed;
+                if (sequential) {
+                    setRevealedCount(prevCount => {
+                        if (prevCount < text.length) {
+                            const newCount = prevCount + 1;
+                            setDisplayText(shuffleText(newCount));
+                            return newCount;
                         } else {
                             clearInterval(interval);
                             setIsScrambling(false);
-                            return prevRevealed;
+                            return prevCount;
                         }
-                    } else {
-                        setDisplayText(shuffleText(prevRevealed));
-                        currentIteration++;
-                        if (currentIteration >= maxIterations) {
-                            clearInterval(interval);
-                            setIsScrambling(false);
-                            setDisplayText(text.split(''));
-                        }
-                        return prevRevealed;
+                    });
+                } else {
+                    setDisplayText(shuffleText(0));
+                    currentIteration++;
+                    if (currentIteration >= maxIterations) {
+                        clearInterval(interval);
+                        setIsScrambling(false);
+                        setDisplayText(originalTextArray);
                     }
-                });
+                }
             }, speed);
         } else {
-            setDisplayText(text.split(''));
-            setRevealedIndices(new Set());
+            setDisplayText(originalTextArray);
+            setRevealedCount(0);
             setIsScrambling(false);
         }
 
         return () => {
             if (interval) clearInterval(interval);
         };
-    }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly]);
+    }, [isHovering, text.length, speed, maxIterations, sequential, originalTextArray, availableChars, revealOrder, useOriginalCharsOnly]);
 
 
 
@@ -218,7 +226,7 @@ export default function DecryptedText({
 
             <span aria-hidden="true">
                 {displayText.map((char, index) => {
-                    const isRevealedOrDone = revealedIndices.has(index) || !isScrambling || !isHovering;
+                    const isRevealedOrDone = revealOrder[index] < revealedCount || !isScrambling || !isHovering;
 
                     return (
                         <span key={index} className={isRevealedOrDone ? className : encryptedClassName}>
