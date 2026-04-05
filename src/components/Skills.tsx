@@ -78,6 +78,7 @@ const MarqueeRow = ({
         No React render loop, no JS overhead
       */}
       <div
+        role="list"
         className="flex gap-4 sm:gap-6 whitespace-nowrap pl-4 w-max hover:[animation-play-state:paused]"
         style={{
           animation: `marquee-${direction} ${speed}s linear infinite`
@@ -85,6 +86,8 @@ const MarqueeRow = ({
       >
         {duplicatedSkills.map((skill, idx) => (
           <div
+            role="listitem"
+            aria-hidden={idx >= skills.length ? "true" : undefined}
             key={`${skill.name}-${idx}`}
             className="relative group/card flex flex-col items-center justify-center w-[160px] h-[160px] sm:w-[180px] sm:h-[180px] rounded-2xl bg-[#D4D4D4] backdrop-blur-md border border-gray-200/60 shadow-sm hover:shadow-lg hover:bg-white hover:border-gray-200 hover:scale-105 transition-all duration-500 ease-out cursor-default overflow-hidden"
           >
@@ -93,7 +96,7 @@ const MarqueeRow = ({
 
             {/* Icon Container */}
             <div className="mb-4 p-4 rounded-2xl bg-white/90 shadow-sm group-hover/card:scale-110 group-hover/card:shadow-md transition-all duration-500">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center" aria-hidden="true">
                 {getSkillIcon(skill.name, skill.icon)}
               </div>
             </div>
