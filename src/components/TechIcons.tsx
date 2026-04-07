@@ -13,7 +13,14 @@ interface IconProps {
 // during rapid parent state changes or within rendered lists/marquees.
 export const PythonIcon = memo(function PythonIcon({ size = 24, className }: IconProps) {
     return (
-    <svg width={size} height={size} viewBox="0 0 256 256" className={className}>
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 256 256"
+        className={className}
+        aria-hidden="true"
+        focusable="false"
+    >
         <defs>
             <linearGradient id="pyGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#3776AB" />
