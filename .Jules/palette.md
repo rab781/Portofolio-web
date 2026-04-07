@@ -22,3 +22,7 @@
 ## 2026-03-27 - [Decorative Required Asterisks in Forms]
 **Learning:** Visual-only text like asterisks ("*") used to indicate required form fields are announced by screen readers (e.g., "Name star"), adding noise and confusion. Since the `required` attribute on the input element already semantically handles the requirement for assistive technologies, the visual asterisk should be hidden from them.
 **Action:** Always add `aria-hidden="true"` to decorative elements or visual-only text inside form labels (like required asterisks) to ensure screen readers do not incorrectly announce them.
+
+## 2026-03-31 - [Restoring List Semantics for Visual Layouts]
+**Learning:** When native HTML lists (`<ul>`/`<ol>`) are replaced with standard generic containers (e.g. `<div>`) to achieve specific design layouts (like timelines or horizontal carousels), the natural list grouping semantics are lost for assistive technologies, making it harder for screen reader users to understand the content relationships and item count.
+**Action:** When implementing repeating data structures using non-native lists for styling reasons, explicitly add `role="list"` to the parent container and `role="listitem"` to the child elements to restore native list semantics and ensure a cohesive accessibility experience.
