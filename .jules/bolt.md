@@ -23,3 +23,7 @@
 ## 2025-03-05 - Avoid Redundant Array Allocations in Animation Loops
 **Learning:** In high-frequency React animation loops (e.g., `setInterval` updating text via Framer Motion), mapping over a static string by calling `.split('')` inside the JSX render path creates a new array allocation on every tick, triggering unnecessary garbage collection and degrading performance.
 **Action:** Store statically-sized character sequences as arrays (`string[]`) in component state rather than strings, avoiding redundant `.split('')` calls during render. Only use `.join('')` when strictly necessary (e.g., for accessible `aria-hidden` screen reader text).
+
+## 2025-03-05 - Hoisting Static Config Objects in Framer Motion
+**Learning:** Defining static configuration objects (like `springConfig` passed to `useSpring`) and arrays (like `offset` passed to `useScroll`) inside functional components causes React to allocate a new object/array in memory on every single render. This breaks referential equality and forces unnecessary evaluations or re-renders within Framer Motion hooks.
+**Action:** Always hoist static configuration objects, arrays, and variants outside the component body (or wrap them in `useMemo` if they depend on props) to ensure stable references and reduce garbage collection overhead.
