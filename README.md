@@ -1,12 +1,12 @@
 # Portfolio Website
 
-> A production-ready Next.js 15 developer portfolio template with TypeScript, Tailwind CSS, and Framer Motion.
+> A production-ready Next.js 15 developer portfolio template that handles presentation so you can focus on showcasing your work.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Why This Exists
 
-Building a modern, accessible, and performant developer portfolio from scratch takes time away from what you actually want to showcase: your projects and skills. This template provides a pre-configured foundation with responsive design, dark mode, and smooth animations out of the box. You write your content, and the template handles the presentation.
+Building a modern, accessible, and performant developer portfolio from scratch takes time away from what you actually want to showcase: your projects and skills. This template solves that pain by providing a pre-configured foundation with responsive design, dark mode, and smooth animations out of the box. You write your content, and the template handles the presentation.
 
 ## Quick Start
 
@@ -21,68 +21,55 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) to see your site.
 
+> **Tip**: If you see `EACCES` errors during installation, [fix npm permissions](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally) or use `npx`.
+
 ## Installation
 
-**Prerequisites**:
-- Node.js 18.17+
-- pnpm 8+
-
-1. Clone the repository and navigate into the directory:
+**Prerequisites**: Node.js 18.17+, pnpm 8+
 
 ```bash
 git clone <your-repo-url> portfolio-website
 cd portfolio-website
-```
-
-2. Install dependencies:
-
-```bash
 pnpm install
-```
-
-3. Start the development server:
-
-```bash
-pnpm dev
 ```
 
 ## Usage
 
-### Personal Information
+### Basic Example: Adding Projects
 
-You update your personal details by modifying the components in the `src/components/` directory.
+You showcase your work by updating the `projects` array in `src/data/projects.ts`.
 
-- **Hero Section** (`src/components/HeroClient.tsx`): Change your name, titles, social links, and the animated text array.
-- **About Section** (`src/components/About.tsx`): Update your personal description, background, and avatar image.
-- **Skills Section**:
-  - Content: Edit your skill categories and items in `src/data/skills.ts` (see the `skillCategories` export).
-  - Layout/Animation: Customize how skills are displayed and animated in `src/components/Skills.tsx`.
+```typescript
+// src/data/projects.ts
+import type { Project } from "@/types/project";
 
-### Adding Projects
-
-You showcase your work by updating the projects list in `src/components/Projects.tsx`.
-
-```tsx
-// src/components/Projects.tsx
-export const projects = [
+export const projects: Project[] = [
   {
-    title: 'My Awesome Project',
-    description: 'A brief description of the project and the problem it solves.',
-    technologies: ['React', 'Node.js', 'Tailwind CSS'],
-    link: 'https://github.com/yourusername/project',
-  },
+    id: "my-awesome-project",
+    title: "My Awesome Project",
+    subtitle: "A brief description of the project and the problem it solves.",
+    category: "Full Stack Dev",
+    image: "/projects/my-image.jpg",
+    technologies: ["React", "Node.js", "Tailwind CSS"],
+    githubUrl: "https://github.com/yourusername/project",
+    problem: "The specific challenge this project addresses.",
+    dataOverview: "Overview of data processing.",
+    methodology: ["Step 1", "Step 2", "Step 3"],
+    results: ["Result 1", "Result 2"]
+  }
 ];
 ```
 
 ### Configuration
 
-You customize the visual appearance of your portfolio through standard configuration files.
+You customize the visual appearance and personal details of your portfolio through standard configuration files and components.
 
-| File | Purpose |
-|------|---------|
+| Option/File | Description |
+|-------------|-------------|
+| `src/components/HeroClient.tsx` | Change your name, titles, social links, and the animated text array |
+| `src/components/About.tsx` | Update your personal description, background, and avatar image |
+| `src/data/skills.ts` | Edit your skill categories and items |
 | `tailwind.config.ts` | Adjust color schemes, themes, and design tokens |
-| `src/app/globals.css` | Add global CSS variables and base styles |
-| `src/app/layout.tsx` | Configure SEO metadata and change fonts |
 
 ### Advanced Usage: Contact Form
 
@@ -92,9 +79,17 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 2. Update the form submission handler to `POST` data to your new endpoint.
 3. Use a service like Resend or SendGrid to deliver the email.
 
+If you encounter a `404 Not Found` error when submitting the form, ensure you have correctly created the API route in the `src/app/api/contact/route.ts` file and that it exports a `POST` handler.
+
+## API Reference
+
+The primary data structures you interact with are defined in `src/types/`. For detailed Next.js API reference, see the [Next.js Documentation](https://nextjs.org/docs).
+
+See [full API reference →](https://nextjs.org/docs)
+
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## License
 
