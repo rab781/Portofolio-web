@@ -22,3 +22,6 @@
 ## 2026-03-27 - [Decorative Required Asterisks in Forms]
 **Learning:** Visual-only text like asterisks ("*") used to indicate required form fields are announced by screen readers (e.g., "Name star"), adding noise and confusion. Since the `required` attribute on the input element already semantically handles the requirement for assistive technologies, the visual asterisk should be hidden from them.
 **Action:** Always add `aria-hidden="true"` to decorative elements or visual-only text inside form labels (like required asterisks) to ensure screen readers do not incorrectly announce them.
+## 2026-04-08 - [Restoring Semantics in Div-based Layouts and Marquees]
+**Learning:** When replacing native HTML lists (`<ul>`/`<ol>`) with `<div>` containers for specific layout purposes like timelines (e.g., in Experience) or marquees (e.g., in Skills), the list semantics are lost for screen readers. Furthermore, duplicating items for infinite scroll marquees causes screen readers to redundantly announce the same content multiple times.
+**Action:** Always explicitly add `role="list"` to the parent container and `role="listitem"` to the child elements to restore list semantics. When duplicating DOM elements for infinite loops, ensure the duplicated elements have `aria-hidden="true"` to prevent screen reader redundancy.

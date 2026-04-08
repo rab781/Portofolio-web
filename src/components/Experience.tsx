@@ -68,7 +68,7 @@ export default function Experience() {
                 >
                     <div className="p-4 rounded-3xl bg-white shadow-lg shadow-orange-100/50 text-[#FFA239] ring-1 ring-orange-50 relative overflow-hidden group">
                         <div className="absolute inset-0 bg-orange-100/20 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-3xl" />
-                        <Briefcase size={32} strokeWidth={1.5} className="relative z-10" />
+                        <Briefcase size={32} strokeWidth={1.5} className="relative z-10" aria-hidden="true" />
                     </div>
                     <div className="text-center md:text-left">
                         <h2 className="text-sm font-bold tracking-[0.2em] text-[#FFA239] uppercase mb-2">
@@ -89,9 +89,9 @@ export default function Experience() {
                         />
                     </div>
 
-                    <div className="space-y-24">
+                    <div className="space-y-24" role="list">
                         {experiences.map((exp, idx) => (
-                            <div key={idx} className={`relative flex flex-col md:flex-row gap-8 md:gap-0 items-center justify-between group ${idx % 2 === 0 ? "md:flex-row-reverse" : ""
+                            <div key={idx} role="listitem" className={`relative flex flex-col md:flex-row gap-8 md:gap-0 items-center justify-between group ${idx % 2 === 0 ? "md:flex-row-reverse" : ""
                                 }`}>
                                 {/* Timeline Node */}
                                 <div className="absolute left-[20px] md:left-[50%] top-0 md:-translate-x-1/2 w-3 h-3 z-20">
