@@ -93,6 +93,7 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
             {/* Carousel */}
             <div
                 ref={carouselRef}
+                role="list"
                 className="flex gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing px-6 py-8 scroll-smooth"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 onMouseDown={handleMouseDown}
@@ -106,6 +107,7 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
                 {items.map((item, index) => (
                     <motion.div
                         key={index}
+                        role="listitem"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
