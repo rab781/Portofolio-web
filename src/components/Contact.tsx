@@ -115,7 +115,7 @@ function Contact() {
 
           <div className="space-y-8">
             <div className="flex items-start">
-              <Mail className="w-6 h-6 text-white mt-1 mr-4" />
+              <Mail className="w-6 h-6 text-white mt-1 mr-4" aria-hidden="true" />
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Email</div>
                 <div className="flex items-center gap-3">
@@ -139,7 +139,7 @@ function Contact() {
             </div>
 
             <div className="flex items-start">
-              <Phone className="w-6 h-6 text-white mt-1 mr-4" />
+              <Phone className="w-6 h-6 text-white mt-1 mr-4" aria-hidden="true" />
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Phone</div>
                 <a href="tel:+6285824665623" className="text-xl font-medium text-white hover:text-gray-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg px-1 -mx-1">
@@ -149,7 +149,7 @@ function Contact() {
             </div>
 
             <div className="flex items-start">
-              <MapPin className="w-6 h-6 text-white mt-1 mr-4" />
+              <MapPin className="w-6 h-6 text-white mt-1 mr-4" aria-hidden="true" />
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Location</div>
                 <div className="text-xl font-medium text-white">
