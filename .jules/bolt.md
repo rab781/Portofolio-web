@@ -23,3 +23,7 @@
 ## 2025-03-05 - Avoid Redundant Array Allocations in Animation Loops
 **Learning:** In high-frequency React animation loops (e.g., `setInterval` updating text via Framer Motion), mapping over a static string by calling `.split('')` inside the JSX render path creates a new array allocation on every tick, triggering unnecessary garbage collection and degrading performance.
 **Action:** Store statically-sized character sequences as arrays (`string[]`) in component state rather than strings, avoiding redundant `.split('')` calls during render. Only use `.join('')` when strictly necessary (e.g., for accessible `aria-hidden` screen reader text).
+
+## 2026-04-08 - Pre-computing animation reveal maps
+**Learning:** In high-frequency React animation loops (e.g., `DecryptedText`), tracking sequential state dynamically using a `Set` and performing `Set.has(index)` operations on every frame causes O(N) lookup overhead and garbage collection pressure, leading to frame drops.
+**Action:** Replace dynamic collection-based lookups (`Set`) with a primitive numeric state (e.g., `revealedCount`) and a pre-computed `Int32Array` that maps indices to their reveal step, wrapped in `useMemo` to prevent re-calculation on every tick.
