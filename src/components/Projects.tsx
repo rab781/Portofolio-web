@@ -71,8 +71,8 @@ function Projects() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-400 hover:text-[#111111] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg"
-                    aria-label={`View source code for ${project.title} on GitHub`}
-                    title={`View source code for ${project.title} on GitHub`}
+                    aria-label={`View source code for ${project.title} on GitHub (opens in a new tab)`}
+                    title={`View source code for ${project.title} on GitHub (opens in a new tab)`}
                   >
                     <Github size={24} aria-hidden="true" />
                   </a>
