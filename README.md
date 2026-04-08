@@ -10,7 +10,7 @@ Building a modern, accessible, and performant developer portfolio from scratch t
 
 ## Quick Start
 
-Get your portfolio running locally.
+You can get your portfolio running locally in just a few steps.
 
 ```bash
 git clone <your-repo-url> portfolio-website
@@ -23,32 +23,17 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 
 ## Installation
 
-**Prerequisites**:
-- Node.js 18.17+
-- pnpm 8+
-
-1. Clone the repository and navigate into the directory:
+**Prerequisites**: Node.js 18.17+, pnpm 8+
 
 ```bash
 git clone <your-repo-url> portfolio-website
 cd portfolio-website
-```
-
-2. Install dependencies:
-
-```bash
 pnpm install
-```
-
-3. Start the development server:
-
-```bash
-pnpm dev
 ```
 
 ## Usage
 
-### Personal Information
+### Basic Example
 
 You update your personal details by modifying the components in the `src/components/` directory.
 
@@ -58,43 +43,64 @@ You update your personal details by modifying the components in the `src/compone
   - Content: Edit your skill categories and items in `src/data/skills.ts` (see the `skillCategories` export).
   - Layout/Animation: Customize how skills are displayed and animated in `src/components/Skills.tsx`.
 
-### Adding Projects
-
-You showcase your work by updating the projects list in `src/components/Projects.tsx`.
-
-```tsx
-// src/components/Projects.tsx
-export const projects = [
-  {
-    title: 'My Awesome Project',
-    description: 'A brief description of the project and the problem it solves.',
-    technologies: ['React', 'Node.js', 'Tailwind CSS'],
-    link: 'https://github.com/yourusername/project',
-  },
-];
-```
-
 ### Configuration
 
 You customize the visual appearance of your portfolio through standard configuration files.
 
-| File | Purpose |
-|------|---------|
-| `tailwind.config.ts` | Adjust color schemes, themes, and design tokens |
-| `src/app/globals.css` | Add global CSS variables and base styles |
-| `src/app/layout.tsx` | Configure SEO metadata and change fonts |
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `tailwind.config.ts` | `file` | - | Adjust color schemes, themes, and design tokens |
+| `src/app/globals.css` | `file` | - | Add global CSS variables and base styles |
+| `src/app/layout.tsx` | `file` | - | Configure SEO metadata and change fonts |
 
-### Advanced Usage: Contact Form
+### Advanced Usage
 
-The contact form in `src/components/Contact.tsx` logs submissions to the console by default. You make it functional by integrating a backend or email service.
+You showcase your work by adding new projects to the `projects` array in `src/data/projects.ts`.
 
-1. Create an API route in Next.js (`src/app/api/contact/route.ts`).
-2. Update the form submission handler to `POST` data to your new endpoint.
-3. Use a service like Resend or SendGrid to deliver the email.
+```typescript
+import type { Project } from "@/types/project";
+
+export const projects: Project[] = [
+  // ... existing projects
+  {
+    id: "my-awesome-project",
+    title: "My Awesome Project",
+    subtitle: "A brief description of the project.",
+    category: "Web Development",
+    image: "/projects/awesome-project.jpg",
+    technologies: ["React", "Next.js", "Tailwind CSS"],
+    githubUrl: "https://github.com/yourusername/project",
+    problem: "The problem this project solves.",
+    dataOverview: "Overview of the data used.",
+    methodology: ["Step 1: Planning", "Step 2: Execution"],
+    results: ["Increased efficiency by 50%", "Delivered on time"]
+  }
+];
+```
+
+## API Reference
+
+The contact form in `src/components/Contact.tsx` submits data to a built-in Next.js API route. You integrate it with an external email service for production use.
+
+- **Endpoint**: `/api/contact`
+- **Method**: `POST`
+- **Request Body**:
+  ```json
+  {
+    "name": "string",
+    "email": "string",
+    "subject": "string",
+    "message": "string"
+  }
+  ```
+- **Responses**:
+  - `200 OK`: `{"message": "Message sent successfully"}`
+  - `400 Bad Request`: `{"error": "Missing required fields"}` or `{"error": "Invalid email address"}`
+  - `500 Internal Server Error`: `{"error": "Internal server error"}`
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## License
 
