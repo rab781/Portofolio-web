@@ -23,3 +23,7 @@
 ## 2025-03-05 - Avoid Redundant Array Allocations in Animation Loops
 **Learning:** In high-frequency React animation loops (e.g., `setInterval` updating text via Framer Motion), mapping over a static string by calling `.split('')` inside the JSX render path creates a new array allocation on every tick, triggering unnecessary garbage collection and degrading performance.
 **Action:** Store statically-sized character sequences as arrays (`string[]`) in component state rather than strings, avoiding redundant `.split('')` calls during render. Only use `.join('')` when strictly necessary (e.g., for accessible `aria-hidden` screen reader text).
+
+## 2026-04-05 - Pre-calculating Arrays with useMemo in Animation Loops
+**Learning:** In high-frequency React animation loops (like text scrambling), initializing state or fallback values with `text.split('')` inside the component body or effect loop causes the string to be re-split into a new array on every render tick or timeout cycle. This triggers unnecessary array allocations and garbage collection pressure, severely impacting performance during rapid animations.
+**Action:** Use `useMemo` to pre-calculate the character array once based on the source string. Then, reference this memoized array throughout the component's state initialization, effects, and render cycle to eliminate redundant allocations.

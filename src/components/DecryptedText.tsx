@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const styles = {
@@ -47,9 +47,12 @@ export default function DecryptedText({
     animateOn = 'hover',
     ...props
 }: DecryptedTextProps) {
+    // ⚡ Bolt: Pre-calculate the character array once to prevent redundant allocations during render and animation loops.
+    const originalTextArray = useMemo(() => text.split(''), [text]);
+
     // ⚡ Bolt: Store character arrays directly in state rather than strings.
     // This eliminates redundant `.split('')` allocations on every React render tick during rapid animations.
-    const [displayText, setDisplayText] = useState<string[]>(animateOn === 'auto' ? [] : text.split(''));
+    const [displayText, setDisplayText] = useState<string[]>(animateOn === 'auto' ? [] : originalTextArray);
     const [isHovering, setIsHovering] = useState(animateOn === 'auto');
     const [isScrambling, setIsScrambling] = useState(false);
     const [revealedIndices, setRevealedIndices] = useState(new Set<number>());
@@ -86,8 +89,6 @@ export default function DecryptedText({
             }
         };
 
-        // ⚡ Bolt: Pre-calculate arrays outside the interval loop to prevent re-allocating on every tick
-        const originalTextArray = text.split('');
         const availableChars = useOriginalCharsOnly
             ? Array.from(new Set(originalTextArray)).filter(char => char !== ' ')
             : characters.split('');
@@ -148,14 +149,14 @@ export default function DecryptedText({
                         if (currentIteration >= maxIterations) {
                             clearInterval(interval);
                             setIsScrambling(false);
-                            setDisplayText(text.split(''));
+                            setDisplayText(originalTextArray);
                         }
                         return prevRevealed;
                     }
                 });
             }, speed);
         } else {
-            setDisplayText(text.split(''));
+            setDisplayText(originalTextArray);
             setRevealedIndices(new Set());
             setIsScrambling(false);
         }
@@ -163,7 +164,7 @@ export default function DecryptedText({
         return () => {
             if (interval) clearInterval(interval);
         };
-    }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly]);
+    }, [isHovering, originalTextArray, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly]);
 
 
 
