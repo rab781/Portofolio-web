@@ -1,7 +1,12 @@
 'use client';
 
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, UseScrollOptions } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+
+// ⚡ Bolt: Hoisted static Framer Motion config objects outside the component
+// to prevent unnecessary memory allocations and referential inequality on every render cycle.
+const scrollOffset: UseScrollOptions["offset"] = ["start center", "end end"];
+const springConfig = { stiffness: 400, damping: 90 };
 
 export default function ScrollLine() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -10,10 +15,10 @@ export default function ScrollLine() {
     // Track scroll progress relative to this container
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end end"]
+        offset: scrollOffset
     });
 
-    const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 });
+    const pathLength = useSpring(scrollYProgress, springConfig);
 
     // Hoist useTransform calls to top level — Rules of Hooks requirement
     const dotTop = useTransform(pathLength, [0, 1], ["0%", "100%"]);
