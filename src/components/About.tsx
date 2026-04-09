@@ -14,11 +14,15 @@ interface AboutProps {
   triggerAnimation?: boolean;
 }
 
+// ⚡ Bolt: Hoisted static Framer Motion config objects outside the component
+// to prevent unnecessary memory allocations and referential inequality on every render cycle.
+const counterSpringConfig = { damping: 30, stiffness: 100 };
+
 // Helper for counting up numbers
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
+  const springValue = useSpring(motionValue, counterSpringConfig);
   const isInView = useInView(ref, { once: true, margin: "-10px" });
 
   useEffect(() => {
