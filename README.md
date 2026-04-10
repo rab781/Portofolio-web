@@ -30,7 +30,7 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 1. Clone the repository and navigate into the directory:
 
 ```bash
-git clone <your-repo-url> portfolio-website
+git clone https://github.com/rab781/Portofolio-web.git
 cd portfolio-website
 ```
 
@@ -95,7 +95,3 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 ## Contributing
 
 Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
-
-## License
-
-MIT © [Your Name](https://github.com/yourname)
