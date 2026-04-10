@@ -13,8 +13,8 @@ Building a modern, accessible, and performant developer portfolio from scratch t
 Get your portfolio running locally.
 
 ```bash
-git clone <your-repo-url> portfolio-website
-cd portfolio-website
+git clone https://github.com/rab781/Portofolio-web.git
+cd Portofolio-web
 pnpm install
 pnpm dev
 ```
