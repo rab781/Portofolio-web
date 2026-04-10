@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const styles = {
@@ -49,56 +49,75 @@ export default function DecryptedText({
 }: DecryptedTextProps) {
     // ⚡ Bolt: Store character arrays directly in state rather than strings.
     // This eliminates redundant `.split('')` allocations on every React render tick during rapid animations.
+    // Replace `Set`-based index tracking with a numeric `revealedCount` state and a pre-calculated `Int32Array` mapping
+    // indices to their reveal step via `useMemo` to eliminate garbage collection pressure and O(N) lookups.
     const [displayText, setDisplayText] = useState<string[]>(animateOn === 'auto' ? [] : text.split(''));
     const [isHovering, setIsHovering] = useState(animateOn === 'auto');
     const [isScrambling, setIsScrambling] = useState(false);
-    const [revealedIndices, setRevealedIndices] = useState(new Set<number>());
+    const [revealedCount, setRevealedCount] = useState(0);
     const [hasAnimated, setHasAnimated] = useState(false);
     const containerRef = useRef<HTMLSpanElement>(null);
+
+    // ⚡ Bolt: Pre-calculate invariant data outside the interval loop and memoize it across renders
+    const { originalTextArray, availableChars, revealStepForIndex } = useMemo(() => {
+        const textArray = text.split('');
+        const chars = useOriginalCharsOnly
+            ? Array.from(new Set(textArray)).filter(char => char !== ' ')
+            : characters.split('');
+
+        const length = textArray.length;
+        const revealOrder = new Int32Array(length);
+
+        // Pre-calculate at which step each character should be revealed
+        let step = 0;
+        if (sequential) {
+            switch (revealDirection) {
+                case 'start':
+                    for (let i = 0; i < length; i++) revealOrder[i] = step++;
+                    break;
+                case 'end':
+                    for (let i = length - 1; i >= 0; i--) revealOrder[i] = step++;
+                    break;
+                case 'center': {
+                    const middle = Math.floor(length / 2);
+                    for (let i = 0; i < length; i++) {
+                        const offset = Math.floor(i / 2);
+                        const nextIndex = i % 2 === 0 ? middle + offset : middle - offset - 1;
+                        if (nextIndex >= 0 && nextIndex < length) {
+                            revealOrder[nextIndex] = step++;
+                        }
+                    }
+                    // Fallback for any unassigned indices
+                    for (let i = 0; i < length; i++) {
+                        if (revealOrder[i] === 0 && i !== middle) {
+                            revealOrder[i] = step++;
+                        }
+                    }
+                    break;
+                }
+                default:
+                    for (let i = 0; i < length; i++) revealOrder[i] = step++;
+            }
+        }
+
+        return {
+            originalTextArray: textArray,
+            availableChars: chars,
+            revealStepForIndex: revealOrder
+        };
+    }, [text, characters, useOriginalCharsOnly, sequential, revealDirection]);
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
         let currentIteration = 0;
 
-        const getNextIndex = (revealedSet: Set<number>) => {
-            const textLength = text.length;
-            switch (revealDirection) {
-                case 'start':
-                    return revealedSet.size;
-                case 'end':
-                    return textLength - 1 - revealedSet.size;
-                case 'center': {
-                    const middle = Math.floor(textLength / 2);
-                    const offset = Math.floor(revealedSet.size / 2);
-                    const nextIndex = revealedSet.size % 2 === 0 ? middle + offset : middle - offset - 1;
-
-                    if (nextIndex >= 0 && nextIndex < textLength && !revealedSet.has(nextIndex)) {
-                        return nextIndex;
-                    }
-
-                    for (let i = 0; i < textLength; i++) {
-                        if (!revealedSet.has(i)) return i;
-                    }
-                    return 0;
-                }
-                default:
-                    return revealedSet.size;
-            }
-        };
-
-        // ⚡ Bolt: Pre-calculate arrays outside the interval loop to prevent re-allocating on every tick
-        const originalTextArray = text.split('');
-        const availableChars = useOriginalCharsOnly
-            ? Array.from(new Set(originalTextArray)).filter(char => char !== ' ')
-            : characters.split('');
-
-        const shuffleText = (currentRevealed: Set<number>) => {
+        const shuffleText = (currentCount: number) => {
             if (useOriginalCharsOnly) {
-                // ⚡ Bolt: Collect unrevealed, non-space characters without mapping full positions array
+                // ⚡ Bolt: Collect unrevealed, non-space characters
                 const nonSpaceChars: string[] = [];
                 for (let i = 0; i < originalTextArray.length; i++) {
                     const char = originalTextArray[i];
-                    if (char !== ' ' && !currentRevealed.has(i)) {
+                    if (char !== ' ' && revealStepForIndex[i] >= currentCount) {
                         nonSpaceChars.push(char);
                     }
                 }
@@ -110,60 +129,57 @@ export default function DecryptedText({
                 }
 
                 let charIndex = 0;
-                return originalTextArray
-                    .map((char, i) => {
-                        if (char === ' ') return ' ';
-                        if (currentRevealed.has(i)) return char;
-                        return nonSpaceChars[charIndex++];
-                    });
+                return originalTextArray.map((char, i) => {
+                    if (char === ' ') return ' ';
+                    if (revealStepForIndex[i] < currentCount) return char;
+                    return nonSpaceChars[charIndex++] || char;
+                });
             } else {
-                return originalTextArray
-                    .map((char, i) => {
-                        if (char === ' ') return ' ';
-                        if (currentRevealed.has(i)) return char;
-                        return availableChars[Math.floor(Math.random() * availableChars.length)];
-                    });
+                return originalTextArray.map((char, i) => {
+                    if (char === ' ') return ' ';
+                    if (revealStepForIndex[i] < currentCount) return char;
+                    return availableChars[Math.floor(Math.random() * availableChars.length)];
+                });
             }
         };
 
         if (isHovering) {
             setIsScrambling(true);
             interval = setInterval(() => {
-                setRevealedIndices(prevRevealed => {
+                setRevealedCount(prevCount => {
                     if (sequential) {
-                        if (prevRevealed.size < text.length) {
-                            const nextIndex = getNextIndex(prevRevealed);
-                            const newRevealed = new Set(prevRevealed);
-                            newRevealed.add(nextIndex);
-                            setDisplayText(shuffleText(newRevealed));
-                            return newRevealed;
+                        if (prevCount < text.length) {
+                            const newCount = prevCount + 1;
+                            setDisplayText(shuffleText(newCount));
+                            return newCount;
                         } else {
                             clearInterval(interval);
                             setIsScrambling(false);
-                            return prevRevealed;
+                            return prevCount;
                         }
                     } else {
-                        setDisplayText(shuffleText(prevRevealed));
+                        // Non-sequential handles everything as revealed at once or none
+                        setDisplayText(shuffleText(0));
                         currentIteration++;
                         if (currentIteration >= maxIterations) {
                             clearInterval(interval);
                             setIsScrambling(false);
-                            setDisplayText(text.split(''));
+                            setDisplayText(originalTextArray);
                         }
-                        return prevRevealed;
+                        return prevCount;
                     }
                 });
             }, speed);
         } else {
-            setDisplayText(text.split(''));
-            setRevealedIndices(new Set());
+            setDisplayText(originalTextArray);
+            setRevealedCount(0);
             setIsScrambling(false);
         }
 
         return () => {
             if (interval) clearInterval(interval);
         };
-    }, [isHovering, text, speed, maxIterations, sequential, revealDirection, characters, useOriginalCharsOnly]);
+    }, [isHovering, text, speed, maxIterations, sequential, originalTextArray, availableChars, revealStepForIndex, useOriginalCharsOnly]);
 
 
 
@@ -218,10 +234,13 @@ export default function DecryptedText({
 
             <span aria-hidden="true">
                 {displayText.map((char, index) => {
-                    const isRevealedOrDone = revealedIndices.has(index) || !isScrambling || !isHovering;
+                    // Simplify: if not scrambling/hovering, or if its index step is already revealed, it's done
+                    // Note: for non-sequential, we can consider them all "done" once the iteration is complete, which is handled
+                    // by the !isScrambling state reset anyway.
+                    const finalIsRevealedOrDone = !isScrambling || !isHovering || revealStepForIndex[index] < revealedCount;
 
                     return (
-                        <span key={index} className={isRevealedOrDone ? className : encryptedClassName}>
+                        <span key={index} className={finalIsRevealedOrDone ? className : encryptedClassName}>
                             {char}
                         </span>
                     );
