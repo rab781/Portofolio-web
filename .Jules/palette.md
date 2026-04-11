@@ -22,3 +22,6 @@
 ## 2026-03-27 - [Decorative Required Asterisks in Forms]
 **Learning:** Visual-only text like asterisks ("*") used to indicate required form fields are announced by screen readers (e.g., "Name star"), adding noise and confusion. Since the `required` attribute on the input element already semantically handles the requirement for assistive technologies, the visual asterisk should be hidden from them.
 **Action:** Always add `aria-hidden="true"` to decorative elements or visual-only text inside form labels (like required asterisks) to ensure screen readers do not incorrectly announce them.
+## 2026-03-27 - [Semantic Roles for Div-based Lists]
+**Learning:** When using generic `<div>` containers combined with utility classes (like Tailwind's `space-y-*`) to build visual lists or timelines, the native list semantics provided by `<ul>` or `<ol>` are lost. This makes it difficult for screen readers to announce the content as a related sequence and inform the user of the list length.
+**Action:** Always add `role="list"` to the parent container and `role="listitem"` to the child elements within the iteration loop when constructing lists out of non-semantic HTML elements to restore accessibility.
