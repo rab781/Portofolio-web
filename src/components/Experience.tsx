@@ -35,13 +35,17 @@ const experiences = [
     }
 ];
 
+// ⚡ Bolt: Hoist static scroll offset array outside the component to prevent
+// unnecessary re-allocations on every render.
+const SCROLL_OFFSET: import("framer-motion").UseScrollOptions["offset"] = ["start center", "end center"];
+
 export default function Experience() {
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Scroll progress specifically for this container
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end center"]
+        offset: SCROLL_OFFSET
     });
 
     const scrollY = useSpring(scrollYProgress, {

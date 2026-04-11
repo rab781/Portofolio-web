@@ -3,6 +3,10 @@
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
+// ⚡ Bolt: Hoist static scroll offset array outside the component to prevent
+// unnecessary re-allocations on every render.
+const SCROLL_OFFSET: import("framer-motion").UseScrollOptions["offset"] = ["start center", "end end"];
+
 export default function ScrollLine() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [svgHeight, setSvgHeight] = useState(0);
@@ -10,7 +14,7 @@ export default function ScrollLine() {
     // Track scroll progress relative to this container
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end end"]
+        offset: SCROLL_OFFSET
     });
 
     const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 });
