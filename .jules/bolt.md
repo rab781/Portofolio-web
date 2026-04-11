@@ -26,3 +26,7 @@
 ## 2026-04-10 - Optimizing Array allocations in animation loops
 **Learning:** In high-frequency React animation loops (e.g., `setInterval` for a text scramble effect), dynamically managing index visibility using a `Set` introduces unnecessary memory allocations on every tick.
 **Action:** Replace `Set`-based indexing with a numeric tracker (e.g., `revealedCount`) and a pre-calculated mapping array (`Int32Array`). This allows for O(1) integer comparisons during map iterations instead of allocating new objects and iterating over Sets during rapid animation frames.
+
+## 2025-03-05 - Hoisting Array Literals from useScroll Configuration
+**Learning:** Passing array literals (like `["start center", "end center"]`) inline to the `offset` parameter of Framer Motion's `useScroll` hook causes a new array to be allocated on every React render. In high-frequency render scenarios, this creates unnecessary garbage collection pressure and can trigger redundant internal hook re-evaluations.
+**Action:** Always hoist static configuration arrays and objects (such as `useScroll`'s `offset` array) outside of the component body. When typing these hoisted arrays in TypeScript, explicitly use `import("framer-motion").UseScrollOptions["offset"]` instead of `as const` to satisfy strict tuple requirements.
