@@ -230,6 +230,7 @@ function Contact() {
               type="submit"
               disabled={isSubmitting}
               aria-keyshortcuts={`${modifierKey === '⌘' ? 'Meta' : 'Control'}+Enter`}
+              aria-describedby="submit-shortcut"
               className={`w-full bg-[#111111] text-white px-8 py-4 rounded-lg font-bold hover:bg-black transition-all flex items-center justify-center group relative overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] focus-visible:ring-offset-2 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
               <div className="flex items-center justify-center">
@@ -244,7 +245,7 @@ function Contact() {
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
 
                     {/* Keyboard Shortcut Hint */}
-                    <div className="hidden sm:flex items-center ml-3 px-2 py-0.5 rounded text-[10px] font-medium bg-white/10 text-white/80 border border-white/20 transition-opacity opacity-0 group-hover:opacity-100 absolute right-6" aria-hidden="true">
+                    <div id="submit-shortcut" className="hidden sm:flex items-center ml-3 px-2 py-0.5 rounded text-[10px] font-medium bg-white/10 text-white/80 border border-white/20 transition-opacity opacity-0 group-hover:opacity-100 absolute right-6" aria-hidden="true">
                       <span>{modifierKey}</span>
                       <span className="mx-0.5">+</span>
                       <span>Enter</span>
