@@ -27,20 +27,20 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 - Node.js 18.17+
 - pnpm 8+
 
-1. Clone the repository and navigate into the directory:
+First, clone the repository and navigate into the directory:
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
-cd portfolio-website
+cd Portofolio-web
 ```
 
-2. Install dependencies:
+Next, install the dependencies using `pnpm`:
 
 ```bash
 pnpm install
 ```
 
-3. Start the development server:
+Finally, start the development server:
 
 ```bash
 pnpm dev
@@ -60,16 +60,31 @@ You update your personal details by modifying the components in the `src/compone
 
 ### Adding Projects
 
-You showcase your work by updating the projects list in `src/components/Projects.tsx`.
+You showcase your work by updating the projects list in `src/data/projects.ts`.
 
-```tsx
-// src/components/Projects.tsx
-export const projects = [
+```typescript
+// src/data/projects.ts
+import type { Project } from "@/types/project";
+
+export const projects: Project[] = [
   {
+    id: "my-awesome-project",
     title: 'My Awesome Project',
-    description: 'A brief description of the project and the problem it solves.',
+    subtitle: 'A brief description of the project.',
+    category: "Full Stack Dev",
+    image: "/projects/awesome.jpg",
     technologies: ['React', 'Node.js', 'Tailwind CSS'],
-    link: 'https://github.com/yourusername/project',
+    githubUrl: 'https://github.com/rab781/project',
+    problem: "The specific problem this project solves.",
+    dataOverview: "Details about the data used.",
+    methodology: [
+      "Step 1: Did something cool.",
+      "Step 2: Did something even cooler."
+    ],
+    results: [
+      "Result 1: It worked.",
+      "Result 2: Users loved it."
+    ]
   },
 ];
 ```
@@ -80,11 +95,11 @@ You customize the visual appearance of your portfolio through standard configura
 
 | File | Purpose |
 |------|---------|
-| `tailwind.config.ts` | Adjust color schemes, themes, and design tokens |
+| `src/data/skills.ts` | Edit your skill categories and items |
 | `src/app/globals.css` | Add global CSS variables and base styles |
 | `src/app/layout.tsx` | Configure SEO metadata and change fonts |
 
-### Advanced Usage: Contact Form
+### Contact Form Integration
 
 The contact form in `src/components/Contact.tsx` logs submissions to the console by default. You make it functional by integrating a backend or email service.
 
@@ -94,4 +109,8 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## License
+
+MIT © [rab781](https://github.com/rab781)
