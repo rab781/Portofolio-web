@@ -1,6 +1,6 @@
 'use client';
 
-import { useScroll, useSpring, motion, useTransform } from "framer-motion";
+import { useScroll, useSpring, motion, useTransform, UseScrollOptions, SpringOptions } from "framer-motion";
 import { Briefcase } from "lucide-react";
 import { useRef } from "react";
 
@@ -35,20 +35,24 @@ const experiences = [
     }
 ];
 
+const scrollOffset: UseScrollOptions["offset"] = ["start center", "end center"];
+const springConfig: SpringOptions = {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+};
+
 export default function Experience() {
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Scroll progress specifically for this container
+    // ⚡ Bolt: Hoisted static configuration to prevent unnecessary object/array re-allocations on every render
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end center"]
+        offset: scrollOffset
     });
 
-    const scrollY = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    });
+    const scrollY = useSpring(scrollYProgress, springConfig);
 
     // Vertical line fills up
     const lineHeight = useTransform(scrollY, [0, 1], ["0%", "100%"]);
