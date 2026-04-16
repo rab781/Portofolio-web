@@ -89,9 +89,9 @@ export default function Experience() {
                         />
                     </div>
 
-                    <div className="space-y-24">
+                    <div className="space-y-24" role="list">
                         {experiences.map((exp, idx) => (
-                            <div key={idx} className={`relative flex flex-col md:flex-row gap-8 md:gap-0 items-center justify-between group ${idx % 2 === 0 ? "md:flex-row-reverse" : ""
+                            <div key={idx} role="listitem" className={`relative flex flex-col md:flex-row gap-8 md:gap-0 items-center justify-between group ${idx % 2 === 0 ? "md:flex-row-reverse" : ""
                                 }`}>
                                 {/* Timeline Node */}
                                 <div className="absolute left-[20px] md:left-[50%] top-0 md:-translate-x-1/2 w-3 h-3 z-20">
