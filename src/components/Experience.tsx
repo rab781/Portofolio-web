@@ -1,8 +1,12 @@
 'use client';
 
 import { useScroll, useSpring, motion, useTransform } from "framer-motion";
+import type { UseScrollOptions } from "framer-motion";
 import { Briefcase } from "lucide-react";
 import { useRef } from "react";
+
+// ⚡ Bolt: Hoist static offset arrays outside the component to prevent re-allocation on every render
+const scrollOffset: UseScrollOptions["offset"] = ["start center", "end center"];
 
 const experiences = [
     {
@@ -41,7 +45,7 @@ export default function Experience() {
     // Scroll progress specifically for this container
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end center"]
+        offset: scrollOffset
     });
 
     const scrollY = useSpring(scrollYProgress, {
