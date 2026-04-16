@@ -1,6 +1,7 @@
 'use client';
 
-import { useScroll, useSpring, motion, useTransform, UseScrollOptions } from "framer-motion";
+import { useScroll, useSpring, motion, useTransform } from "framer-motion";
+import type { UseScrollOptions } from "framer-motion";
 import { Briefcase } from "lucide-react";
 import { useRef } from "react";
 
