@@ -1,6 +1,7 @@
 'use client';
 
-import { motion, useScroll, useSpring, useTransform, UseScrollOptions } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import type { UseScrollOptions } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 // ⚡ Bolt: Hoist static offset arrays outside the component to prevent re-allocation on every render
