@@ -22,3 +22,6 @@
 ## 2026-03-27 - [Decorative Required Asterisks in Forms]
 **Learning:** Visual-only text like asterisks ("*") used to indicate required form fields are announced by screen readers (e.g., "Name star"), adding noise and confusion. Since the `required` attribute on the input element already semantically handles the requirement for assistive technologies, the visual asterisk should be hidden from them.
 **Action:** Always add `aria-hidden="true"` to decorative elements or visual-only text inside form labels (like required asterisks) to ensure screen readers do not incorrectly announce them.
+## 2025-03-14 - [Semantic List Roles for Div Structures]
+**Learning:** The project occasionally uses generic `<div>` wrappers instead of native HTML lists (`<ul>`/`<ol>`) to create complex repeating layouts, such as the visual timeline in `src/components/Experience.tsx`. Screen readers fail to announce these as lists, removing valuable structural context for users.
+**Action:** When creating layouts for repeating grouped items using `<div>` elements, ensure that `role="list"` is explicitly added to the parent container and `role="listitem"` to the child elements to restore proper semantic structure and assistive technology announcements.
