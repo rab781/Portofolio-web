@@ -5,6 +5,9 @@ import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Code, Zap, Sparkles } from "lucide-react";
 
+// ⚡ Bolt: Hoisted spring physics config outside component to prevent object re-allocation on every render
+const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
+
 export default function MagneticPortrait() {
     const ref = useRef<HTMLDivElement>(null);
     const rectRef = useRef<{ width: number; height: number; left: number; top: number } | null>(null);
@@ -16,7 +19,6 @@ export default function MagneticPortrait() {
     const y = useMotionValue(0);
 
     // Spring physics for smooth tilt
-    const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
     const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [7, -7]), springConfig);
     const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-7, 7]), springConfig);
 

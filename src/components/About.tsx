@@ -14,11 +14,14 @@ interface AboutProps {
   triggerAnimation?: boolean;
 }
 
+// ⚡ Bolt: Hoisted spring physics config outside component to prevent object re-allocation on every render
+const springConfig = { damping: 30, stiffness: 100 };
+
 // Helper for counting up numbers
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
+  const springValue = useSpring(motionValue, springConfig);
   const isInView = useInView(ref, { once: true, margin: "-10px" });
 
   useEffect(() => {

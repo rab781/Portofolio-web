@@ -3,6 +3,9 @@
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
+// ⚡ Bolt: Hoisted spring physics config outside component to prevent object re-allocation on every render
+const springConfig = { stiffness: 400, damping: 90 };
+
 export default function ScrollLine() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [svgHeight, setSvgHeight] = useState(0);
@@ -13,7 +16,7 @@ export default function ScrollLine() {
         offset: ["start center", "end end"]
     });
 
-    const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 });
+    const pathLength = useSpring(scrollYProgress, springConfig);
 
     // Hoist useTransform calls to top level — Rules of Hooks requirement
     const dotTop = useTransform(pathLength, [0, 1], ["0%", "100%"]);

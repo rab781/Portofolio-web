@@ -35,6 +35,13 @@ const experiences = [
     }
 ];
 
+// ⚡ Bolt: Hoisted spring physics config outside component to prevent object re-allocation on every render
+const springConfig = {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+};
+
 export default function Experience() {
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -44,11 +51,7 @@ export default function Experience() {
         offset: ["start center", "end center"]
     });
 
-    const scrollY = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    });
+    const scrollY = useSpring(scrollYProgress, springConfig);
 
     // Vertical line fills up
     const lineHeight = useTransform(scrollY, [0, 1], ["0%", "100%"]);
