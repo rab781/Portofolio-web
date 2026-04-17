@@ -130,11 +130,11 @@ const MarqueeRow = ({
   );
 };
 
-function Skills() {
-  const row1 = getSkillsFromCategory([0]); // Languages
-  const row2 = getSkillsFromCategory([1]); // Data Science
-  const row3 = getSkillsFromCategory([2, 3]); // Web + Tools
+const row1 = getSkillsFromCategory([0]); // Languages
+const row2 = getSkillsFromCategory([1]); // Data Science
+const row3 = getSkillsFromCategory([2, 3]); // Web + Tools
 
+function Skills() {
   return (
     <section className="relative py-32 overflow-hidden">
       {/* Background Elements */}
