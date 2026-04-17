@@ -3,13 +3,15 @@
 import { useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
+// ⚡ Bolt: Hoisted spring physics config outside component to prevent object re-allocation on every render
+const springConfig = { damping: 25, stiffness: 700 };
+
 export default function CustomCursor() {
     // ⚡ Bolt: Use motion values for scale to avoid React re-renders on hover
     const cursorX = useMotionValue(-100);
     const cursorY = useMotionValue(-100);
     const scale = useMotionValue(1);
 
-    const springConfig = { damping: 25, stiffness: 700 };
     const cursorXSpring = useSpring(cursorX, springConfig);
     const cursorYSpring = useSpring(cursorY, springConfig);
     const scaleSpring = useSpring(scale, springConfig);
