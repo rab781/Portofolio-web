@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
     // Here you would typically send an email using a service like SendGrid, Mailgun, etc.
     // For now, we'll simulate a successful processing
-    console.log('Received contact form submission:', { name, email, subject, message });
+    console.log('Received contact form submission successfully.');
 
     return NextResponse.json(
       { message: 'Message sent successfully' },
