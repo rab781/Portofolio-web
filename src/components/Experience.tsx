@@ -1,8 +1,12 @@
 'use client';
 
-import { useScroll, useSpring, motion, useTransform } from "framer-motion";
+import { useScroll, useSpring, motion, useTransform, UseScrollOptions } from "framer-motion";
 import { Briefcase } from "lucide-react";
 import { useRef } from "react";
+
+// ⚡ Bolt: Hoisted static scroll offset configuration outside of the component body
+// to prevent unnecessary array allocations on every render tick during scrolling.
+const SCROLL_OFFSET: UseScrollOptions["offset"] = ["start center", "end center"];
 
 const experiences = [
     {
@@ -41,7 +45,7 @@ export default function Experience() {
     // Scroll progress specifically for this container
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end center"]
+        offset: SCROLL_OFFSET
     });
 
     const scrollY = useSpring(scrollYProgress, {
@@ -91,7 +95,7 @@ export default function Experience() {
 
                     <div className="space-y-24" role="list">
                         {experiences.map((exp, idx) => (
-                            <div key={idx} role="listitem" className={`relative flex flex-col md:flex-row gap-8 md:gap-0 items-center justify-between group ${idx % 2 === 0 ? "md:flex-row-reverse" : ""
+                            <div key={`${exp.role}-${exp.period}`} role="listitem" className={`relative flex flex-col md:flex-row gap-8 md:gap-0 items-center justify-between group ${idx % 2 === 0 ? "md:flex-row-reverse" : ""
                                 }`}>
                                 {/* Timeline Node */}
                                 <div className="absolute left-[20px] md:left-[50%] top-0 md:-translate-x-1/2 w-3 h-3 z-20">
@@ -143,8 +147,8 @@ export default function Experience() {
                                         {/* Tags */}
                                         <div className={`flex flex-wrap gap-2 ${idx % 2 === 0 ? "md:justify-start" : "md:justify-end"
                                             }`}>
-                                            {exp.tags?.map((tag, tIdx) => (
-                                                <span key={tIdx} className="text-[10px] uppercase tracking-wider font-semibold text-gray-400 bg-gray-50 px-2 py-1 rounded-md">
+                                            {exp.tags?.map((tag) => (
+                                                <span key={tag} className="text-[10px] uppercase tracking-wider font-semibold text-gray-400 bg-gray-50 px-2 py-1 rounded-md">
                                                     {tag}
                                                 </span>
                                             ))}
