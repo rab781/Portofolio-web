@@ -10,7 +10,7 @@ Building a modern, accessible, and performant developer portfolio from scratch t
 
 ## Quick Start
 
-Get your portfolio running locally.
+You can get your portfolio running locally in just a few commands.
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
@@ -27,20 +27,20 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 - Node.js 18.17+
 - pnpm 8+
 
-1. Clone the repository and navigate into the directory:
+1. You clone the repository and navigate into the directory:
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
-cd portfolio-website
+cd Portofolio-web
 ```
 
-2. Install dependencies:
+2. You install dependencies:
 
 ```bash
 pnpm install
 ```
 
-3. Start the development server:
+3. You start the development server:
 
 ```bash
 pnpm dev
@@ -52,11 +52,11 @@ pnpm dev
 
 You update your personal details by modifying the components in the `src/components/` directory.
 
-- **Hero Section** (`src/components/HeroClient.tsx`): Change your name, titles, social links, and the animated text array.
-- **About Section** (`src/components/About.tsx`): Update your personal description, background, and avatar image.
+- **Hero Section** (`src/components/HeroClient.tsx`): You change your name, titles, social links, and the animated text array.
+- **About Section** (`src/components/About.tsx`): You update your personal description, background, and avatar image.
 - **Skills Section**:
-  - Content: Edit your skill categories and items in `src/data/skills.ts` (see the `skillCategories` export).
-  - Layout/Animation: Customize how skills are displayed and animated in `src/components/Skills.tsx`.
+  - Content: You edit your skill categories and items in `src/data/skills.ts` (see the `skillCategories` export).
+  - Layout/Animation: You customize how skills are displayed and animated in `src/components/Skills.tsx`.
 
 ### Adding Projects
 
@@ -88,10 +88,14 @@ You customize the visual appearance of your portfolio through standard configura
 
 The contact form in `src/components/Contact.tsx` logs submissions to the console by default. You make it functional by integrating a backend or email service.
 
-1. Create an API route in Next.js (`src/app/api/contact/route.ts`).
-2. Update the form submission handler to `POST` data to your new endpoint.
-3. Use a service like Resend or SendGrid to deliver the email.
+1. You create an API route in Next.js (`src/app/api/contact/route.ts`).
+2. You update the form submission handler to `POST` data to your new endpoint.
+3. You use a service like Resend or SendGrid to deliver the email.
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+MIT © [Portfolio Website Contributors](https://github.com/rab781)
