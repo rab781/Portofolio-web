@@ -9,6 +9,7 @@ function Contact() {
   const [copied, setCopied] = useState(false);
   const [modifierKey, setModifierKey] = useState('Ctrl');
   const [isMac, setIsMac] = useState(false);
+  const [messageLength, setMessageLength] = useState(0);
   const timeoutRef = useRef<NodeJS.Timeout>(null);
   const isMounted = useRef(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -174,6 +175,7 @@ function Contact() {
                   name="name"
                   autoComplete="name"
                   required
+                  maxLength={100}
                   aria-required="true"
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                   placeholder="John Doe"
@@ -189,6 +191,7 @@ function Contact() {
                   name="email"
                   autoComplete="email"
                   required
+                  maxLength={255}
                   aria-required="true"
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                   placeholder="john@example.com"
@@ -205,6 +208,7 @@ function Contact() {
                 id="subject"
                 name="subject"
                 required
+                maxLength={200}
                 aria-required="true"
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
                 placeholder="Project Inquiry"
@@ -212,15 +216,22 @@ function Contact() {
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2">
-                Message <span className="text-red-500" aria-hidden="true">*</span>
-              </label>
+              <div className="flex justify-between items-end mb-2">
+                <label htmlFor="message" className="block text-sm font-bold text-gray-700">
+                  Message <span className="text-red-500" aria-hidden="true">*</span>
+                </label>
+                <span className={`text-xs ${messageLength >= 4500 ? 'text-red-500 font-medium' : 'text-gray-500'}`} aria-live="polite">
+                  {messageLength}/5000
+                </span>
+              </div>
               <textarea
                 id="message"
                 name="message"
                 required
                 aria-required="true"
+                maxLength={5000}
                 rows={4}
+                onChange={(e) => setMessageLength(e.target.value.length)}
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all resize-none"
                 placeholder="Tell me about your project..."
               />
