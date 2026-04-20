@@ -1,16 +1,16 @@
 # Portfolio Website
 
-> A production-ready Next.js 15 developer portfolio template with TypeScript, Tailwind CSS, and Framer Motion.
+> After following this guide, you will have a production-ready Next.js 15 developer portfolio with TypeScript, Tailwind CSS, and Framer Motion deployed and showcasing your work.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Why This Exists
 
-Building a modern, accessible, and performant developer portfolio from scratch takes time away from what you actually want to showcase: your projects and skills. This template provides a pre-configured foundation with responsive design, dark mode, and smooth animations out of the box. You write your content, and the template handles the presentation.
+Building a modern, accessible, and performant developer portfolio from scratch takes time away from what you actually want to showcase: your projects and skills. This template solves the pain of manual configuration and layout building by providing a pre-configured foundation with responsive design, dark mode, and smooth animations out of the box. You write your content, and the template handles the presentation.
 
 ## Quick Start
 
-Get your portfolio running locally.
+Get your portfolio running locally in under 5 minutes.
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
@@ -20,6 +20,8 @@ pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to see your site.
+
+> **Tip**: If you see `EACCES` errors during installation, ensure your node environment is configured correctly or try using `npx`. If `pnpm dev` fails with a port in use error, try `pnpm dev --port 3001`.
 
 ## Installation
 
@@ -86,7 +88,7 @@ You customize the visual appearance of your portfolio through standard configura
 
 ### Advanced Usage: Contact Form
 
-The contact form in `src/components/Contact.tsx` logs submissions to the console by default. You make it functional by integrating a backend or email service.
+The contact form in `src/components/Contact.tsx` logs submissions to the console by default. Connecting this to an actual email service has a few moving parts.
 
 1. Create an API route in Next.js (`src/app/api/contact/route.ts`).
 2. Update the form submission handler to `POST` data to your new endpoint.
@@ -94,4 +96,8 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to get started.
+
+## License
+
+MIT © [Portfolio Website](LICENSE)
