@@ -5,6 +5,10 @@ import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Code, Zap, Sparkles } from "lucide-react";
 
+// ⚡ Bolt: Hoisted static spring configuration object outside of the component body
+// to prevent unnecessary allocations on every render tick.
+const SPRING_CONFIG = { damping: 20, stiffness: 300, mass: 0.5 };
+
 export default function MagneticPortrait() {
     const ref = useRef<HTMLDivElement>(null);
     const rectRef = useRef<{ width: number; height: number; left: number; top: number } | null>(null);
@@ -15,18 +19,16 @@ export default function MagneticPortrait() {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
-    // Spring physics for smooth tilt
-    const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
-    const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [7, -7]), springConfig);
-    const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-7, 7]), springConfig);
+    const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [7, -7]), SPRING_CONFIG);
+    const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-7, 7]), SPRING_CONFIG);
 
     // Parallax for floating elements (move more than the card)
-    const floatX = useSpring(useTransform(x, [-0.5, 0.5], [-30, 30]), springConfig);
-    const floatY = useSpring(useTransform(y, [-0.5, 0.5], [-30, 30]), springConfig);
+    const floatX = useSpring(useTransform(x, [-0.5, 0.5], [-30, 30]), SPRING_CONFIG);
+    const floatY = useSpring(useTransform(y, [-0.5, 0.5], [-30, 30]), SPRING_CONFIG);
 
     // Background Parallax (moves opposite)
-    const bgX = useSpring(useTransform(x, [-0.5, 0.5], [20, -20]), springConfig);
-    const bgY = useSpring(useTransform(y, [-0.5, 0.5], [20, -20]), springConfig);
+    const bgX = useSpring(useTransform(x, [-0.5, 0.5], [20, -20]), SPRING_CONFIG);
+    const bgY = useSpring(useTransform(y, [-0.5, 0.5], [20, -20]), SPRING_CONFIG);
 
     // ⚡ Bolt: Use a ref to track whether a requestAnimationFrame is queued and store latest coords
     const ticking = useRef(false);
