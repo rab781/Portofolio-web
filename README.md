@@ -10,7 +10,7 @@ Building a modern, accessible, and performant developer portfolio from scratch t
 
 ## Quick Start
 
-Get your portfolio running locally.
+You can get your portfolio running locally in just a few minutes.
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
@@ -27,20 +27,22 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 - Node.js 18.17+
 - pnpm 8+
 
-1. Clone the repository and navigate into the directory:
+First, clone the repository and navigate into the directory:
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
 cd portfolio-website
 ```
 
-2. Install dependencies:
+Then, install dependencies:
 
 ```bash
 pnpm install
 ```
 
-3. Start the development server:
+If you see an error like `ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE`, make sure you are using pnpm 8+ and not npm or yarn.
+
+Finally, start the development server:
 
 ```bash
 pnpm dev
@@ -88,10 +90,14 @@ You customize the visual appearance of your portfolio through standard configura
 
 The contact form in `src/components/Contact.tsx` logs submissions to the console by default. You make it functional by integrating a backend or email service.
 
-1. Create an API route in Next.js (`src/app/api/contact/route.ts`).
+1. Create an API route in Next.js (`src/app/api/contact/route.ts`). (This route is already created for you).
 2. Update the form submission handler to `POST` data to your new endpoint.
 3. Use a service like Resend or SendGrid to deliver the email.
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+Contributions, issues, and feature requests are welcome. Feel free to check the issues page. See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
+
+## License
+
+MIT © [Raihan Rabbani](https://github.com/rab781)
