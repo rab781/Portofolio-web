@@ -1,0 +1,4 @@
+💡 What: Hoisted static Framer Motion configuration objects (`useScroll` `offset`, `SPRING_CONFIG`) outside of component bodies in `ScrollLine.tsx`, `CustomCursor.tsx`, `MagneticPortrait.tsx`, and `About.tsx`.
+🎯 Why: React re-allocates object literals defined inline on every render cycle. When attached to Framer Motion hooks like `useSpring` and `useScroll` that process high-frequency events (scrolling, mouse movement), this causes unnecessary garbage collection pressure and internal referential equality checks to fail.
+📊 Impact: Reduces memory allocation and GC pauses during high-frequency interaction loops (scroll/mousemove), maintaining smoother 60fps animations.
+🔬 Measurement: Verify stable memory footprint during scroll/hover using Chrome DevTools Performance Profiler.
