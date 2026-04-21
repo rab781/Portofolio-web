@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Barlow_Condensed } from "next/font/google";
+import BackToTop from "@/components/BackToTop";
 import CustomCursor from "@/components/CustomCursor";
 import GradientMesh from "@/components/GradientMesh";
 import SkipLink from "@/components/SkipLink";
@@ -46,6 +47,7 @@ export default function RootLayout({
         <GradientMesh />
         {/* ScrollToTop is rendered inside HeroClient — loads with client bundle only */}
         {children}
+        <BackToTop />
       </body>
     </html>
   );
