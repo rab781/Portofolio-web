@@ -78,6 +78,7 @@ const MarqueeRow = ({
         No React render loop, no JS overhead
       */}
       <div
+        role="list"
         className="flex gap-4 sm:gap-6 whitespace-nowrap pl-4 w-max hover:[animation-play-state:paused]"
         style={{
           animation: `marquee-${direction} ${speed}s linear infinite`
@@ -86,6 +87,7 @@ const MarqueeRow = ({
         {duplicatedSkills.map((skill, idx) => (
           <div
             key={`${skill.name}-${idx}`}
+            role="listitem"
             className="relative group/card flex flex-col items-center justify-center w-[160px] h-[160px] sm:w-[180px] sm:h-[180px] rounded-2xl bg-[#D4D4D4] backdrop-blur-md border border-gray-200/60 shadow-sm hover:shadow-lg hover:bg-white hover:border-gray-200 hover:scale-105 transition-all duration-500 ease-out cursor-default overflow-hidden"
           >
             {/* Subtle Gradient Spot */}
