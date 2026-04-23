@@ -94,4 +94,8 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to set up the project locally, run tests, and submit pull requests.
+
+## License
+
+MIT © [Mohammad Raihan Rabbani](https://github.com/rab781)
