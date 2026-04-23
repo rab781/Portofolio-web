@@ -29,3 +29,6 @@
 ## 2026-04-10 - Optimizing Array allocations in animation loops
 **Learning:** In high-frequency React animation loops (e.g., `setInterval` for a text scramble effect), dynamically managing index visibility using a `Set` introduces unnecessary memory allocations on every tick.
 **Action:** Replace `Set`-based indexing with a numeric tracker (e.g., `revealedCount`) and a pre-calculated mapping array (`Int32Array`). This allows for O(1) integer comparisons during map iterations instead of allocating new objects and iterating over Sets during rapid animation frames.
+## 2026-04-23 - Hoisting static object configurations for Framer Motion hooks
+**Learning:** When using Framer Motion hooks like `useSpring` or `useScroll`, providing inline object literals (e.g. `{ stiffness: 400, damping: 90 }`) forces React to allocate a new object reference on every render. During rapid updates or scrolling, this creates significant garbage collection pressure and can trigger unnecessary internal hook re-evaluations.
+**Action:** Always hoist static Framer Motion configuration objects outside the component body (e.g. `const SPRING_CONFIG = { ... }`) to maintain referential equality and prevent redundant object allocations on every render tick.
