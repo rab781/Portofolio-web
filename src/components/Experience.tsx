@@ -8,6 +8,14 @@ import { useRef } from "react";
 // to prevent unnecessary array allocations on every render tick during scrolling.
 const SCROLL_OFFSET: UseScrollOptions["offset"] = ["start center", "end center"];
 
+// ⚡ Bolt: Hoisted static spring configuration object outside of the component body
+// to prevent unnecessary object allocations on every render tick.
+const SPRING_CONFIG = {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+};
+
 const experiences = [
     {
         role: "Head of Practicum Assistant Division",
@@ -48,11 +56,7 @@ export default function Experience() {
         offset: SCROLL_OFFSET
     });
 
-    const scrollY = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    });
+    const scrollY = useSpring(scrollYProgress, SPRING_CONFIG);
 
     // Vertical line fills up
     const lineHeight = useTransform(scrollY, [0, 1], ["0%", "100%"]);

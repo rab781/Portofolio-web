@@ -1,7 +1,15 @@
 'use client';
 
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, UseScrollOptions } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+
+// ⚡ Bolt: Hoisted static scroll offset configuration outside of the component body
+// to prevent unnecessary array allocations on every render tick during scrolling.
+const SCROLL_OFFSET: UseScrollOptions["offset"] = ["start center", "end end"];
+
+// ⚡ Bolt: Hoisted static spring configuration object outside of the component body
+// to prevent unnecessary object allocations on every render tick.
+const SPRING_CONFIG = { stiffness: 400, damping: 90 };
 
 export default function ScrollLine() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -10,10 +18,11 @@ export default function ScrollLine() {
     // Track scroll progress relative to this container
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end end"]
+        offset: SCROLL_OFFSET
     });
 
-    const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 });
+    // ⚡ Bolt: Hoisted static spring configuration object outside of the component body
+    const pathLength = useSpring(scrollYProgress, SPRING_CONFIG);
 
     // Hoist useTransform calls to top level — Rules of Hooks requirement
     const dotTop = useTransform(pathLength, [0, 1], ["0%", "100%"]);
