@@ -1,36 +1,34 @@
-# Portfolio Website
+# Portfolio Website Template
 
-> A production-ready Next.js 15 developer portfolio template with TypeScript, Tailwind CSS, and Framer Motion.
+> A production-ready Next.js 15 developer portfolio template that handles presentation so you focus on showcasing your work.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## Why This Exists
 
-Building a modern, accessible, and performant developer portfolio from scratch takes time away from what you actually want to showcase: your projects and skills. This template provides a pre-configured foundation with responsive design, dark mode, and smooth animations out of the box. You write your content, and the template handles the presentation.
+Building a modern, accessible, and performant developer portfolio from scratch takes time away from what you actually want to showcase: your projects and skills. This template gives you a pre-configured foundation with responsive design, dark mode, and smooth Framer Motion animations out of the box. You write your content, and the template handles the rest.
 
 ## Quick Start
 
-Get your portfolio running locally.
+Launch your portfolio locally in under a minute.
 
 ```bash
-git clone https://github.com/rab781/Portofolio-web.git
-cd Portofolio-web
+git clone https://github.com/rab781/Portofolio-web.git portfolio-website
+cd portfolio-website
 pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your site.
+Open [http://localhost:3000](http://localhost:3000) to see your live site.
 
 ## Installation
 
-**Prerequisites**:
-- Node.js 18.17+
-- pnpm 8+
+**Prerequisites**: Node.js 18.17+, pnpm 8+
 
 1. Clone the repository and navigate into the directory:
 
 ```bash
-git clone https://github.com/rab781/Portofolio-web.git
+git clone https://github.com/rab781/Portofolio-web.git portfolio-website
 cd portfolio-website
 ```
 
@@ -40,6 +38,8 @@ cd portfolio-website
 pnpm install
 ```
 
+> **Tip**: If `pnpm install` fails due to network timeouts, check your connection or registry settings. If you see `EACCES` errors, ensure your node environment permissions are correct.
+
 3. Start the development server:
 
 ```bash
@@ -48,7 +48,7 @@ pnpm dev
 
 ## Usage
 
-### Personal Information
+### Customize Personal Information
 
 You update your personal details by modifying the components in the `src/components/` directory.
 
@@ -58,7 +58,7 @@ You update your personal details by modifying the components in the `src/compone
   - Content: Edit your skill categories and items in `src/data/skills.ts` (see the `skillCategories` export).
   - Layout/Animation: Customize how skills are displayed and animated in `src/components/Skills.tsx`.
 
-### Adding Projects
+### Add Projects
 
 You showcase your work by updating the projects list in `src/components/Projects.tsx`.
 
@@ -74,7 +74,7 @@ export const projects = [
 ];
 ```
 
-### Configuration
+### Configure Appearance
 
 You customize the visual appearance of your portfolio through standard configuration files.
 
@@ -94,4 +94,8 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local development setup and contribution guidelines.
+
+## License
+
+MIT © [Mohammad Raihan Rabbani](LICENSE)
