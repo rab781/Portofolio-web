@@ -3,16 +3,18 @@
 import { useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
+// ⚡ Bolt: Hoisted static framer-motion config to prevent object re-allocation on every render
+const SPRING_CONFIG = { damping: 25, stiffness: 700 };
+
 export default function CustomCursor() {
     // ⚡ Bolt: Use motion values for scale to avoid React re-renders on hover
     const cursorX = useMotionValue(-100);
     const cursorY = useMotionValue(-100);
     const scale = useMotionValue(1);
 
-    const springConfig = { damping: 25, stiffness: 700 };
-    const cursorXSpring = useSpring(cursorX, springConfig);
-    const cursorYSpring = useSpring(cursorY, springConfig);
-    const scaleSpring = useSpring(scale, springConfig);
+    const cursorXSpring = useSpring(cursorX, SPRING_CONFIG);
+    const cursorYSpring = useSpring(cursorY, SPRING_CONFIG);
+    const scaleSpring = useSpring(scale, SPRING_CONFIG);
 
     useEffect(() => {
         let ticking = false;
