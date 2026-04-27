@@ -7,6 +7,11 @@ import { useRef } from "react";
 // ⚡ Bolt: Hoisted static scroll offset configuration outside of the component body
 // to prevent unnecessary array allocations on every render tick during scrolling.
 const SCROLL_OFFSET: UseScrollOptions["offset"] = ["start center", "end center"];
+const SPRING_CONFIG = {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+};
 
 const experiences = [
     {
@@ -48,11 +53,7 @@ export default function Experience() {
         offset: SCROLL_OFFSET
     });
 
-    const scrollY = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    });
+    const scrollY = useSpring(scrollYProgress, SPRING_CONFIG);
 
     // Vertical line fills up
     const lineHeight = useTransform(scrollY, [0, 1], ["0%", "100%"]);

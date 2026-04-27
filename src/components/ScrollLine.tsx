@@ -3,6 +3,8 @@
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
+const SPRING_CONFIG = { stiffness: 400, damping: 90 };
+
 export default function ScrollLine() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [svgHeight, setSvgHeight] = useState(0);
@@ -13,7 +15,7 @@ export default function ScrollLine() {
         offset: ["start center", "end end"]
     });
 
-    const pathLength = useSpring(scrollYProgress, { stiffness: 400, damping: 90 });
+    const pathLength = useSpring(scrollYProgress, SPRING_CONFIG);
 
     // Hoist useTransform calls to top level — Rules of Hooks requirement
     const dotTop = useTransform(pathLength, [0, 1], ["0%", "100%"]);
