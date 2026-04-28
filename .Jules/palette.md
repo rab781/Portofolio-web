@@ -28,3 +28,7 @@
 ## 2026-03-29 - [Form Input MaxLengths & Character Counters]
 **Learning:** Setting `maxLength` on form inputs (`<input>`, `<textarea>`) is an essential but often overlooked accessibility and UX feature. It prevents users from accidentally typing/pasting beyond database limits and provides immediate native browser feedback. Additionally, when enforcing high limits (like 5000 characters for a message), a visual character counter paired with `aria-live="polite"` gives users clear context about remaining space, preventing frustrating validation errors on submission.
 **Action:** Always add appropriate `maxLength` attributes to form fields to align with server/database limits. For long-form text areas, combine `maxLength` with a visual character counter and `aria-live="polite"` so screen reader users are also informed of their input progress.
+
+## 2026-03-31 - [Infinite Marquee Accessibility Redundancy]
+**Learning:** Infinite scrolling marquees built with CSS typically duplicate elements (`[...items, ...items]`) to create the seamless visual loop. For screen reader users, this results in the same list of items being announced twice, creating a redundant and confusing experience.
+**Action:** When implementing CSS-only infinite marquees, add `role="list"` to the scrolling container. For the original set of items, apply `role="listitem"`. For any duplicated items used purely for visual continuity, apply `aria-hidden="true"` so they are ignored by assistive technologies, ensuring a clean, single read-through of the content.
