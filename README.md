@@ -40,6 +40,8 @@ cd portfolio-website
 pnpm install
 ```
 
+> **Note**: If `pnpm install` fails due to network timeouts, retry the command, check your firewall settings, or consider switching to a different network. Ensure you have the correct Node.js and pnpm versions before proceeding.
+
 3. Start the development server:
 
 ```bash
@@ -74,7 +76,15 @@ export const projects = [
 ];
 ```
 
-### Configuration
+### Advanced Usage: Contact Form
+
+The contact form in `src/components/Contact.tsx` logs submissions to the console by default. You make it functional by integrating a backend or email service.
+
+1. Create an API route in Next.js (`src/app/api/contact/route.ts`).
+2. Update the form submission handler to `POST` data to your new endpoint.
+3. Use a service like Resend or SendGrid to deliver the email.
+
+## Configuration
 
 You customize the visual appearance of your portfolio through standard configuration files.
 
@@ -84,14 +94,10 @@ You customize the visual appearance of your portfolio through standard configura
 | `src/app/globals.css` | Add global CSS variables and base styles |
 | `src/app/layout.tsx` | Configure SEO metadata and change fonts |
 
-### Advanced Usage: Contact Form
-
-The contact form in `src/components/Contact.tsx` logs submissions to the console by default. You make it functional by integrating a backend or email service.
-
-1. Create an API route in Next.js (`src/app/api/contact/route.ts`).
-2. Update the form submission handler to `POST` data to your new endpoint.
-3. Use a service like Resend or SendGrid to deliver the email.
-
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+Contributions, issues, and feature requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to get started.
+
+## License
+
+MIT © [Mohammad Raihan Rabbani](https://github.com/rab781)
