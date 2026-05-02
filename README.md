@@ -84,7 +84,7 @@ You customize the visual appearance of your portfolio through standard configura
 | `src/app/globals.css` | Add global CSS variables and base styles |
 | `src/app/layout.tsx` | Configure SEO metadata and change fonts |
 
-### Advanced Usage: Contact Form
+### Advanced Usage
 
 The contact form in `src/components/Contact.tsx` logs submissions to the console by default. You make it functional by integrating a backend or email service.
 
@@ -94,4 +94,8 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+MIT © [Mohammad Raihan Rabbani](https://github.com/rab781)
