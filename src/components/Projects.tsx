@@ -17,10 +17,11 @@ function Projects() {
         </p>
       </div>
 
-      <div className="space-y-12">
+      <div className="space-y-12" role="list">
         {displayedProjects.map((project, index) => (
           <div
             key={project.id}
+            role="listitem"
             className="sticky top-24 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col md:flex-row h-auto md:h-[500px] transition-all duration-300"
             style={{
               top: `${6 + (index * 1.5)}rem`, // Stacking offset
@@ -43,10 +44,11 @@ function Projects() {
                   {project.subtitle}
                 </p>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2" role="list" aria-label="Technologies used">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
+                      role="listitem"
                       className="px-3 py-1 text-sm font-medium text-gray-600 bg-gray-50 rounded"
                     >
                       {tech}
