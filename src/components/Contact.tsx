@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, memo, useEffect, useRef } from "react";
+import React, { useState, memo, useEffect, useRef } from "react";
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Loader2, Copy, Check, AlertCircle, ArrowUpRight } from "lucide-react";
 
 function Contact() {
@@ -9,7 +9,8 @@ function Contact() {
   const [copied, setCopied] = useState(false);
   const [modifierKey, setModifierKey] = useState('Ctrl');
   const [isMac, setIsMac] = useState(false);
-  const [messageLength, setMessageLength] = useState(0);
+  // messageLength is now handled by TextareaWithCounter
+  const textareaRef = useRef<{ resetCount: () => void }>(null);
   const timeoutRef = useRef<NodeJS.Timeout>(null);
   const isMounted = useRef(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -70,7 +71,9 @@ function Contact() {
 
       if (response.ok) {
         formRef.current?.reset();
-        setMessageLength(0);
+        if (textareaRef.current) {
+          textareaRef.current.resetCount();
+        }
         setSubmitStatus('success');
       } else {
         setSubmitStatus('error');
@@ -216,27 +219,7 @@ function Contact() {
               />
             </div>
 
-            <div>
-              <div className="flex justify-between items-end mb-2">
-                <label htmlFor="message" className="block text-sm font-bold text-gray-700">
-                  Message <span className="text-red-500" aria-hidden="true">*</span>
-                </label>
-                <span className={`text-xs ${messageLength > 4800 ? 'text-red-500' : 'text-gray-400'}`} aria-live="polite">
-                  {messageLength}/5000
-                </span>
-              </div>
-              <textarea
-                id="message"
-                name="message"
-                required
-                aria-required="true"
-                maxLength={5000}
-                onChange={(e) => setMessageLength(e.target.value.length)}
-                rows={4}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all resize-none"
-                placeholder="Tell me about your project..."
-              />
-            </div>
+            <TextareaWithCounter ref={textareaRef} />
 
             <button
               type="submit"
@@ -348,5 +331,40 @@ function Contact() {
     </div>
   );
 }
+
+// ⚡ Bolt: Extracted Textarea into a standalone component to prevent the entire Contact
+// form from re-rendering on every keystroke.
+const TextareaWithCounter = memo(React.forwardRef<{ resetCount: () => void }>((props, ref) => {
+  const [messageLength, setMessageLength] = useState(0);
+
+  React.useImperativeHandle(ref, () => ({
+    resetCount: () => setMessageLength(0)
+  }));
+TextareaWithCounter.displayName = "TextareaWithCounter";
+
+  return (
+    <div>
+      <div className="flex justify-between items-end mb-2">
+        <label htmlFor="message" className="block text-sm font-bold text-gray-700">
+          Message <span className="text-red-500" aria-hidden="true">*</span>
+        </label>
+        <span className={`text-xs ${messageLength > 4800 ? 'text-red-500' : 'text-gray-400'}`} aria-live="polite">
+          {messageLength}/5000
+        </span>
+      </div>
+      <textarea
+        id="message"
+        name="message"
+        required
+        aria-required="true"
+        maxLength={5000}
+        onChange={(e) => setMessageLength(e.target.value.length)}
+        rows={4}
+        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all resize-none"
+        placeholder="Tell me about your project..."
+      />
+    </div>
+  );
+}));
 
 export default memo(Contact);
