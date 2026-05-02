@@ -28,3 +28,7 @@
 ## 2026-03-29 - [Form Input MaxLengths & Character Counters]
 **Learning:** Setting `maxLength` on form inputs (`<input>`, `<textarea>`) is an essential but often overlooked accessibility and UX feature. It prevents users from accidentally typing/pasting beyond database limits and provides immediate native browser feedback. Additionally, when enforcing high limits (like 5000 characters for a message), a visual character counter paired with `aria-live="polite"` gives users clear context about remaining space, preventing frustrating validation errors on submission.
 **Action:** Always add appropriate `maxLength` attributes to form fields to align with server/database limits. For long-form text areas, combine `maxLength` with a visual character counter and `aria-live="polite"` so screen reader users are also informed of their input progress.
+
+## 2026-05-18 - Actionable Form Error Fallbacks
+**Learning:** Generic error messages (e.g., "Something went wrong") leave users stranded when backend submissions fail (e.g., API timeouts or network errors). Providing an immediate, alternative path for contact is critical for maintaining user trust and preventing lost leads during outages.
+**Action:** Always include a direct `mailto:` fallback link within form error states, ensuring the user can bypass the broken mechanism and still complete their intended action without frustration.

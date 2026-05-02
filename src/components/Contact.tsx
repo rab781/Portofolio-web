@@ -282,10 +282,18 @@ function Contact() {
               <div
                 role="alert"
                 aria-live="assertive"
-                className="mt-4 p-4 bg-red-50 text-red-800 rounded-lg flex items-center animate-in fade-in slide-in-from-bottom-2 border border-red-100"
+                className="mt-4 p-4 bg-red-50 text-red-800 rounded-lg flex items-start animate-in fade-in slide-in-from-bottom-2 border border-red-100"
               >
-                <AlertCircle className="w-5 h-5 mr-2 shrink-0" />
-                <span>Something went wrong. Please try again later.</span>
+                <AlertCircle className="w-5 h-5 mr-3 shrink-0 mt-0.5" />
+                <div className="flex flex-col">
+                  <span className="font-semibold">Something went wrong.</span>
+                  <span className="text-sm mt-1">
+                    Please try again or email me directly at{' '}
+                    <a href="mailto:raihanrabani199@gmail.com" className="font-bold underline hover:text-red-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 rounded-sm">
+                      raihanrabani199@gmail.com
+                    </a>
+                  </span>
+                </div>
               </div>
             )}
           </form>
