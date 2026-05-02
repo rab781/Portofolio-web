@@ -32,3 +32,6 @@
 ## 2025-03-31 - [Accessible CSS Infinite Marquees]
 **Learning:** When implementing CSS-only infinite marquees that require duplicating array items for visual continuity (e.g. `[...skills, ...skills]`), screen readers will announce the duplicated list items twice, creating a poor, repetitive user experience. Since visual layout requires generic containers like `<div>`, native list semantics are also often lost.
 **Action:** When creating infinite scrolling marquees, restore list semantics by adding `role="list"` to the parent container and `role="listitem"` to the child elements. Furthermore, conditionally apply `aria-hidden="true"` to any duplicated items (e.g. `idx >= originalList.length`) so screen readers only announce the unique items once while visual continuity is preserved.
+## 2026-05-18 - Actionable Form Error Fallbacks
+**Learning:** Generic error messages (e.g., "Something went wrong") leave users stranded when backend submissions fail (e.g., API timeouts or network errors). Providing an immediate, alternative path for contact is critical for maintaining user trust and preventing lost leads during outages.
+**Action:** Always include a direct `mailto:` fallback link within form error states, ensuring the user can bypass the broken mechanism and still complete their intended action without frustration.

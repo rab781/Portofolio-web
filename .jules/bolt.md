@@ -32,3 +32,7 @@
 ## 2025-03-05 - Hoisting Framer Motion springConfig Objects
 **Learning:** When using Framer Motion hooks like `useSpring` inside components, defining configuration objects (like `const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };`) inline causes a new object allocation on every render tick. This can trigger unnecessary internal hook re-evaluations and increase garbage collection pressure during rapid scroll or hover events. A micro-benchmark showed hoisted configs are ~50% faster.
 **Action:** Always hoist static Framer Motion configuration objects outside the component body or wrap them in `useMemo` to maintain referential equality and avoid unnecessary allocations.
+
+## 2026-05-02 - Extracting High-Frequency Inputs to Prevent Full Form Re-Renders
+**Learning:** Updating a character counter (`messageLength`) state on every keystroke inside a large, complex form component (like `Contact.tsx`) causes the entire form to re-render. Attempting to bypass React by manually mutating the DOM with a `useRef` causes synchronization bugs, as any unrelated React re-render will overwrite the manual DOM mutations.
+**Action:** Always extract high-frequency inputs and their localized state (like a textarea and its character counter) into a standalone, memoized child component. Use `useImperativeHandle` with `forwardRef` to allow the parent to safely trigger state resets upon successful form submission.
