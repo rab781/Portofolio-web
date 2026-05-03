@@ -35,3 +35,7 @@
 ## 2026-05-18 - Actionable Form Error Fallbacks
 **Learning:** Generic error messages (e.g., "Something went wrong") leave users stranded when backend submissions fail (e.g., API timeouts or network errors). Providing an immediate, alternative path for contact is critical for maintaining user trust and preventing lost leads during outages.
 **Action:** Always include a direct `mailto:` fallback link within form error states, ensuring the user can bypass the broken mechanism and still complete their intended action without frustration.
+
+## 2026-10-24 - [Dynamic Aria-Labels for Toggle Buttons]
+**Learning:** When dealing with toggle buttons (like mobile hamburger menus), using a generic aria-label="Toggle menu" is less descriptive than explicitly stating the current action (e.g., aria-label={isOpen ? "Close menu" : "Open menu"}). This gives screen reader users clearer expectations of what pressing the button will do.
+**Action:** Always use dynamic aria-labels that reflect the current intended action for toggle state buttons, and ensure decorative icons within the button have aria-hidden="true".
