@@ -14,11 +14,15 @@ interface AboutProps {
   triggerAnimation?: boolean;
 }
 
+// ⚡ Bolt: Extract static springConfig object outside the component body
+// to prevent unnecessary object allocation on every render.
+const SPRING_CONFIG = { damping: 30, stiffness: 100 };
+
 // Helper for counting up numbers
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
+  const springValue = useSpring(motionValue, SPRING_CONFIG);
   const isInView = useInView(ref, { once: true, margin: "-10px" });
 
   useEffect(() => {
