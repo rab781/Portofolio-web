@@ -22,7 +22,7 @@ describe('Navigation Mobile Accessibility', () => {
   it('toggles mobile menu and sets accessibility attributes', () => {
     const { container } = render(<Navigation />);
 
-    const toggleButton = screen.getByLabelText(/toggle menu/i);
+    const toggleButton = screen.getByLabelText(/open menu/i);
 
     // Initial state: menu closed
     expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
@@ -33,6 +33,7 @@ describe('Navigation Mobile Accessibility', () => {
     fireEvent.click(toggleButton);
 
     // State: menu open
+    expect(toggleButton).toHaveAttribute('aria-label', 'Close menu');
     expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
     expect(document.body.style.overflow).toBe('hidden');
     expect(toggleButton).toHaveAttribute('aria-controls', 'mobile-menu');
@@ -49,7 +50,7 @@ describe('Navigation Mobile Accessibility', () => {
 
   it('closes on Escape key', () => {
     render(<Navigation />);
-    const toggleButton = screen.getByLabelText(/toggle menu/i);
+    const toggleButton = screen.getByLabelText(/open menu/i);
 
     fireEvent.click(toggleButton);
     expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
