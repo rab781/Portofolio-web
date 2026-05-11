@@ -104,13 +104,13 @@ function Navigation() {
             {/* Mobile menu button */}
             <div className="md:hidden">
               <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
                 className="text-gray-900 p-2 hover:bg-gray-100 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
-                aria-label="Toggle menu"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
               >
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
+                {isOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
               </button>
             </div>
           </div>
