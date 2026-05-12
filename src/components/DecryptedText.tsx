@@ -18,6 +18,13 @@ const styles = {
     }
 };
 
+// ⚡ Bolt: Hoist static observer options outside component to prevent re-allocation
+const OBSERVER_OPTIONS = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
 interface DecryptedTextProps {
     text: string;
     speed?: number;
@@ -195,13 +202,7 @@ export default function DecryptedText({
             });
         };
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        const observer = new IntersectionObserver(observerCallback, OBSERVER_OPTIONS);
         const currentRef = containerRef.current;
         if (currentRef) {
             observer.observe(currentRef);
