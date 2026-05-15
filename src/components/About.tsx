@@ -14,12 +14,15 @@ interface AboutProps {
   triggerAnimation?: boolean;
 }
 
+const SPRING_CONFIG = { damping: 30, stiffness: 100 };
+const IN_VIEW_CONFIG: Parameters<typeof useInView>[1] = { once: true, margin: "-10px" };
+
 // Helper for counting up numbers
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
-  const isInView = useInView(ref, { once: true, margin: "-10px" });
+  const springValue = useSpring(motionValue, SPRING_CONFIG);
+  const isInView = useInView(ref, IN_VIEW_CONFIG);
 
   useEffect(() => {
     if (isInView) {
