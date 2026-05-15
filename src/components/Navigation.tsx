@@ -13,6 +13,10 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
+const OBSERVER_CONFIG = {
+  rootMargin: "-150px 0px -50% 0px", // Approximate 'top 150px' logic
+};
+
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -50,9 +54,7 @@ function Navigation() {
           }
         });
       },
-      {
-        rootMargin: "-150px 0px -50% 0px", // Approximate 'top 150px' logic
-      }
+      OBSERVER_CONFIG
     );
 
     const sections = navLinks.map((link) => link.href.substring(1));
