@@ -93,7 +93,11 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
             {/* Carousel */}
             <div
                 ref={carouselRef}
-                className="flex gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing px-6 py-8 scroll-smooth"
+                role="region"
+                aria-roledescription="carousel"
+                aria-label="Certificates"
+                tabIndex={0}
+                className="flex gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing px-6 py-8 scroll-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-2xl"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
@@ -106,6 +110,9 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
                 {items.map((item, index) => (
                     <motion.div
                         key={index}
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label={`Slide ${index + 1} of ${items.length}`}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
