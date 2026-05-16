@@ -21,6 +21,8 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) to see your site.
 
+> **Tip**: If you see a "port already in use" error, kill any process on port 3000 by running `kill $(lsof -t -i :3000) 2>/dev/null || true` before starting the server.
+
 ## Installation
 
 **Prerequisites**:
@@ -31,7 +33,7 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
-cd portfolio-website
+cd Portofolio-web
 ```
 
 2. Install dependencies:
@@ -94,4 +96,8 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+See [LICENSE](LICENSE)
