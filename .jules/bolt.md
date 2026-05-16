@@ -36,3 +36,6 @@
 ## 2026-05-02 - Extracting High-Frequency Inputs to Prevent Full Form Re-Renders
 **Learning:** Updating a character counter (`messageLength`) state on every keystroke inside a large, complex form component (like `Contact.tsx`) causes the entire form to re-render. Attempting to bypass React by manually mutating the DOM with a `useRef` causes synchronization bugs, as any unrelated React re-render will overwrite the manual DOM mutations.
 **Action:** Always extract high-frequency inputs and their localized state (like a textarea and its character counter) into a standalone, memoized child component. Use `useImperativeHandle` with `forwardRef` to allow the parent to safely trigger state resets upon successful form submission.
+## 2024-05-16 - Hoisting IntersectionObserver Config Objects
+**Learning:** Defining static configuration objects for `IntersectionObserver` directly inline inside `useEffect` or other hooks causes unnecessary garbage collection and repeated object allocation each time the effect runs or the component re-renders.
+**Action:** Always hoist invariant configuration objects, such as `observerOptions` and `{ rootMargin: "..." }` used for `IntersectionObserver`, into static constants outside the component body to reduce memory overhead and garbage collection cycles.
