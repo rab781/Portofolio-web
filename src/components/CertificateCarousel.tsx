@@ -102,6 +102,10 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleMouseUp}
                 onTouchMove={handleTouchMove}
+                tabIndex={0}
+                role="region"
+                aria-roledescription="carousel"
+                aria-label="Certificates carousel"
             >
                 {items.map((item, index) => (
                     <motion.div
@@ -111,6 +115,9 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.1 }}
                         className="flex-shrink-0 group"
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label={`Slide ${index + 1} of ${items.length}`}
                     >
                         <div className="relative w-[320px] md:w-[400px] aspect-[4/3] rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
                             <Image
