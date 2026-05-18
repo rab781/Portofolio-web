@@ -13,6 +13,11 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
+// ⚡ Bolt: Hoist observer options to avoid reallocation during renders
+const OBSERVER_OPTIONS = {
+  rootMargin: "-150px 0px -50% 0px", // Approximate 'top 150px' logic
+};
+
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -50,9 +55,7 @@ function Navigation() {
           }
         });
       },
-      {
-        rootMargin: "-150px 0px -50% 0px", // Approximate 'top 150px' logic
-      }
+      OBSERVER_OPTIONS
     );
 
     const sections = navLinks.map((link) => link.href.substring(1));
