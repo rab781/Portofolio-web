@@ -1,0 +1,3 @@
+## 2025-05-19 - [Accessible Carousels]
+**Learning:** Custom scrollable carousels are frequently inaccessible to keyboard users and screen readers if they lack focusability and explicit ARIA roles.
+**Action:** Always add `tabIndex={0}`, `role="region"`, `aria-roledescription="carousel"`, and a descriptive `aria-label` to the scroll container, and `role="group"`, `aria-roledescription="slide"`, and an `aria-label` to the individual carousel items to ensure full accessibility.
