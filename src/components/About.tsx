@@ -9,6 +9,9 @@ import CircularBadge from "./CircularBadge";
 // Avoids bundling portrait logic when About is rendered without the image (main page)
 const MagneticPortrait = dynamic(() => import("./MagneticPortrait"), { ssr: false });
 
+const NUMBER_SPRING_CONFIG = { damping: 30, stiffness: 100 };
+const NUMBER_IN_VIEW_CONFIG: Parameters<typeof useInView>[1] = { once: true, margin: "-10px" };
+
 interface AboutProps {
   hideImage?: boolean;
   triggerAnimation?: boolean;
@@ -18,8 +21,8 @@ interface AboutProps {
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
-  const isInView = useInView(ref, { once: true, margin: "-10px" });
+  const springValue = useSpring(motionValue, NUMBER_SPRING_CONFIG);
+  const isInView = useInView(ref, NUMBER_IN_VIEW_CONFIG);
 
   useEffect(() => {
     if (isInView) {

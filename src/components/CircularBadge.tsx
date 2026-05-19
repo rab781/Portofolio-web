@@ -3,6 +3,8 @@
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 
+const IN_VIEW_CONFIG: Parameters<typeof useInView>[1] = { margin: "0px 0px -50px 0px" };
+
 interface CircularTextProps {
     text: string;
     radius?: number;
@@ -15,7 +17,7 @@ export default function CircularText({
     className = ""
 }: CircularTextProps) {
     const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, { margin: "0px 0px -50px 0px" });
+    const isInView = useInView(ref, IN_VIEW_CONFIG);
 
     return (
         <div

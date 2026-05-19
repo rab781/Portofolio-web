@@ -33,6 +33,12 @@ interface DecryptedTextProps {
     [key: string]: string | number | boolean | undefined;
 }
 
+const OBSERVER_OPTIONS = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
 export default function DecryptedText({
     text,
     speed = 50,
@@ -195,13 +201,7 @@ export default function DecryptedText({
             });
         };
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        const observer = new IntersectionObserver(observerCallback, OBSERVER_OPTIONS);
         const currentRef = containerRef.current;
         if (currentRef) {
             observer.observe(currentRef);
