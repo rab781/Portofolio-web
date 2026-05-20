@@ -4,6 +4,12 @@ import { useState, useEffect, memo } from "react";
 import { Menu, X } from "lucide-react";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 
+// ⚡ Bolt: Hoisted static IntersectionObserver options outside of component
+// to prevent unnecessary re-allocation on every render/execution.
+const OBSERVER_OPTIONS = {
+  rootMargin: "-150px 0px -50% 0px", // Approximate 'top 150px' logic
+};
+
 const navLinks = [
   { href: "#home", label: "Home" },
   { href: "#about", label: "About" },
@@ -50,9 +56,7 @@ function Navigation() {
           }
         });
       },
-      {
-        rootMargin: "-150px 0px -50% 0px", // Approximate 'top 150px' logic
-      }
+      OBSERVER_OPTIONS
     );
 
     const sections = navLinks.map((link) => link.href.substring(1));
