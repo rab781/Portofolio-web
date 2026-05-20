@@ -1,6 +1,14 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
+// ⚡ Bolt: Hoisted static IntersectionObserver options outside of component
+// to prevent unnecessary re-allocation on every render/execution.
+const OBSERVER_OPTIONS = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
 const styles = {
     wrapper: {
         display: 'inline-block',
@@ -195,13 +203,7 @@ export default function DecryptedText({
             });
         };
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        const observer = new IntersectionObserver(observerCallback, OBSERVER_OPTIONS);
         const currentRef = containerRef.current;
         if (currentRef) {
             observer.observe(currentRef);
