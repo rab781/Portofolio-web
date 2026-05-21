@@ -93,7 +93,7 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
             {/* Carousel */}
             <div
                 ref={carouselRef}
-                className="flex gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing px-6 py-8 scroll-smooth"
+                className="flex gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing px-6 py-8 scroll-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
@@ -102,6 +102,10 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleMouseUp}
                 onTouchMove={handleTouchMove}
+                tabIndex={0}
+                role="region"
+                aria-roledescription="carousel"
+                aria-label="Certificates carousel"
             >
                 {items.map((item, index) => (
                     <motion.div
@@ -111,6 +115,9 @@ export default function CertificateCarousel({ items }: CertificateCarouselProps)
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.1 }}
                         className="flex-shrink-0 group"
+                        role="group"
+                        aria-roledescription="slide"
+                        aria-label={`Certificate ${index + 1} of ${items.length}: ${item.text}`}
                     >
                         <div className="relative w-[320px] md:w-[400px] aspect-[4/3] rounded-2xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
                             <Image
