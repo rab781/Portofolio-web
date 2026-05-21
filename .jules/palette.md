@@ -1,0 +1,3 @@
+## 2025-02-23 - Custom Scrollable Carousels Accessibility
+**Learning:** Custom scrollable components (like `CertificateCarousel.tsx`) often lack native keyboard focusability out-of-the-box. When they use `overflow-x-auto` to create a scroll container, keyboard-only users cannot scroll through them without explicitly adding `tabIndex={0}`. Furthermore, they need specific ARIA roles to be understood as interactive lists of items by screen readers.
+**Action:** Always add `tabIndex={0}`, `role="region"`, `aria-roledescription="carousel"`, and an `aria-label` to custom scroll containers. Add `role="group"`, `aria-roledescription="slide"`, and descriptive `aria-label`s to the individual items inside the carousel.
