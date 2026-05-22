@@ -1,0 +1,3 @@
+## 2025-05-22 - Add ARIA roles to custom Certificate Carousel
+**Learning:** For custom draggable carousels built with divs, users relying on screen readers or keyboards are unable to understand the structure or interact with it effectively. Adding `role="region"`, `aria-roledescription="carousel"`, `aria-label="Certificates Carousel"`, and `tabIndex={0}` to the container, along with `role="group"`, `aria-roledescription="slide"`, and `aria-label="<index> of <total>"` on items makes it accessible.
+**Action:** Always verify custom draggable carousels have proper ARIA attributes and focus styles applied to the container and individual items.
