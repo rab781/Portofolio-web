@@ -8,7 +8,8 @@ jest.mock('next/image', () => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: (props: any) => {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} alt={props.alt} data-testid="project-image" />;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { fill, ...rest } = props; return <img {...rest} alt={props.alt} data-testid="project-image" />;
   },
 }));
 

@@ -36,3 +36,6 @@
 ## 2026-05-02 - Extracting High-Frequency Inputs to Prevent Full Form Re-Renders
 **Learning:** Updating a character counter (`messageLength`) state on every keystroke inside a large, complex form component (like `Contact.tsx`) causes the entire form to re-render. Attempting to bypass React by manually mutating the DOM with a `useRef` causes synchronization bugs, as any unrelated React re-render will overwrite the manual DOM mutations.
 **Action:** Always extract high-frequency inputs and their localized state (like a textarea and its character counter) into a standalone, memoized child component. Use `useImperativeHandle` with `forwardRef` to allow the parent to safely trigger state resets upon successful form submission.
+## 2025-05-24 - Wrapped DecryptedText with React.memo()
+**Learning:** In high-frequency animation components (e.g. `DecryptedText.tsx` which runs `setInterval` updating state rapidly), if the component is used in a parent like `Preloader.tsx` without memoization, there's a risk of the parent context rendering unnecessarily, or the component itself rerendering if passed different props despite the same primitive values. Wrapping heavy animation components with `React.memo` isolates them.
+**Action:** Wrap animation-heavy components using `setInterval` with `React.memo()` to reduce DOM reconciliation overhead.

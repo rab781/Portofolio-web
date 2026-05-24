@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useMemo } from 'react';
+import { useEffect, useState, useRef, useMemo, memo } from 'react';
 import { motion } from 'framer-motion';
 
 const styles = {
@@ -33,7 +33,9 @@ interface DecryptedTextProps {
     [key: string]: string | number | boolean | undefined;
 }
 
-export default function DecryptedText({
+// ⚡ Bolt: Wrapped animation-heavy component with React.memo() to isolate
+// high-frequency setInterval updates from parent render cycles and reduce DOM reconciliation overhead.
+const DecryptedText = memo(function DecryptedText({
     text,
     speed = 50,
     maxIterations = 10,
@@ -248,4 +250,8 @@ export default function DecryptedText({
             </span>
         </motion.span>
     );
-}
+});
+
+DecryptedText.displayName = 'DecryptedText';
+
+export default DecryptedText;
