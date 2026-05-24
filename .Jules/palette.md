@@ -35,3 +35,7 @@
 ## 2026-05-18 - Actionable Form Error Fallbacks
 **Learning:** Generic error messages (e.g., "Something went wrong") leave users stranded when backend submissions fail (e.g., API timeouts or network errors). Providing an immediate, alternative path for contact is critical for maintaining user trust and preventing lost leads during outages.
 **Action:** Always include a direct `mailto:` fallback link within form error states, ensuring the user can bypass the broken mechanism and still complete their intended action without frustration.
+
+## 2026-10-24 - [Accessible Scrollable Carousels]
+**Learning:** Custom scrollable carousels created with flexbox and `overflow-x-auto` are completely invisible to keyboard users and screen readers unless explicitly marked up. The lack of native focusability prevents keyboard users from scrolling the container horizontally, and the lack of structure leaves screen reader users without context about the collection of items.
+**Action:** Always make custom carousels keyboard-focusable by adding `tabIndex={0}` and clear focus ring styles (`focus-visible`). Restore list and carousel semantics by adding `role="region"`, an appropriate `aria-label`, and `aria-roledescription="carousel"` to the scroll container, and `role="group"`, `aria-roledescription="slide"`, and positional labels (e.g. "Item 1 of 5") to each child item.

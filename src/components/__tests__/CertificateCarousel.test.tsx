@@ -44,8 +44,7 @@ describe('CertificateCarousel', () => {
   it('handles mouse drag interaction', () => {
     render(<CertificateCarousel items={mockItems} />);
 
-    const item = screen.getByText('Cert 1');
-    const carouselContainer = item.closest('div.overflow-x-auto');
+    const carouselContainer = screen.getByRole('region', { name: 'Certificates Carousel' });
 
     if (!carouselContainer) throw new Error('Carousel container not found');
 
@@ -83,8 +82,7 @@ describe('CertificateCarousel', () => {
 
   it('handles touch drag interaction', () => {
     render(<CertificateCarousel items={mockItems} />);
-    const item = screen.getByText('Cert 1');
-    const carouselContainer = item.closest('div.overflow-x-auto');
+    const carouselContainer = screen.getByRole('region', { name: 'Certificates Carousel' });
 
     if (!carouselContainer) throw new Error('Carousel container not found');
 
