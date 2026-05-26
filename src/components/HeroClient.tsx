@@ -222,7 +222,7 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
                       className="absolute -bottom-6 -right-6 md:bottom-10 md:-right-10 bg-white/90 backdrop-blur-md p-3 sm:p-4 rounded-2xl shadow-xl border border-white/50 flex items-center gap-3 z-20 hover:scale-105 transition-transform cursor-default scale-75 sm:scale-100 origin-bottom-right"
                     >
                       <div className="bg-[#FFA239] p-2 rounded-full text-white shadow-sm">
-                        <Sparkles size={20} fill="currentColor" />
+                        <Sparkles size={20} fill="currentColor" aria-hidden="true" />
                       </div>
                       <div>
                         <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider leading-none mb-1">
