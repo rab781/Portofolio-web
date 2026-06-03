@@ -52,7 +52,7 @@ export default function Certificates() {
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                         <div className="p-4 rounded-3xl bg-white shadow-lg shadow-teal-100/50 text-teal-600 ring-1 ring-teal-50 relative overflow-hidden group">
                             <div className="absolute inset-0 bg-teal-100/20 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-3xl" />
-                            <Award size={32} strokeWidth={1.5} className="relative z-10" />
+                            <Award size={32} strokeWidth={1.5} className="relative z-10" aria-hidden="true" />
                         </div>
                         <div>
                             <h2 className="text-sm font-bold tracking-[0.2em] text-[#0D9488] uppercase mb-2">
