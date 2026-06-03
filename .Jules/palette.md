@@ -39,3 +39,7 @@
 ## 2026-10-24 - [Accessible Scrollable Carousels]
 **Learning:** Custom scrollable carousels created with flexbox and `overflow-x-auto` are completely invisible to keyboard users and screen readers unless explicitly marked up. The lack of native focusability prevents keyboard users from scrolling the container horizontally, and the lack of structure leaves screen reader users without context about the collection of items.
 **Action:** Always make custom carousels keyboard-focusable by adding `tabIndex={0}` and clear focus ring styles (`focus-visible`). Restore list and carousel semantics by adding `role="region"`, an appropriate `aria-label`, and `aria-roledescription="carousel"` to the scroll container, and `role="group"`, `aria-roledescription="slide"`, and positional labels (e.g. "Item 1 of 5") to each child item.
+
+## 2026-06-03 - [Decorative Icons in Custom Components]
+**Learning:** Purely decorative icons (such as those from `lucide-react`) used alongside visible text or as standalone visual enhancements (like floating stickers in hero sections) are often read aloud by screen readers if not explicitly hidden. This creates redundant or confusing audio announcements (e.g., reading "zap" or "sparkles" without context).
+**Action:** Always verify that purely visual/decorative icons, especially those from external icon libraries, include the `aria-hidden="true"` attribute to prevent them from cluttering the screen reader experience.
