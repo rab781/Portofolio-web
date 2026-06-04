@@ -39,3 +39,7 @@
 ## 2025-05-24 - Wrapped DecryptedText with React.memo()
 **Learning:** In high-frequency animation components (e.g. `DecryptedText.tsx` which runs `setInterval` updating state rapidly), if the component is used in a parent like `Preloader.tsx` without memoization, there's a risk of the parent context rendering unnecessarily, or the component itself rerendering if passed different props despite the same primitive values. Wrapping heavy animation components with `React.memo` isolates them.
 **Action:** Wrap animation-heavy components using `setInterval` with `React.memo()` to reduce DOM reconciliation overhead.
+
+## 2025-03-05 - Hoisting Configs across Multiple Components
+**Learning:** Re-iterated the importance of hoisting static configuration objects for `framer-motion` hooks (`useSpring`, `useInView`, `useScroll`) in components like `About.tsx`, `CircularBadge.tsx`, and `ScrollLine.tsx` to prevent unnecessary allocations on every render tick.
+**Action:** Applied the optimization uniformly to these components. Explicitly typed `UseScrollOptions["offset"]` in `ScrollLine.tsx` to prevent build type errors.
