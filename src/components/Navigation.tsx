@@ -75,7 +75,7 @@ function Navigation() {
         <div className="relative px-6 lg:px-8">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <a href="#home" aria-label="Home" className="flex items-center space-x-2 group z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg">
+            <a href="#home" aria-label="Home" title="Home" className="flex items-center space-x-2 group z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg">
               <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 group-hover:to-[#FFA239] transition-all">
                 RAB.
               </span>
@@ -107,6 +107,7 @@ function Navigation() {
                 onClick={() => setIsOpen((prevIsOpen) => !prevIsOpen)}
                 className="text-gray-900 p-2 hover:bg-gray-100 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                 aria-label={isOpen ? "Close menu" : "Open menu"}
+                title={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
               >

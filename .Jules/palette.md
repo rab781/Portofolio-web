@@ -39,3 +39,6 @@
 ## 2026-10-24 - [Accessible Scrollable Carousels]
 **Learning:** Custom scrollable carousels created with flexbox and `overflow-x-auto` are completely invisible to keyboard users and screen readers unless explicitly marked up. The lack of native focusability prevents keyboard users from scrolling the container horizontally, and the lack of structure leaves screen reader users without context about the collection of items.
 **Action:** Always make custom carousels keyboard-focusable by adding `tabIndex={0}` and clear focus ring styles (`focus-visible`). Restore list and carousel semantics by adding `role="region"`, an appropriate `aria-label`, and `aria-roledescription="carousel"` to the scroll container, and `role="group"`, `aria-roledescription="slide"`, and positional labels (e.g. "Item 1 of 5") to each child item.
+## 2025-06-04 - Adding Tooltips for Visual UX
+**Learning:** Adding a `title` attribute that matches the `aria-label` provides a native, zero-dependency browser tooltip on hover. This significantly improves visual UX for mouse users on icon-only interactive elements without negatively impacting screen readers (since `aria-label` is already present). It's a quick accessibility/UX win.
+**Action:** Always pair `aria-label` with an identical `title` attribute for icon-only buttons or links.
