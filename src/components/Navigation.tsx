@@ -109,6 +109,7 @@ function Navigation() {
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
+                title={isOpen ? "Close menu" : "Open menu"}
               >
                 {isOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
               </button>
