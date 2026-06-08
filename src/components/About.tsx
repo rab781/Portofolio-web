@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, useEffect, useRef } from "react";
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, UseInViewOptions } from "framer-motion";
 import dynamic from "next/dynamic";
 import CircularBadge from "./CircularBadge";
 
@@ -14,12 +14,16 @@ interface AboutProps {
   triggerAnimation?: boolean;
 }
 
+// ⚡ Bolt: Hoisted static useInView options to prevent unnecessary object allocation on every render tick
+
+const INVIEW_OPTIONS: UseInViewOptions = { once: true, margin: "-10px" };
+
 // Helper for counting up numbers
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
-  const isInView = useInView(ref, { once: true, margin: "-10px" });
+  const isInView = useInView(ref, INVIEW_OPTIONS);
 
   useEffect(() => {
     if (isInView) {
