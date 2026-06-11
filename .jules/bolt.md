@@ -10,7 +10,7 @@
 **Learning:** Static `framer-motion` animation variants should be defined outside the component function scope to ensure referential stability and prevent unnecessary object re-allocations on every render.
 **Action:** Extract `containerVariants`, `itemVariants`, `heroVariants` etc. outside of components like `About.tsx` and `HeroClient.tsx`.
 
-## $(date +%Y-%m-%d) - Debouncing synchronous layout reads on window resize
+## 2025-05-24 - Debouncing synchronous layout reads on window resize
 **Learning:** Attaching a window resize event listener that synchronously reads layout properties (like `offsetTop` or `getBoundingClientRect()`) forces the browser into a continuous cycle of synchronous layout calculations (reflow). During a fast window resize, this severely blocks the main thread.
 **Action:** When handling `window.addEventListener('resize', ...)`, wrap synchronous layout reads in a debounce function (e.g., using `setTimeout` of 100-150ms) to ensure the expensive calculation only happens after the resize operation pauses or finishes.
 ## 2025-03-05 - Debouncing Resize Event Handlers
@@ -39,3 +39,6 @@
 ## 2025-05-24 - Wrapped DecryptedText with React.memo()
 **Learning:** In high-frequency animation components (e.g. `DecryptedText.tsx` which runs `setInterval` updating state rapidly), if the component is used in a parent like `Preloader.tsx` without memoization, there's a risk of the parent context rendering unnecessarily, or the component itself rerendering if passed different props despite the same primitive values. Wrapping heavy animation components with `React.memo` isolates them.
 **Action:** Wrap animation-heavy components using `setInterval` with `React.memo()` to reduce DOM reconciliation overhead.
+## 2025-05-24 - Hoisting Framer Motion `useScroll` Offset Arrays
+**Learning:** Defining static configuration arrays like `offset: ["start center", "end end"]` inline inside `useScroll` causes a new array allocation on every render tick. This can increase garbage collection pressure and trigger unnecessary internal hook evaluations during high-frequency scroll events.
+**Action:** Always hoist static arrays outside the component body (e.g., `const SCROLL_OFFSET: UseScrollOptions["offset"] = ["start center", "end end"];`) to maintain referential equality and avoid unnecessary allocations during scroll.
