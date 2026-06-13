@@ -73,7 +73,7 @@ export default function Experience() {
                 >
                     <div className="p-4 rounded-3xl bg-white shadow-lg shadow-orange-100/50 text-[#FFA239] ring-1 ring-orange-50 relative overflow-hidden group">
                         <div className="absolute inset-0 bg-orange-100/20 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-3xl" />
-                        <Briefcase size={32} strokeWidth={1.5} className="relative z-10" />
+                        <Briefcase size={32} strokeWidth={1.5} className="relative z-10"  aria-hidden="true" />
                     </div>
                     <div className="text-center md:text-left">
                         <h2 className="text-sm font-bold tracking-[0.2em] text-[#FFA239] uppercase mb-2">

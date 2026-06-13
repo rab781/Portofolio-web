@@ -172,7 +172,7 @@ export default function MagneticPortrait() {
                     className="absolute -right-6 top-20 bg-white p-3 rounded-2xl shadow-lg border border-gray-100 flex items-center gap-2"
                 >
                     <div className="bg-[#111111] p-1.5 rounded-lg text-white">
-                        <Code size={18} />
+                        <Code size={18}  aria-hidden="true" />
                     </div>
                     <span className="font-bold text-xs text-gray-800 pr-2">Developer</span>
                 </motion.div>
@@ -183,7 +183,7 @@ export default function MagneticPortrait() {
                     className="absolute -left-6 bottom-32 bg-white/90 backdrop-blur-md p-3 rounded-full shadow-lg border border-gray-100"
                 >
                     <div className="bg-[#FFA239] p-2 rounded-full text-white animate-pulse">
-                        <Zap size={20} fill="currentColor" />
+                        <Zap size={20} fill="currentColor"  aria-hidden="true" />
                     </div>
                 </motion.div>
 
@@ -192,7 +192,7 @@ export default function MagneticPortrait() {
                     style={{ x: floatX, y: floatY, z: 40 }}
                     className="absolute right-8 -bottom-6 bg-[#111111] text-white py-2 px-4 rounded-full shadow-xl flex items-center gap-2"
                 >
-                    <Sparkles size={14} className="text-[#FEEE91]" />
+                    <Sparkles size={14} className="text-[#FEEE91]"  aria-hidden="true" />
                     <span className="text-xs font-bold tracking-wider uppercase">Creative</span>
                 </motion.div>
 
