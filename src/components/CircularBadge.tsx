@@ -1,7 +1,10 @@
 'use client';
 
-import { useInView } from "framer-motion";
+import { useInView, UseInViewOptions } from "framer-motion";
 import { useRef } from "react";
+
+// ⚡ Bolt: Hoist static configuration object to prevent unnecessary allocations on every render
+const IN_VIEW_OPTIONS: UseInViewOptions = { margin: "0px 0px -50px 0px" };
 
 interface CircularTextProps {
     text: string;
@@ -15,7 +18,7 @@ export default function CircularText({
     className = ""
 }: CircularTextProps) {
     const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, { margin: "0px 0px -50px 0px" });
+    const isInView = useInView(ref, IN_VIEW_OPTIONS);
 
     return (
         <div
