@@ -39,3 +39,6 @@
 ## 2025-05-24 - Wrapped DecryptedText with React.memo()
 **Learning:** In high-frequency animation components (e.g. `DecryptedText.tsx` which runs `setInterval` updating state rapidly), if the component is used in a parent like `Preloader.tsx` without memoization, there's a risk of the parent context rendering unnecessarily, or the component itself rerendering if passed different props despite the same primitive values. Wrapping heavy animation components with `React.memo` isolates them.
 **Action:** Wrap animation-heavy components using `setInterval` with `React.memo()` to reduce DOM reconciliation overhead.
+## 2025-03-05 - Hoisting Framer Motion useTransform arrays
+**Learning:** When using Framer Motion hooks like `useTransform` inside components, defining input and output configuration arrays inline causes new array allocations on every render tick. This can trigger unnecessary internal hook evaluations and increase garbage collection pressure.
+**Action:** Always hoist static Framer Motion `useTransform` dependency arrays outside the component body to maintain referential equality and prevent unnecessary allocations.
