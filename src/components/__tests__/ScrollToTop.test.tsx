@@ -6,7 +6,7 @@ let mockScrollY = 0;
 jest.mock('framer-motion', () => ({
   motion: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    button: ({ children, onClick, className, 'aria-label': ariaLabel, style }: any) => {
+    button: ({ children, onClick, className, 'aria-label': ariaLabel, title, style }: any) => {
       // For tests, if opacity is 0 or display is none, hide it from screen readers so testing-library
       // behaves similarly to when the component was conditionally rendered.
       const isHidden = style?.opacity === '0' || style?.opacity === 0 || style?.display === 'none';
@@ -15,6 +15,7 @@ jest.mock('framer-motion', () => ({
           onClick={onClick}
           className={className}
           aria-label={ariaLabel}
+          title={title}
           style={style}
           aria-hidden={isHidden ? "true" : undefined}
           data-testid={isHidden ? "hidden-button" : "visible-button"}
