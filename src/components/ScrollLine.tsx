@@ -1,7 +1,15 @@
 'use client';
 
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, UseScrollOptions } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+
+// ⚡ Bolt: Hoisted static Framer Motion configuration arrays outside the component body
+// to prevent unnecessary array allocations during initial mount and non-scroll re-renders.
+// Note: Framer Motion hooks return MotionValues, so this component does not re-render
+// on every scroll tick. Hoisting saves allocations when the component is explicitly re-rendered (e.g., via state changes).
+const SCROLL_OFFSET: UseScrollOptions["offset"] = ["start center", "end end"];
+const TRANSFORM_INPUT = [0, 1];
+const TRANSFORM_OUTPUT = ["0%", "100%"];
 
 const SPRING_CONFIG = { stiffness: 400, damping: 90 };
 
@@ -12,13 +20,13 @@ export default function ScrollLine() {
     // Track scroll progress relative to this container
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end end"]
+        offset: SCROLL_OFFSET
     });
 
     const pathLength = useSpring(scrollYProgress, SPRING_CONFIG);
 
     // Hoist useTransform calls to top level — Rules of Hooks requirement
-    const dotTop = useTransform(pathLength, [0, 1], ["0%", "100%"]);
+    const dotTop = useTransform(pathLength, TRANSFORM_INPUT, TRANSFORM_OUTPUT);
 
     useEffect(() => {
         if (containerRef.current) {

@@ -7,7 +7,14 @@ import { Code, Zap, Sparkles } from "lucide-react";
 
 // ⚡ Bolt: Hoist static springConfig object outside the component body
 // to prevent unnecessary object allocation on every render.
+// ⚡ Bolt: Hoisted static springConfig and useTransform array configurations outside the component body
+// to prevent unnecessary object/array allocations on every render tick.
 const SPRING_CONFIG = { damping: 20, stiffness: 300, mass: 0.5 };
+const TRANSFORM_INPUT = [-0.5, 0.5];
+const ROTATE_X_OUTPUT = [7, -7];
+const ROTATE_Y_OUTPUT = [-7, 7];
+const FLOAT_OUTPUT = [-30, 30];
+const BG_OUTPUT = [20, -20];
 
 export default function MagneticPortrait() {
     const ref = useRef<HTMLDivElement>(null);
@@ -20,16 +27,16 @@ export default function MagneticPortrait() {
     const y = useMotionValue(0);
 
     // Spring physics for smooth tilt
-    const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [7, -7]), SPRING_CONFIG);
-    const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-7, 7]), SPRING_CONFIG);
+    const rotateX = useSpring(useTransform(y, TRANSFORM_INPUT, ROTATE_X_OUTPUT), SPRING_CONFIG);
+    const rotateY = useSpring(useTransform(x, TRANSFORM_INPUT, ROTATE_Y_OUTPUT), SPRING_CONFIG);
 
     // Parallax for floating elements (move more than the card)
-    const floatX = useSpring(useTransform(x, [-0.5, 0.5], [-30, 30]), SPRING_CONFIG);
-    const floatY = useSpring(useTransform(y, [-0.5, 0.5], [-30, 30]), SPRING_CONFIG);
+    const floatX = useSpring(useTransform(x, TRANSFORM_INPUT, FLOAT_OUTPUT), SPRING_CONFIG);
+    const floatY = useSpring(useTransform(y, TRANSFORM_INPUT, FLOAT_OUTPUT), SPRING_CONFIG);
 
     // Background Parallax (moves opposite)
-    const bgX = useSpring(useTransform(x, [-0.5, 0.5], [20, -20]), SPRING_CONFIG);
-    const bgY = useSpring(useTransform(y, [-0.5, 0.5], [20, -20]), SPRING_CONFIG);
+    const bgX = useSpring(useTransform(x, TRANSFORM_INPUT, BG_OUTPUT), SPRING_CONFIG);
+    const bgY = useSpring(useTransform(y, TRANSFORM_INPUT, BG_OUTPUT), SPRING_CONFIG);
 
     // ⚡ Bolt: Use a ref to track whether a requestAnimationFrame is queued and store latest coords
     const ticking = useRef(false);
