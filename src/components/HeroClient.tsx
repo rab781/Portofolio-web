@@ -39,6 +39,11 @@ const containerVariants = {
   },
 };
 
+const SCROLL_INPUT = [0, 1];
+const OPACITY_OUTPUT = [0, 0.6];
+const FONT_SCALE_OUTPUT = [1, 0.9];
+const SCROLL_INDICATOR_OUTPUT = [1, 0];
+
 export default function HeroClient({ aboutRef, children }: HeroClientProps) {
   const { scrollY } = useScroll();
   const [isLoading, setIsLoading] = useState(true);
@@ -102,9 +107,9 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
   });
 
   // Use opacity-only for the background colour shift — compositor safe, no repaint
-  const overlayOpacity = useTransform(clampedScrollProgress, [0, 1], [0, 0.6]);
-  const fontScale = useTransform(clampedScrollProgress, [0, 1], [1, 0.9]);
-  const scrollIndicatorOpacity = useTransform(clampedScrollProgress, [0, 1], [1, 0]);
+  const overlayOpacity = useTransform(clampedScrollProgress, SCROLL_INPUT, OPACITY_OUTPUT);
+  const fontScale = useTransform(clampedScrollProgress, SCROLL_INPUT, FONT_SCALE_OUTPUT);
+  const scrollIndicatorOpacity = useTransform(clampedScrollProgress, SCROLL_INPUT, SCROLL_INDICATOR_OUTPUT);
 
   return (
     <div className="relative min-h-screen bg-[#8CE4FF] text-[#18181B] selection:bg-blue-100 selection:text-blue-900 bg-noise">
