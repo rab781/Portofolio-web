@@ -39,3 +39,7 @@
 ## 2026-10-24 - [Accessible Scrollable Carousels]
 **Learning:** Custom scrollable carousels created with flexbox and `overflow-x-auto` are completely invisible to keyboard users and screen readers unless explicitly marked up. The lack of native focusability prevents keyboard users from scrolling the container horizontally, and the lack of structure leaves screen reader users without context about the collection of items.
 **Action:** Always make custom carousels keyboard-focusable by adding `tabIndex={0}` and clear focus ring styles (`focus-visible`). Restore list and carousel semantics by adding `role="region"`, an appropriate `aria-label`, and `aria-roledescription="carousel"` to the scroll container, and `role="group"`, `aria-roledescription="slide"`, and positional labels (e.g. "Item 1 of 5") to each child item.
+
+## 2025-06-24 - Native Hover Tooltips for Icon-Only Buttons
+**Learning:** For strictly icon-only buttons that rely on `aria-label` for accessibility, screen reader users get the accessible name, but sighted mouse users often lack context because `aria-label` is not visually rendered. Adding a matching `title` attribute provides a native hover tooltip, enhancing usability for mouse users without negatively impacting accessibility.
+**Action:** Always include a `title` attribute that matches the `aria-label` on icon-only buttons to provide a native hover tooltip. However, strictly avoid adding `title` attributes to elements with visible text to prevent redundant tooltips.
