@@ -26,10 +26,11 @@ export default function ScrollToTop() {
       onClick={scrollToTop}
       className="fixed bottom-8 right-8 z-40 p-3 bg-[var(--pop-orange)] text-brand-black rounded-full shadow-lg hover:bg-brand-black hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] focus-visible:ring-offset-2 flex items-center justify-center"
       aria-label="Scroll to top"
+      title="Scroll to top"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
     >
-      <ArrowUp className="w-6 h-6" />
+      <ArrowUp className="w-6 h-6" aria-hidden="true" />
     </motion.button>
   );
 }
