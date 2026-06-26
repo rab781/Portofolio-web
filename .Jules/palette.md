@@ -43,3 +43,6 @@
 ## 2025-06-24 - Native Hover Tooltips for Icon-Only Buttons
 **Learning:** For strictly icon-only buttons that rely on `aria-label` for accessibility, screen reader users get the accessible name, but sighted mouse users often lack context because `aria-label` is not visually rendered. Adding a matching `title` attribute provides a native hover tooltip, enhancing usability for mouse users without negatively impacting accessibility.
 **Action:** Always include a `title` attribute that matches the `aria-label` on icon-only buttons to provide a native hover tooltip. However, strictly avoid adding `title` attributes to elements with visible text to prevent redundant tooltips.
+## 2025-05-18 - [Decorative Lucide-React Icons]
+**Learning:** The project uses `lucide-react` icons (like `<Code>`, `<Zap>`, `<Sparkles>`, `<Briefcase>`) as purely decorative visual flair in components like `MagneticPortrait`, `HeroClient`, and `Experience`. Since these are imported directly as components and serve purely as visual accents alongside visible text, they lack native `aria-hidden` attributes. Screen readers may attempt to read their presence or SVG titles, creating confusing auditory noise.
+**Action:** Always explicitly add `aria-hidden="true"` to decorative `lucide-react` icons used as visual accents to prevent redundant or confusing audio announcements by screen readers.
