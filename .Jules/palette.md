@@ -43,3 +43,7 @@
 ## 2025-06-24 - Native Hover Tooltips for Icon-Only Buttons
 **Learning:** For strictly icon-only buttons that rely on `aria-label` for accessibility, screen reader users get the accessible name, but sighted mouse users often lack context because `aria-label` is not visually rendered. Adding a matching `title` attribute provides a native hover tooltip, enhancing usability for mouse users without negatively impacting accessibility.
 **Action:** Always include a `title` attribute that matches the `aria-label` on icon-only buttons to provide a native hover tooltip. However, strictly avoid adding `title` attributes to elements with visible text to prevent redundant tooltips.
+
+## 2024-06-27 - [Decorative 'Sticker' Icon Accessibility]
+**Learning:** The app relies heavily on floating, decorative "sticker" icons (e.g., `lucide-react` components in `MagneticPortrait` and `HeroClient`) to add visual flair. By default, these SVGs are exposed to the accessibility tree, which pollutes the screen reader experience with out-of-context, floating words like "zap", "sparkles", or "briefcase" that do not represent interactive elements.
+**Action:** Consistently apply `aria-hidden="true"` to all decorative "sticker" icons across the application to ensure they remain purely visual enhancements without degrading the auditory UX.
