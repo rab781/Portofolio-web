@@ -26,7 +26,7 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                     aria-label="Back to projects list"
                     className="group inline-flex items-center gap-2 px-5 py-2.5 bg-white/50 backdrop-blur-md border border-white/40 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-white hover:border-[#FFA239] hover:text-[#FFA239] transition-all shadow-sm mb-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                 >
-                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
                     Back to Works
                 </Link>
 
@@ -85,7 +85,7 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                         {/* The Problem */}
                         <section className="bg-white/80 backdrop-blur-sm p-10 md:p-12 rounded-[2.5rem] border border-white shadow-xl relative overflow-hidden group">
                             <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                                <Brain size={150} />
+                                <Brain size={150} aria-hidden="true" />
                             </div>
 
                             <h2 className="text-3xl font-bold text-[#111111] mb-8 flex items-center gap-4 relative z-10">
