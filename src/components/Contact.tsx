@@ -181,7 +181,7 @@ function Contact() {
                   required
                   aria-required="true"
                   maxLength={100}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] transition-all"
                   placeholder="John Doe"
                 />
               </div>
@@ -197,7 +197,7 @@ function Contact() {
                   required
                   aria-required="true"
                   maxLength={255}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] transition-all"
                   placeholder="john@example.com"
                 />
               </div>
@@ -214,7 +214,7 @@ function Contact() {
                 required
                 aria-required="true"
                 maxLength={200}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] transition-all"
                 placeholder="Project Inquiry"
               />
             </div>
@@ -256,7 +256,7 @@ function Contact() {
                 aria-live="polite"
                 className="mt-4 p-4 bg-green-50 text-green-800 rounded-lg flex items-center animate-in fade-in slide-in-from-bottom-2 border border-green-100"
               >
-                <CheckCircle className="w-5 h-5 mr-2 shrink-0" />
+                <CheckCircle className="w-5 h-5 mr-2 shrink-0" aria-hidden="true" />
                 <span>Message sent successfully! I&apos;ll get back to you soon.</span>
               </div>
             )}
@@ -267,7 +267,7 @@ function Contact() {
                 aria-live="assertive"
                 className="mt-4 p-4 bg-red-50 text-red-800 rounded-lg flex items-start animate-in fade-in slide-in-from-bottom-2 border border-red-100"
               >
-                <AlertCircle className="w-5 h-5 mr-3 shrink-0 mt-0.5" />
+                <AlertCircle className="w-5 h-5 mr-3 shrink-0 mt-0.5" aria-hidden="true" />
                 <div className="flex flex-col">
                   <span className="font-semibold">Something went wrong.</span>
                   <span className="text-sm mt-1">
@@ -360,7 +360,7 @@ TextareaWithCounter.displayName = "TextareaWithCounter";
         maxLength={5000}
         onChange={(e) => setMessageLength(e.target.value.length)}
         rows={4}
-        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all resize-none"
+        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] transition-all resize-none"
         placeholder="Tell me about your project..."
       />
     </div>
