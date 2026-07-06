@@ -15,10 +15,14 @@ interface AboutProps {
 }
 
 // Helper for counting up numbers
+// ⚡ Bolt: Hoist static springConfig object outside the component body
+// to prevent unnecessary object allocations during initial mount or non-scroll re-renders.
+const COUNTER_SPRING_CONFIG = { damping: 30, stiffness: 100 };
+
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
+  const springValue = useSpring(motionValue, COUNTER_SPRING_CONFIG);
   const isInView = useInView(ref, { once: true, margin: "-10px" });
 
   useEffect(() => {
