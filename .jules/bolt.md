@@ -39,3 +39,6 @@
 ## 2025-05-24 - Wrapped DecryptedText with React.memo()
 **Learning:** In high-frequency animation components (e.g. `DecryptedText.tsx` which runs `setInterval` updating state rapidly), if the component is used in a parent like `Preloader.tsx` without memoization, there's a risk of the parent context rendering unnecessarily, or the component itself rerendering if passed different props despite the same primitive values. Wrapping heavy animation components with `React.memo` isolates them.
 **Action:** Wrap animation-heavy components using `setInterval` with `React.memo()` to reduce DOM reconciliation overhead.
+## 2026-05-25 - Hoisting Scroll Options in ScrollLine
+**Learning:** Inline array allocations inside hooks like `useScroll( { offset: ["start center", "end end"] } )` create a new reference on every render, triggering unnecessary evaluations.
+**Action:** Always hoist configuration objects and arrays to static module-level constants (e.g., `SCROLL_OFFSET: UseScrollOptions["offset"] = ...`) outside the component to preserve referential equality and reduce garbage collection pressure.
