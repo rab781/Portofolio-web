@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Barlow_Condensed } from "next/font/google";
-import CustomCursor from "@/components/CustomCursor";
-import GradientMesh from "@/components/GradientMesh";
+import ClientEffects from "@/components/ClientEffects";
 import SkipLink from "@/components/SkipLink";
 import "./globals.css";
 
@@ -42,8 +41,7 @@ export default function RootLayout({
         className={`${dmSans.variable} ${barlowCondensed.variable} antialiased`}
       >
         <SkipLink />
-        <CustomCursor />
-        <GradientMesh />
+        <ClientEffects />
         {/* ScrollToTop is rendered inside HeroClient — loads with client bundle only */}
         {children}
       </body>
