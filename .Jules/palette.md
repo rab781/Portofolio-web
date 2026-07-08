@@ -43,3 +43,7 @@
 ## 2025-06-24 - Native Hover Tooltips for Icon-Only Buttons
 **Learning:** For strictly icon-only buttons that rely on `aria-label` for accessibility, screen reader users get the accessible name, but sighted mouse users often lack context because `aria-label` is not visually rendered. Adding a matching `title` attribute provides a native hover tooltip, enhancing usability for mouse users without negatively impacting accessibility.
 **Action:** Always include a `title` attribute that matches the `aria-label` on icon-only buttons to provide a native hover tooltip. However, strictly avoid adding `title` attributes to elements with visible text to prevent redundant tooltips.
+
+## 2023-10-28 - [Lingering Focus Rings on Mouse Click]
+**Learning:** Using generic `focus:` utility classes on interactive elements can cause lingering focus rings when clicked by a mouse user, detracting from the visual experience.
+**Action:** Always prefer `focus-visible:` utility classes to ensure focus rings are strictly applied during keyboard navigation, preserving accessibility while maintaining a clean UI for mouse users.
