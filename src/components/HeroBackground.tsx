@@ -20,11 +20,10 @@ export default function HeroBackground() {
 
                 window.requestAnimationFrame(() => {
                     // ⚡ Bolt: Throttled with rAF to avoid main-thread blocking.
-                    // getBoundingClientRect is evaluated inside the callback to prevent layout thrashing
-                    // while ensuring measurements stay accurate if the page is scrolled between frames.
-                    const rect = container.getBoundingClientRect();
-                    const x = clientX - rect.left;
-                    const y = clientY - rect.top;
+                    // Removed getBoundingClientRect to prevent layout thrashing.
+                    // Since container is full-screen, clientX/Y maps 1:1 to local coords.
+                    const x = clientX;
+                    const y = clientY;
 
                     container.style.setProperty("--mouse-x", `${x}px`);
                     container.style.setProperty("--mouse-y", `${y}px`);

@@ -39,3 +39,6 @@
 ## 2025-05-24 - Wrapped DecryptedText with React.memo()
 **Learning:** In high-frequency animation components (e.g. `DecryptedText.tsx` which runs `setInterval` updating state rapidly), if the component is used in a parent like `Preloader.tsx` without memoization, there's a risk of the parent context rendering unnecessarily, or the component itself rerendering if passed different props despite the same primitive values. Wrapping heavy animation components with `React.memo` isolates them.
 **Action:** Wrap animation-heavy components using `setInterval` with `React.memo()` to reduce DOM reconciliation overhead.
+## 2024-07-08 - Avoid getBoundingClientRect on Full-Screen Containers
+**Learning:** Calling `getBoundingClientRect()` inside a high-frequency `requestAnimationFrame` loop causes layout thrashing and main-thread blocking. For containers that fill the entire screen (like absolute inset-0 inside a fixed container), this is redundant because viewport-relative event coordinates (`clientX`/`clientY`) map 1:1 to the element's local coordinates.
+**Action:** Always verify if an element is full-screen or fixed before using `getBoundingClientRect()` for mouse tracking; use `clientX`/`clientY` directly to save compute time and avoid forcing synchronous style recalculations.
