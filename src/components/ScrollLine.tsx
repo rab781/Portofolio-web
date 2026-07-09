@@ -1,18 +1,20 @@
 'use client';
 
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, UseScrollOptions } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const SPRING_CONFIG = { stiffness: 400, damping: 90 };
+const SCROLL_OFFSET: UseScrollOptions["offset"] = ["start center", "end end"];
 
 export default function ScrollLine() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [svgHeight, setSvgHeight] = useState(0);
 
-    // Track scroll progress relative to this container
+    // ⚡ Bolt: Hoisted static scroll offset outside the component body
+    // to prevent unnecessary array allocations on every render tick during scrolling.
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end end"]
+        offset: SCROLL_OFFSET
     });
 
     const pathLength = useSpring(scrollYProgress, SPRING_CONFIG);

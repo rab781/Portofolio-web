@@ -23,6 +23,9 @@ interface HeroClientProps {
   children: React.ReactNode;
 }
 
+// ⚡ Bolt: Hoisted clamp config outside component to prevent object allocation on render
+const CLAMP_CONFIG = { clamp: true };
+
 // ⚡ Bolt: Extract static framer-motion variants outside component to prevent re-allocation on every render
 const heroVariants = {
   hidden: { y: 100, opacity: 0 },
@@ -97,9 +100,7 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
   const transformStyle = useMotionTemplate`translate(-50%, -50%) translateY(${yVal}px)`;
 
   const maxScroll = 500;
-  const clampedScrollProgress = useTransform(scrollY, [0, maxScroll], [0, 1], {
-    clamp: true,
-  });
+  const clampedScrollProgress = useTransform(scrollY, [0, maxScroll], [0, 1], CLAMP_CONFIG);
 
   // Use opacity-only for the background colour shift — compositor safe, no repaint
   const overlayOpacity = useTransform(clampedScrollProgress, [0, 1], [0, 0.6]);
