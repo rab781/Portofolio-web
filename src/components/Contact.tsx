@@ -120,7 +120,7 @@ function Contact() {
 
           <div className="space-y-8">
             <div className="flex items-start">
-              <Mail className="w-6 h-6 text-white mt-1 mr-4" />
+              <Mail className="w-6 h-6 text-white mt-1 mr-4" aria-hidden="true" />
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Email</div>
                 <div className="flex items-center gap-3">
@@ -144,7 +144,7 @@ function Contact() {
             </div>
 
             <div className="flex items-start">
-              <Phone className="w-6 h-6 text-white mt-1 mr-4" />
+              <Phone className="w-6 h-6 text-white mt-1 mr-4" aria-hidden="true" />
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Phone</div>
                 <a href="tel:+6285824665623" className="text-xl font-medium text-white hover:text-gray-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239] rounded-lg px-1 -mx-1">
@@ -154,7 +154,7 @@ function Contact() {
             </div>
 
             <div className="flex items-start">
-              <MapPin className="w-6 h-6 text-white mt-1 mr-4" />
+              <MapPin className="w-6 h-6 text-white mt-1 mr-4" aria-hidden="true" />
               <div>
                 <div className="text-sm text-gray-500 uppercase tracking-wide">Location</div>
                 <div className="text-xl font-medium text-white">
@@ -256,7 +256,7 @@ function Contact() {
                 aria-live="polite"
                 className="mt-4 p-4 bg-green-50 text-green-800 rounded-lg flex items-center animate-in fade-in slide-in-from-bottom-2 border border-green-100"
               >
-                <CheckCircle className="w-5 h-5 mr-2 shrink-0" />
+                <CheckCircle className="w-5 h-5 mr-2 shrink-0" aria-hidden="true" />
                 <span>Message sent successfully! I&apos;ll get back to you soon.</span>
               </div>
             )}
@@ -267,7 +267,7 @@ function Contact() {
                 aria-live="assertive"
                 className="mt-4 p-4 bg-red-50 text-red-800 rounded-lg flex items-start animate-in fade-in slide-in-from-bottom-2 border border-red-100"
               >
-                <AlertCircle className="w-5 h-5 mr-3 shrink-0 mt-0.5" />
+                <AlertCircle className="w-5 h-5 mr-3 shrink-0 mt-0.5" aria-hidden="true" />
                 <div className="flex flex-col">
                   <span className="font-semibold">Something went wrong.</span>
                   <span className="text-sm mt-1">

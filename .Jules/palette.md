@@ -43,3 +43,7 @@
 ## 2025-06-24 - Native Hover Tooltips for Icon-Only Buttons
 **Learning:** For strictly icon-only buttons that rely on `aria-label` for accessibility, screen reader users get the accessible name, but sighted mouse users often lack context because `aria-label` is not visually rendered. Adding a matching `title` attribute provides a native hover tooltip, enhancing usability for mouse users without negatively impacting accessibility.
 **Action:** Always include a `title` attribute that matches the `aria-label` on icon-only buttons to provide a native hover tooltip. However, strictly avoid adding `title` attributes to elements with visible text to prevent redundant tooltips.
+
+## 2025-07-10 - Hiding Decorative Icons from Screen Readers
+**Learning:** Lucide-react icons are often used purely for decorative purposes next to visible text (e.g., a Mail icon next to the word "Email"). Screen readers may attempt to announce these icons, creating redundant or confusing noise for users.
+**Action:** Always add `aria-hidden="true"` to decorative SVG/Lucide icons unless they are interactive and standalone (in which case they need an `aria-label`).
