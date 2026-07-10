@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, useEffect, useRef } from "react";
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, UseInViewOptions } from "framer-motion";
 import dynamic from "next/dynamic";
 import CircularBadge from "./CircularBadge";
 
@@ -15,11 +15,16 @@ interface AboutProps {
 }
 
 // Helper for counting up numbers
+// ⚡ Bolt: Hoisted static spring and view configuration objects outside the component body
+// to prevent unnecessary object allocation on every render tick.
+const COUNTER_SPRING_CONFIG = { damping: 30, stiffness: 100 };
+const COUNTER_VIEW_CONFIG: UseInViewOptions = { once: true, margin: "-10px" };
+
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
-  const isInView = useInView(ref, { once: true, margin: "-10px" });
+  const springValue = useSpring(motionValue, COUNTER_SPRING_CONFIG);
+  const isInView = useInView(ref, COUNTER_VIEW_CONFIG);
 
   useEffect(() => {
     if (isInView) {
