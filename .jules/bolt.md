@@ -39,3 +39,7 @@
 ## 2025-05-24 - Wrapped DecryptedText with React.memo()
 **Learning:** In high-frequency animation components (e.g. `DecryptedText.tsx` which runs `setInterval` updating state rapidly), if the component is used in a parent like `Preloader.tsx` without memoization, there's a risk of the parent context rendering unnecessarily, or the component itself rerendering if passed different props despite the same primitive values. Wrapping heavy animation components with `React.memo` isolates them.
 **Action:** Wrap animation-heavy components using `setInterval` with `React.memo()` to reduce DOM reconciliation overhead.
+
+## 2026-07-14 - Hoisting Framer Motion useInView Config Objects
+**Learning:** When using Framer Motion hooks like `useInView` inside components, defining configuration objects (like `{ margin: "0px 0px -50px 0px" }`) inline causes a new object allocation during initial mount or non-scroll re-renders. While not as high-frequency as scroll loops, it still increases garbage collection pressure unnecessarily.
+**Action:** Always hoist static Framer Motion configuration objects outside the component body. Type them explicitly (e.g., `UseInViewOptions` imported from `framer-motion`) to satisfy TypeScript.
