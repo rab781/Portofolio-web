@@ -181,7 +181,7 @@ function Contact() {
                   required
                   aria-required="true"
                   maxLength={100}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-black transition-all"
                   placeholder="John Doe"
                 />
               </div>
@@ -197,7 +197,7 @@ function Contact() {
                   required
                   aria-required="true"
                   maxLength={255}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-black transition-all"
                   placeholder="john@example.com"
                 />
               </div>
@@ -214,7 +214,7 @@ function Contact() {
                 required
                 aria-required="true"
                 maxLength={200}
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-black transition-all"
                 placeholder="Project Inquiry"
               />
             </div>
@@ -360,7 +360,7 @@ TextareaWithCounter.displayName = "TextareaWithCounter";
         maxLength={5000}
         onChange={(e) => setMessageLength(e.target.value.length)}
         rows={4}
-        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black transition-all resize-none"
+        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-black transition-all resize-none"
         placeholder="Tell me about your project..."
       />
     </div>
