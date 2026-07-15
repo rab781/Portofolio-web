@@ -43,3 +43,7 @@
 ## 2025-06-24 - Native Hover Tooltips for Icon-Only Buttons
 **Learning:** For strictly icon-only buttons that rely on `aria-label` for accessibility, screen reader users get the accessible name, but sighted mouse users often lack context because `aria-label` is not visually rendered. Adding a matching `title` attribute provides a native hover tooltip, enhancing usability for mouse users without negatively impacting accessibility.
 **Action:** Always include a `title` attribute that matches the `aria-label` on icon-only buttons to provide a native hover tooltip. However, strictly avoid adding `title` attributes to elements with visible text to prevent redundant tooltips.
+
+## 2025-05-15 - [Hidden Decorative Icons]
+**Learning:** Sighted users can see decorative icons placed next to text inside links or buttons. However, screen readers will announce these icons if they are not explicitly hidden, creating redundant noise (e.g., 'ArrowLeft Back to Works').
+**Action:** Always add `aria-hidden="true"` to decorative icons that accompany visible text inside links and buttons to ensure a cleaner experience for screen reader users.
