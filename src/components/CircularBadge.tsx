@@ -1,6 +1,6 @@
 'use client';
 
-import { useInView } from "framer-motion";
+import { UseInViewOptions, useInView } from "framer-motion";
 import { useRef } from "react";
 
 interface CircularTextProps {
@@ -9,13 +9,15 @@ interface CircularTextProps {
     className?: string;
 }
 
+const IN_VIEW_OPTIONS: UseInViewOptions = { margin: "0px 0px -50px 0px" };
+
 export default function CircularText({
     text = "CERTIFIED • CREATIVE • DEVELOPER • ",
     radius = 50,
     className = ""
 }: CircularTextProps) {
     const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, { margin: "0px 0px -50px 0px" });
+    const isInView = useInView(ref, IN_VIEW_OPTIONS);
 
     return (
         <div
