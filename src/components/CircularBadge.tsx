@@ -1,6 +1,6 @@
 'use client';
 
-import { useInView } from "framer-motion";
+import { useInView, UseInViewOptions } from "framer-motion";
 import { useRef } from "react";
 
 interface CircularTextProps {
@@ -9,13 +9,17 @@ interface CircularTextProps {
     className?: string;
 }
 
+// ⚡ Bolt: Hoist static useInView config object outside the component body
+// to prevent unnecessary allocations during initial mount or non-scroll re-renders.
+const CIRCULAR_BADGE_IN_VIEW_CONFIG: UseInViewOptions = { margin: "0px 0px -50px 0px" };
+
 export default function CircularText({
     text = "CERTIFIED • CREATIVE • DEVELOPER • ",
     radius = 50,
     className = ""
 }: CircularTextProps) {
     const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, { margin: "0px 0px -50px 0px" });
+    const isInView = useInView(ref, CIRCULAR_BADGE_IN_VIEW_CONFIG);
 
     return (
         <div

@@ -1,13 +1,17 @@
 'use client';
 
 import { memo, useEffect, useRef } from "react";
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, UseInViewOptions } from "framer-motion";
 import dynamic from "next/dynamic";
 import CircularBadge from "./CircularBadge";
 
 // Dynamically import MagneticPortrait — only needed when hideImage=false
 // Avoids bundling portrait logic when About is rendered without the image (main page)
 const MagneticPortrait = dynamic(() => import("./MagneticPortrait"), { ssr: false });
+
+// ⚡ Bolt: Hoist static useInView config object outside the component body
+// to prevent unnecessary allocations during initial mount or non-scroll re-renders.
+const NUMBER_COUNTER_IN_VIEW_CONFIG: UseInViewOptions = { once: true, margin: "-10px" };
 
 interface AboutProps {
   hideImage?: boolean;
@@ -19,7 +23,7 @@ function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
-  const isInView = useInView(ref, { once: true, margin: "-10px" });
+  const isInView = useInView(ref, NUMBER_COUNTER_IN_VIEW_CONFIG);
 
   useEffect(() => {
     if (isInView) {
