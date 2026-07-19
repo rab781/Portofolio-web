@@ -9,6 +9,7 @@ import {
   useTransform,
   useMotionTemplate,
   useMotionValue,
+  TransformOptions,
 } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
@@ -24,6 +25,7 @@ interface HeroClientProps {
 }
 
 // ⚡ Bolt: Extract static framer-motion variants outside component to prevent re-allocation on every render
+const SCROLL_CONFIG: TransformOptions<number> = { clamp: true };
 const heroVariants = {
   hidden: { y: 100, opacity: 0 },
   visible: {
@@ -97,9 +99,7 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
   const transformStyle = useMotionTemplate`translate(-50%, -50%) translateY(${yVal}px)`;
 
   const maxScroll = 500;
-  const clampedScrollProgress = useTransform(scrollY, [0, maxScroll], [0, 1], {
-    clamp: true,
-  });
+  const clampedScrollProgress = useTransform(scrollY, [0, maxScroll], [0, 1], SCROLL_CONFIG);
 
   // Use opacity-only for the background colour shift — compositor safe, no repaint
   const overlayOpacity = useTransform(clampedScrollProgress, [0, 1], [0, 0.6]);
