@@ -43,3 +43,6 @@
 ## 2025-06-24 - Native Hover Tooltips for Icon-Only Buttons
 **Learning:** For strictly icon-only buttons that rely on `aria-label` for accessibility, screen reader users get the accessible name, but sighted mouse users often lack context because `aria-label` is not visually rendered. Adding a matching `title` attribute provides a native hover tooltip, enhancing usability for mouse users without negatively impacting accessibility.
 **Action:** Always include a `title` attribute that matches the `aria-label` on icon-only buttons to provide a native hover tooltip. However, strictly avoid adding `title` attributes to elements with visible text to prevent redundant tooltips.
+## 2026-03-31 - [Decorative Tech Stack Icons]
+**Learning:** SVGs used for tech stack logos (like React, TypeScript) inside skill cards are purely decorative because the card already contains the visible text of the technology name. Without `aria-hidden="true"` and `focusable="false"`, screen readers may announce generic or confusing information about the SVG graphic, creating a noisy experience.
+**Action:** Always add `aria-hidden="true"` and `focusable="false"` to decorative custom SVGs and Lucide icons, just as we do for standard icons next to text, to ensure they remain invisible to assistive technologies.
