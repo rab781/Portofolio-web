@@ -43,3 +43,7 @@
 ## 2025-06-24 - Native Hover Tooltips for Icon-Only Buttons
 **Learning:** For strictly icon-only buttons that rely on `aria-label` for accessibility, screen reader users get the accessible name, but sighted mouse users often lack context because `aria-label` is not visually rendered. Adding a matching `title` attribute provides a native hover tooltip, enhancing usability for mouse users without negatively impacting accessibility.
 **Action:** Always include a `title` attribute that matches the `aria-label` on icon-only buttons to provide a native hover tooltip. However, strictly avoid adding `title` attributes to elements with visible text to prevent redundant tooltips.
+
+## 2026-10-25 - [Focus Visible Consistency]
+**Learning:** When converting Tailwind `focus:` utilities to `focus-visible:` for accessibility, updating only the color class while leaving layout/outline classes as `focus:` leaves behind the default-colored mouse focus ring, undermining the UI intent.
+**Action:** Ensure all related focus utility classes (e.g., `focus:outline-none`, `focus:ring-2`) are updated simultaneously to `focus-visible:` alongside the color class.
