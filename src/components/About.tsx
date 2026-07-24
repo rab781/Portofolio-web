@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, useEffect, useRef } from "react";
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, UseInViewOptions } from "framer-motion";
 import dynamic from "next/dynamic";
 import CircularBadge from "./CircularBadge";
 
@@ -15,11 +15,14 @@ interface AboutProps {
 }
 
 // Helper for counting up numbers
+const SPRING_CONFIG = { damping: 30, stiffness: 100 };
+const IN_VIEW_OPTIONS: UseInViewOptions = { once: true, margin: "-10px" };
+
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
-  const isInView = useInView(ref, { once: true, margin: "-10px" });
+  const springValue = useSpring(motionValue, SPRING_CONFIG);
+  const isInView = useInView(ref, IN_VIEW_OPTIONS);
 
   useEffect(() => {
     if (isInView) {
@@ -51,6 +54,8 @@ const containerVariants = {
   },
 };
 
+const VIEWPORT_OPTIONS = { once: true, margin: "-100px" };
+
 const itemVariants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
@@ -68,7 +73,7 @@ function About({ hideImage = false, triggerAnimation = false }: AboutProps) {
       initial="hidden"
       whileInView="visible" // Auto trigger if viewed normally
       animate={triggerAnimation ? "visible" : undefined} // Or trigger via prop
-      viewport={{ once: true, margin: "-100px" }}
+      viewport={VIEWPORT_OPTIONS}
       className="max-w-7xl mx-auto p-6 md:p-12 relative"
     >
       <div className={`grid ${hideImage ? 'md:grid-cols-1' : 'md:grid-cols-2'} gap-16 items-start`}>
