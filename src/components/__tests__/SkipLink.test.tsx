@@ -19,6 +19,6 @@ describe('SkipLink', () => {
     // Check for classes that handle visibility
     expect(link).toHaveClass('fixed');
     expect(link).toHaveClass('-translate-y-[150%]');
-    expect(link).toHaveClass('focus:translate-y-0');
+    expect(link).toHaveClass('focus-visible:translate-y-0');
   });
 });
