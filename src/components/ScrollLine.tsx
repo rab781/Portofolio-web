@@ -1,8 +1,10 @@
 'use client';
 
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, UseScrollOptions } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
+// ⚡ Bolt: Hoist static configuration objects to maintain referential equality and prevent re-allocations
+const SCROLL_OFFSET: UseScrollOptions["offset"] = ["start center", "end end"];
 const SPRING_CONFIG = { stiffness: 400, damping: 90 };
 
 export default function ScrollLine() {
@@ -12,7 +14,7 @@ export default function ScrollLine() {
     // Track scroll progress relative to this container
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start center", "end end"]
+        offset: SCROLL_OFFSET
     });
 
     const pathLength = useSpring(scrollYProgress, SPRING_CONFIG);
