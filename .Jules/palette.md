@@ -43,3 +43,7 @@
 ## 2025-06-24 - Native Hover Tooltips for Icon-Only Buttons
 **Learning:** For strictly icon-only buttons that rely on `aria-label` for accessibility, screen reader users get the accessible name, but sighted mouse users often lack context because `aria-label` is not visually rendered. Adding a matching `title` attribute provides a native hover tooltip, enhancing usability for mouse users without negatively impacting accessibility.
 **Action:** Always include a `title` attribute that matches the `aria-label` on icon-only buttons to provide a native hover tooltip. However, strictly avoid adding `title` attributes to elements with visible text to prevent redundant tooltips.
+
+## 2026-10-31 - [Decorative Custom SVGs Accessibility]
+**Learning:** When creating custom SVG icon sets (like in `TechIcons.tsx`), developers often forget to include `aria-hidden="true"` and `focusable="false"`. Without these attributes, screen readers may announce meaningless SVG code or create redundant tab stops in legacy browsers, which is especially problematic when these icons are used decoratively next to visible text in repeating elements like marquees.
+**Action:** Always audit custom SVG components to ensure they have `aria-hidden="true"` and `focusable="false"` applied by default, unless they are explicitly designed to be interactive elements. For third-party icons (e.g., Lucide), ensure `aria-hidden="true"` is passed when used decoratively.
