@@ -39,3 +39,7 @@
 ## 2025-05-24 - Wrapped DecryptedText with React.memo()
 **Learning:** In high-frequency animation components (e.g. `DecryptedText.tsx` which runs `setInterval` updating state rapidly), if the component is used in a parent like `Preloader.tsx` without memoization, there's a risk of the parent context rendering unnecessarily, or the component itself rerendering if passed different props despite the same primitive values. Wrapping heavy animation components with `React.memo` isolates them.
 **Action:** Wrap animation-heavy components using `setInterval` with `React.memo()` to reduce DOM reconciliation overhead.
+
+## 2025-03-05 - Hoisting framer motion array configurations
+**Learning:** Defining configuration arrays (e.g. `offset: ["start center", "end end"]`) inline within hooks like `useScroll` causes a new array allocation on every component render. While these hooks return `MotionValue`s that don't trigger re-renders themselves during scrolling, hoisting these static arrays ensures referential equality and saves allocations during initial component mounts or any other non-scroll related re-renders.
+**Action:** Always hoist static Framer Motion array configurations (and explicitly type them like `UseScrollOptions["offset"]` in TypeScript) outside the component body.
