@@ -1,13 +1,19 @@
 'use client';
 
 import { memo, useEffect, useRef } from "react";
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, UseInViewOptions, SpringOptions } from "framer-motion";
 import dynamic from "next/dynamic";
 import CircularBadge from "./CircularBadge";
 
 // Dynamically import MagneticPortrait — only needed when hideImage=false
 // Avoids bundling portrait logic when About is rendered without the image (main page)
 const MagneticPortrait = dynamic(() => import("./MagneticPortrait"), { ssr: false });
+
+
+// ⚡ Bolt: Hoist static configuration objects outside the component body
+// to prevent unnecessary object allocation on every render.
+const IN_VIEW_OPTIONS: UseInViewOptions = { once: true, margin: "-10px" };
+const SPRING_CONFIG: SpringOptions = { damping: 30, stiffness: 100 };
 
 interface AboutProps {
   hideImage?: boolean;
@@ -18,8 +24,8 @@ interface AboutProps {
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
-  const isInView = useInView(ref, { once: true, margin: "-10px" });
+  const springValue = useSpring(motionValue, SPRING_CONFIG);
+  const isInView = useInView(ref, IN_VIEW_OPTIONS);
 
   useEffect(() => {
     if (isInView) {
