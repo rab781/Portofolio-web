@@ -33,6 +33,15 @@ const heroVariants = {
   },
 };
 
+
+// ⚡ Bolt: Hoist static useTransform configuration arrays outside component body to prevent unnecessary allocations on every render.
+const MAX_SCROLL = 500;
+const CLAMP_INPUT = [0, MAX_SCROLL];
+const DEFAULT_INPUT = [0, 1];
+const OVERLAY_OPACITY_OUTPUT = [0, 0.6];
+const FONT_SCALE_OUTPUT = [1, 0.9];
+const INDICATOR_OPACITY_OUTPUT = [1, 0];
+
 const containerVariants = {
   visible: {
     transition: { staggerChildren: 0.1, delayChildren: 0.5 },
@@ -96,15 +105,14 @@ export default function HeroClient({ aboutRef, children }: HeroClientProps) {
 
   const transformStyle = useMotionTemplate`translate(-50%, -50%) translateY(${yVal}px)`;
 
-  const maxScroll = 500;
-  const clampedScrollProgress = useTransform(scrollY, [0, maxScroll], [0, 1], {
+  const clampedScrollProgress = useTransform(scrollY, CLAMP_INPUT, DEFAULT_INPUT, {
     clamp: true,
   });
 
   // Use opacity-only for the background colour shift — compositor safe, no repaint
-  const overlayOpacity = useTransform(clampedScrollProgress, [0, 1], [0, 0.6]);
-  const fontScale = useTransform(clampedScrollProgress, [0, 1], [1, 0.9]);
-  const scrollIndicatorOpacity = useTransform(clampedScrollProgress, [0, 1], [1, 0]);
+  const overlayOpacity = useTransform(clampedScrollProgress, DEFAULT_INPUT, OVERLAY_OPACITY_OUTPUT);
+  const fontScale = useTransform(clampedScrollProgress, DEFAULT_INPUT, FONT_SCALE_OUTPUT);
+  const scrollIndicatorOpacity = useTransform(clampedScrollProgress, DEFAULT_INPUT, INDICATOR_OPACITY_OUTPUT);
 
   return (
     <div className="relative min-h-screen bg-[#8CE4FF] text-[#18181B] selection:bg-blue-100 selection:text-blue-900 bg-noise">
