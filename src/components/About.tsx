@@ -14,12 +14,19 @@ interface AboutProps {
   triggerAnimation?: boolean;
 }
 
+
+// ⚡ Bolt: Hoist static configuration objects outside the component body
+// to prevent unnecessary object allocation on every render tick.
+const SPRING_CONFIG = { damping: 30, stiffness: 100 };
+const IN_VIEW_CONFIG = { once: true, margin: "-10px" } as const;
+
 // Helper for counting up numbers
+
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { damping: 30, stiffness: 100 });
-  const isInView = useInView(ref, { once: true, margin: "-10px" });
+  const springValue = useSpring(motionValue, SPRING_CONFIG);
+  const isInView = useInView(ref, IN_VIEW_CONFIG);
 
   useEffect(() => {
     if (isInView) {

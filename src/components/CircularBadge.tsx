@@ -9,13 +9,19 @@ interface CircularTextProps {
     className?: string;
 }
 
+
+// ⚡ Bolt: Hoist static configuration objects outside the component body
+// to prevent unnecessary object allocation on every render tick.
+const IN_VIEW_CONFIG = { margin: "0px 0px -50px 0px" } as const;
+
 export default function CircularText({
+
     text = "CERTIFIED • CREATIVE • DEVELOPER • ",
     radius = 50,
     className = ""
 }: CircularTextProps) {
     const ref = useRef<HTMLDivElement>(null);
-    const isInView = useInView(ref, { margin: "0px 0px -50px 0px" });
+    const isInView = useInView(ref, IN_VIEW_CONFIG);
 
     return (
         <div
