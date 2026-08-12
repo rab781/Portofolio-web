@@ -39,3 +39,7 @@
 ## 2025-05-24 - Wrapped DecryptedText with React.memo()
 **Learning:** In high-frequency animation components (e.g. `DecryptedText.tsx` which runs `setInterval` updating state rapidly), if the component is used in a parent like `Preloader.tsx` without memoization, there's a risk of the parent context rendering unnecessarily, or the component itself rerendering if passed different props despite the same primitive values. Wrapping heavy animation components with `React.memo` isolates them.
 **Action:** Wrap animation-heavy components using `setInterval` with `React.memo()` to reduce DOM reconciliation overhead.
+
+## 2025-05-25 - Explicit Typing of Hoisted Framer Motion Config Objects
+**Learning:** When extracting inline configuration objects for Framer Motion hooks (like `useInView`) into static, hoisted constants, relying on TypeScript's implicit type inference for object literals can lead to production build failures. Framer Motion hooks often have specific type requirements (e.g., `MarginType` vs `string` for the `margin` property) that are lost when an object is declared without an explicit type annotation.
+**Action:** Always import the exact type definition (e.g., `import { UseInViewOptions } from "framer-motion";`) and explicitly type the hoisted constant (e.g., `const INVIEW_OPTIONS: UseInViewOptions = { ... }`) to ensure strict type compliance and prevent unexpected compilation errors during `pnpm build`.
