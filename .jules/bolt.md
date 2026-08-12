@@ -39,3 +39,7 @@
 ## 2025-05-24 - Wrapped DecryptedText with React.memo()
 **Learning:** In high-frequency animation components (e.g. `DecryptedText.tsx` which runs `setInterval` updating state rapidly), if the component is used in a parent like `Preloader.tsx` without memoization, there's a risk of the parent context rendering unnecessarily, or the component itself rerendering if passed different props despite the same primitive values. Wrapping heavy animation components with `React.memo` isolates them.
 **Action:** Wrap animation-heavy components using `setInterval` with `React.memo()` to reduce DOM reconciliation overhead.
+
+## 2025-03-05 - Types for Framer Motion configs
+**Learning:** When extracting inline configuration objects for hooks into static constants in TypeScript, do not hallucinate or guess type names (e.g., `SpringOptions` from `framer-motion`). Rely on TypeScript's inference unless you have explicitly verified the exact exported type name exists in the local package to avoid breaking the build.
+**Action:** When extracting configs, rely on type inference for implicit objects (like `SPRING_CONFIG`) and use indexed access types (like `UseScrollOptions["offset"]`) when explicit typing is required, verifying all types against the local package.
