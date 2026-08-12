@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
-cd portfolio-website
+cd Portofolio-web
 ```
 
 2. Install dependencies:
@@ -45,6 +45,10 @@ pnpm install
 ```bash
 pnpm dev
 ```
+
+> **Troubleshooting**:
+> - If you see `EADDRINUSE` errors, another process is using port 3000. Run `pnpm dev --port 3001` or kill the process on port 3000.
+> - If `pnpm install` fails, ensure you are using pnpm v8+ (`pnpm --version`).
 
 ## Usage
 
@@ -94,4 +98,8 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+MIT © [rab781](https://github.com/rab781)
