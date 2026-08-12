@@ -10,8 +10,6 @@ Building a modern, accessible, and performant developer portfolio from scratch t
 
 ## Quick Start
 
-Get your portfolio running locally.
-
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
 cd Portofolio-web
@@ -31,7 +29,7 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
-cd portfolio-website
+cd Portofolio-web
 ```
 
 2. Install dependencies:
@@ -48,31 +46,19 @@ pnpm dev
 
 ## Usage
 
-### Personal Information
+### Basic Example
 
 You update your personal details by modifying the components in the `src/components/` directory.
 
 - **Hero Section** (`src/components/HeroClient.tsx`): Change your name, titles, social links, and the animated text array.
 - **About Section** (`src/components/About.tsx`): Update your personal description, background, and avatar image.
 - **Skills Section**:
-  - Content: Edit your skill categories and items in `src/data/skills.ts` (see the `skillCategories` export).
+  - Content: Edit your skill categories and items in `src/data/skills.ts`.
   - Layout/Animation: Customize how skills are displayed and animated in `src/components/Skills.tsx`.
 
 ### Adding Projects
 
-You showcase your work by updating the projects list in `src/components/Projects.tsx`.
-
-```tsx
-// src/components/Projects.tsx
-export const projects = [
-  {
-    title: 'My Awesome Project',
-    description: 'A brief description of the project and the problem it solves.',
-    technologies: ['React', 'Node.js', 'Tailwind CSS'],
-    link: 'https://github.com/yourusername/project',
-  },
-];
-```
+You showcase your work by updating the projects list in `src/data/projects.ts` (and if modifying structure, `src/components/Projects.tsx`).
 
 ### Configuration
 
@@ -80,8 +66,7 @@ You customize the visual appearance of your portfolio through standard configura
 
 | File | Purpose |
 |------|---------|
-| `tailwind.config.ts` | Adjust color schemes, themes, and design tokens |
-| `src/app/globals.css` | Add global CSS variables and base styles |
+| `src/app/globals.css` | Add global CSS variables, setup tailwindcss and base styles |
 | `src/app/layout.tsx` | Configure SEO metadata and change fonts |
 
 ### Advanced Usage: Contact Form
@@ -94,4 +79,8 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+MIT © [Mohammad Raihan Rabbani](https://github.com/rab781)
