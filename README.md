@@ -6,11 +6,9 @@
 
 ## Why This Exists
 
-Building a modern, accessible, and performant developer portfolio from scratch takes time away from what you actually want to showcase: your projects and skills. This template provides a pre-configured foundation with responsive design, dark mode, and smooth animations out of the box. You write your content, and the template handles the presentation.
+You spend hours building custom portfolio sites when you should be showcasing your work. This template gives you a performant, accessible foundation out of the box so you focus on content, not CSS bugs or layout thrashing.
 
 ## Quick Start
-
-Get your portfolio running locally.
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
@@ -23,28 +21,17 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 
 ## Installation
 
-**Prerequisites**:
-- Node.js 18.17+
-- pnpm 8+
-
-1. Clone the repository and navigate into the directory:
+**Prerequisites**: Node.js 18.17+, pnpm 8+
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
-cd portfolio-website
-```
-
-2. Install dependencies:
-
-```bash
+cd Portofolio-web
 pnpm install
 ```
 
-3. Start the development server:
-
-```bash
-pnpm dev
-```
+> **Troubleshooting**:
+> - If you see `EACCES` errors during installation, ensure your user has the correct directory permissions or prefix commands with `sudo` carefully.
+> - If `pnpm install` fails due to network timeouts, check your proxy settings or try clearing your pnpm store (`pnpm store prune`).
 
 ## Usage
 
@@ -60,7 +47,7 @@ You update your personal details by modifying the components in the `src/compone
 
 ### Adding Projects
 
-You showcase your work by updating the projects list in `src/components/Projects.tsx`.
+You showcase your work by updating the projects list in `src/components/Projects.tsx`. The template dynamically renders your projects from this data file.
 
 ```tsx
 // src/components/Projects.tsx
@@ -86,12 +73,16 @@ You customize the visual appearance of your portfolio through standard configura
 
 ### Advanced Usage: Contact Form
 
-The contact form in `src/components/Contact.tsx` logs submissions to the console by default. You make it functional by integrating a backend or email service.
+The contact form in `src/components/Contact.tsx` logs submissions to the console by default. You make it functional by integrating a backend or email service. This step has a few moving parts.
 
 1. Create an API route in Next.js (`src/app/api/contact/route.ts`).
 2. Update the form submission handler to `POST` data to your new endpoint.
-3. Use a service like Resend or SendGrid to deliver the email.
+3. Use a service like Resend or SendGrid within your API route to deliver the email.
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+See [LICENSE](LICENSE)
