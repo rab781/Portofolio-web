@@ -78,6 +78,7 @@ const MarqueeRow = ({
         No React render loop, no JS overhead
       */}
       <div
+        role="list"
         className="flex gap-4 sm:gap-6 whitespace-nowrap pl-4 w-max hover:[animation-play-state:paused]"
         role="list"
         style={{
