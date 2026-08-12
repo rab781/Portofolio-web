@@ -92,6 +92,15 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 2. Update the form submission handler to `POST` data to your new endpoint.
 3. Use a service like Resend or SendGrid to deliver the email.
 
+## Troubleshooting
+
+- **`pnpm install` timeouts**: If you experience network timeouts during installation, try running `pnpm install --network-concurrency 1` or check your internet connection.
+- **Port 3000 in use**: If `pnpm dev` fails because port 3000 is in use, kill the existing process using `kill $(lsof -t -i :3000) 2>/dev/null || true`.
+
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on how to contribute to this project.
+
+## License
+
+MIT © [Mohammad Raihan Rabbani](https://github.com/rab781)
