@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
-cd portfolio-website
+cd Portofolio-web
 ```
 
 2. Install dependencies:
@@ -94,4 +94,8 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+MIT © [Mohammad Raihan Rabbani](https://github.com/rab781)
