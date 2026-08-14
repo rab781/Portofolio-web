@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, useEffect, useRef } from "react";
-import { motion, useInView, useMotionValue, useSpring, SpringOptions } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, SpringOptions, UseInViewOptions } from "framer-motion";
 import dynamic from "next/dynamic";
 import CircularBadge from "./CircularBadge";
 
@@ -18,12 +18,16 @@ interface AboutProps {
 // to prevent unnecessary object allocation during initial mount/non-scroll re-renders.
 const SPRING_CONFIG: SpringOptions = { damping: 30, stiffness: 100 };
 
+// ⚡ Bolt: Hoist static useInView options outside the component body
+// to prevent unnecessary object allocation on every render.
+const IN_VIEW_OPTIONS: UseInViewOptions = { once: true, margin: "-10px" as UseInViewOptions["margin"] };
+
 // Helper for counting up numbers
 function NumberCounter({ value, suffix = "+" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, SPRING_CONFIG);
-  const isInView = useInView(ref, { once: true, margin: "-10px" });
+  const isInView = useInView(ref, IN_VIEW_OPTIONS);
 
   useEffect(() => {
     if (isInView) {
