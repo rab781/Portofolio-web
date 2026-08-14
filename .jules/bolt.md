@@ -43,3 +43,6 @@
 ## 2026-08-13 - Hoisting Framer Motion springConfig Objects
 **Learning:** When using Framer Motion hooks like `useSpring` inside components, defining configuration objects inline causes a new object allocation during initial mount/non-scroll re-renders. This can trigger unnecessary internal hook re-evaluations and increase garbage collection pressure.
 **Action:** Always hoist static Framer Motion configuration objects outside the component body or wrap them in `useMemo` to maintain referential equality and avoid unnecessary allocations.
+## 2026-08-14 - Hoisting Framer Motion useInView Objects
+**Learning:** When using Framer Motion hooks like `useInView` inside components, defining configuration objects (like `{ once: true, margin: "-10px" }`) inline causes a new object allocation on every render tick. This can trigger unnecessary internal hook re-evaluations and increase garbage collection pressure during rapid scroll or hover events.
+**Action:** Always hoist static Framer Motion configuration objects outside the component body or wrap them in `useMemo` to maintain referential equality and avoid unnecessary allocations.
