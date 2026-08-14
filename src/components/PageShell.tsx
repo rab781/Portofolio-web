@@ -2,15 +2,15 @@
 
 import { useRef } from "react";
 import dynamic from "next/dynamic";
-import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Projects from "@/components/Projects";
-import Contact from "@/components/Contact";
-import Experience from "@/components/Experience";
-import Certificates from "@/components/Certificates";
+// Dynamically import content sections to reduce initial bundle size
+const About = dynamic(() => import("@/components/About"));
+const Skills = dynamic(() => import("@/components/Skills"));
+const Projects = dynamic(() => import("@/components/Projects"));
+const Contact = dynamic(() => import("@/components/Contact"));
+const Experience = dynamic(() => import("@/components/Experience"));
+const Certificates = dynamic(() => import("@/components/Certificates"));
 
 // Only HeroClient (scroll logic, framer-motion, preloader) is a client boundary.
-// All content sections are rendered server-side and passed as children.
 const HeroClient = dynamic(() => import("@/components/HeroClient"), {
   ssr: false,
   loading: () => (
