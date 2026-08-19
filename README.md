@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) to see your site.
 
 ```bash
 git clone https://github.com/rab781/Portofolio-web.git
-cd portfolio-website
+cd Portofolio-web
 ```
 
 2. Install dependencies:
@@ -80,8 +80,7 @@ You customize the visual appearance of your portfolio through standard configura
 
 | File | Purpose |
 |------|---------|
-| `tailwind.config.ts` | Adjust color schemes, themes, and design tokens |
-| `src/app/globals.css` | Add global CSS variables and base styles |
+| `src/app/globals.css` | Configure Tailwind CSS v4 variables, themes, and base styles |
 | `src/app/layout.tsx` | Configure SEO metadata and change fonts |
 
 ### Advanced Usage: Contact Form
@@ -94,4 +93,8 @@ The contact form in `src/components/Contact.tsx` logs submissions to the console
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check the issues page.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute to this project.
+
+## License
+
+MIT © [Mohammad Raihan Rabbani](https://github.com/rab781)
