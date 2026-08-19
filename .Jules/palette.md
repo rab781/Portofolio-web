@@ -46,3 +46,7 @@
 ## 2025-03-31 - [Focus vs Focus-Visible Utilities]
 **Learning:** Using `focus:` utilities (like `focus:ring-2`) on form inputs or skip links applies the focus ring for both mouse clicks and keyboard navigation. Sighted mouse users often find focus rings on every clicked input visually noisy or distracting. Using `focus-visible:` ensures the focus ring only appears for keyboard users (who rely on it for navigation) and remains hidden for mouse users, providing a cleaner UI without sacrificing accessibility.
 **Action:** Default to `focus-visible:` utilities instead of `focus:` for all interactive elements, including inputs and internal links, to improve the mouse user experience while maintaining strict keyboard accessibility standards. When updating `focus:` color utilities to `focus-visible:`, ensure all related focus state utilities (like `outline-none` and `ring-offset`) are updated simultaneously to prevent the browser's default focus ring from appearing.
+
+## 2026-05-18 - Consistent Focus Ring Colors
+**Learning:** Hardcoding generic colors like `focus-visible:ring-black` on inputs can conflict with an application's primary brand accent color, making the UI feel disconnected and less polished for keyboard users.
+**Action:** Always ensure that explicit `focus-visible` styling (e.g., `focus-visible:ring-[#FFA239]`) matches the application's primary brand color across all interactive elements, including inputs and textareas, to provide a cohesive visual experience.
