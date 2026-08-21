@@ -26,7 +26,7 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                     aria-label="Back to projects list"
                     className="group inline-flex items-center gap-2 px-5 py-2.5 bg-white/50 backdrop-blur-md border border-white/40 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-white hover:border-[#FFA239] hover:text-[#FFA239] transition-all shadow-sm mb-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                 >
-                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
                     Back to Works
                 </Link>
 
@@ -85,7 +85,7 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                         {/* The Problem */}
                         <section className="bg-white/80 backdrop-blur-sm p-10 md:p-12 rounded-[2.5rem] border border-white shadow-xl relative overflow-hidden group">
                             <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                                <Brain size={150} />
+                                <Brain size={150} aria-hidden="true" />
                             </div>
 
                             <h2 className="text-3xl font-bold text-[#111111] mb-8 flex items-center gap-4 relative z-10">
@@ -142,7 +142,7 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                                         key={idx}
                                         className="bg-[#111111] text-white p-8 rounded-[2rem] flex flex-col justify-between h-full shadow-2xl shadow-gray-900/20"
                                     >
-                                        <CheckCircle className="text-[#8CE4FF] mb-6 w-8 h-8" />
+                                        <CheckCircle className="text-[#8CE4FF] mb-6 w-8 h-8" aria-hidden="true" />
                                         <p className="font-medium text-xl leading-relaxed opacity-90">{res}</p>
                                     </motion.div>
                                 ))}
@@ -178,7 +178,7 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                                     aria-label={`View source code for ${project.title} on GitHub`}
                                     className="flex items-center justify-center w-full py-5 px-6 bg-[#111111] text-white font-bold rounded-2xl hover:scale-[1.02] transition-transform shadow-lg group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                                 >
-                                    <Github size={20} className="mr-3 group-hover:rotate-12 transition-transform" />
+                                    <Github size={20} className="mr-3 group-hover:rotate-12 transition-transform" aria-hidden="true" />
                                     View Codebase
                                 </a>
 
@@ -190,7 +190,7 @@ export default function ProjectClientWrapper({ project }: { project: Project }) 
                                         aria-label={`View live demo for ${project.title}`}
                                         className="flex items-center justify-center w-full py-5 px-6 bg-[#2563EB] text-white font-bold rounded-2xl hover:bg-blue-600 hover:scale-[1.02] transition-all shadow-lg shadow-blue-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFA239]"
                                     >
-                                        <ExternalLink size={20} className="mr-3 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+                                        <ExternalLink size={20} className="mr-3 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                                         Live Demo
                                     </a>
                                 )}
