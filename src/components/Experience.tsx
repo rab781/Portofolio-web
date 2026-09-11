@@ -1,13 +1,13 @@
 'use client';
 
-import { useScroll, useSpring, motion, useTransform, UseScrollOptions } from "framer-motion";
+import { useScroll, useSpring, motion, useTransform, UseScrollOptions , SpringOptions } from "framer-motion";
 import { Briefcase } from "lucide-react";
 import { useRef } from "react";
 
 // ⚡ Bolt: Hoisted static scroll offset configuration outside of the component body
 // to prevent unnecessary array allocations on every render tick during scrolling.
 const SCROLL_OFFSET: UseScrollOptions["offset"] = ["start center", "end center"];
-const SPRING_CONFIG = {
+const SPRING_CONFIG: SpringOptions = {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001

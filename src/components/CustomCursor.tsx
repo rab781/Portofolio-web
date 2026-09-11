@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring , SpringOptions } from "framer-motion";
 
 // ⚡ Bolt: Hoist static springConfig object outside the component body
 // to prevent unnecessary object allocation on every render.
-const SPRING_CONFIG = { damping: 25, stiffness: 700 };
+const SPRING_CONFIG: SpringOptions = { damping: 25, stiffness: 700 };
 
 export default function CustomCursor() {
     // ⚡ Bolt: Use motion values for scale to avoid React re-renders on hover
