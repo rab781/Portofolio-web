@@ -1,9 +1,9 @@
 'use client';
 
-import { motion, useScroll, useSpring, useTransform, UseScrollOptions } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, UseScrollOptions , SpringOptions } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-const SPRING_CONFIG = { stiffness: 400, damping: 90 };
+const SPRING_CONFIG: SpringOptions = { stiffness: 400, damping: 90 };
 const SCROLL_OFFSET: UseScrollOptions["offset"] = ["start center", "end end"];
 
 export default function ScrollLine() {

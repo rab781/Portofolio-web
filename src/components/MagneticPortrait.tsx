@@ -2,12 +2,12 @@
 
 import React, { useRef, useEffect } from "react";
 import Image from "next/image";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform , SpringOptions } from "framer-motion";
 import { Code, Zap, Sparkles } from "lucide-react";
 
 // ⚡ Bolt: Hoist static springConfig object outside the component body
 // to prevent unnecessary object allocation on every render.
-const SPRING_CONFIG = { damping: 20, stiffness: 300, mass: 0.5 };
+const SPRING_CONFIG: SpringOptions = { damping: 20, stiffness: 300, mass: 0.5 };
 
 export default function MagneticPortrait() {
     const ref = useRef<HTMLDivElement>(null);
